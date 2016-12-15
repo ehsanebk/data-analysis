@@ -27,7 +27,7 @@ public class Tokenizer {
 	}
 
 	public boolean isSeparator(int c) {
-		return c == ',' || c == '\n' || c == '\r' || c=='\t'; // Character.isWhitespace(c);
+		return c == ',' || c == '\n' || c == '\r' || c=='\t' || c==' '; // Character.isWhitespace(c);
 	}
 
 	void advance() {

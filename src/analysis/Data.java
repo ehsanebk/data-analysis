@@ -41,7 +41,6 @@ public class Data {
 			t.nextToken();t.nextToken();
 			CharSequence str = "STRAIGHT";
 			if (t.nextToken().contains(str)){
-				//System.out.println("yes");
 				t.nextToken();t.nextToken();t.nextToken();
 				t.nextToken();t.nextToken();
 				System.out.println(t.nextToken());

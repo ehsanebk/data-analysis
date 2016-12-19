@@ -10,8 +10,8 @@ public class Main {
 		
 		datas = new Vector<Data>();
 		//File directory = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data");
-		//File test = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data\\3040B04.rpt");
-		File test = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data/3040B04.rpt");
+		File test = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data\\3040B04.rpt");
+		//File test = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data/3040B04.rpt");
 
 		
 //		for (File file : directory.listFiles())

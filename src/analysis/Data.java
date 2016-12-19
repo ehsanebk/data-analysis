@@ -4,11 +4,12 @@ import java.io.File;
 import java.util.*;
 
 public class Data {
-	private String name;
-	private String session;
+	int ID;
+	int session;
+	String condition;
 	private long from;
 	private long to;
-	//private Vector<Sample> samples;
+	private Vector<Sample> samples;
 	Sample sample;
 	
 	// Values speeds = new Values();
@@ -25,28 +26,40 @@ public class Data {
 	// static final double laneDepartThreshold = halfLaneWidth - 41; // car is
 	// 82"
 	// // wide
+	
+	private int[] bestCasesNum = {3001,3025,3040,3086,
+			3206,3232,3256,3275,3386,3408,
+			3440,3574,3579,3620};
+	private int[] worstCasesNum = {3047,
+			3122,3171,3207,3215,3220,
+			3309,3311,3359,3421,3512,3570,3674};
 
 	Data(File file) {
-		name = file.getName().substring(0,4);
-		session  = file.getName().substring(5, 7);
+		ID = Integer.parseInt(file.getName().substring(0,4));
+		session  = Integer.parseInt(file.getName().substring(5, 7));
+		if (Utilities.arrayContains(worstCasesNum, ID))
+			condition = "WorstCase";
+		else
+			condition = "BestCase";
+		
+		
+		System.out.println(Utilities.arrayContains (worstCasesNum, ID));
+		System.out.println(ID);
+		System.out.println(condition);
 		
 		//samples = new Vector<Sample>();
-		sample= new Sample();
+		sample = new Sample();
 		
 		Tokenizer t = new Tokenizer(file);
 		t.skipLines(4);
-		
-		int count= 0;
 		String MetricName;
 		while (t.hasMoreTokens()) {			
 			t.nextToken();t.nextToken();
 			CharSequence str = "STRAIGHT";			
-			if (t.nextToken().contains(str)){
-				count++;
+			if (t.nextToken().contains(str)){				
 				t.nextToken();t.nextToken();t.nextToken();
 				t.nextToken();
 				MetricName = t.nextToken();
-				System.out.println(MetricName);
 				switch (MetricName) {
 				case "SPEED_MIN" :
 					sample.SPEED_MIN += t.nextDouble();
@@ -131,9 +144,35 @@ public class Data {
 			}
 			else
 				t.skipLine();
-			System.out.println(count);
 		}
 		
+		
+		// Getting the average :  there are 10 straight segments so the value is divided by 10
+		sample.SPEED_MIN /= 10 ;
+		sample.SPEED_MAX /= 10 ;
+		sample.SPEED_AVG /= 10 ;
+		sample.SPEED_STD /= 10 ;
+		sample.ACCEL_MIN /= 10 ;
+		sample.ACCEL_MAX /= 10 ;
+		sample.ACCEL_AVG /= 10 ;
+		sample.ACCEL_STD /= 10 ;
+		sample.STEER_MIN /= 10 ;
+		sample.STEER_MAX /= 10 ;
+		sample.STEER_AVG /= 10 ;
+		sample.STEER_STD /= 10 ;
+		sample.LANEDEV_MIN /= 10 ;
+		sample.LANEDEV_MAX /= 10 ;
+		sample.LANEDEV_AVG /= 10 ;
+		sample.LANEDEV_STD /= 10 ;
+		sample.BRAKEPDL_MIN /= 10 ;
+		sample.BRAKEPDL_MAX /= 10 ;
+		sample.ACCELPDL_MIN /= 10 ;
+		sample.ACCELPDL_MAX /= 10 ;
+		sample.BRAKEPDL_COUNT /= 10 ;
+		sample.TTBRAKE00 /= 10 ;
+		sample.TTACCREL00 /= 10 ;
+		sample.MPG_AVG /= 10 ;
+		sample.FUELUSED /= 10 ;
 
 //		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
 //		System.out.println(t.nextDouble());

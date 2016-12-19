@@ -91,5 +91,13 @@ public class Utilities {
 		}
 		return stream;
 	}
+	
+	static boolean arrayContains (int [] IDs, int ID){
+		for ( int id: IDs){
+			if ( id == ID)
+				return true;
+		}
+		return false;
+	}
 
 }

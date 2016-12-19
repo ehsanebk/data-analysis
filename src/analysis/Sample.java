@@ -22,6 +22,7 @@ public class Sample {
 	double ACCELPDL_MIN;
 	double ACCELPDL_MAX;
 	double BRAKEPDL_COUNT;
+	double TTBRAKE00;
 	double TTACCREL00;
 	double TTACCREL01;
 	double TTACCREL02;

@@ -35,88 +35,106 @@ public class Data {
 		
 		Tokenizer t = new Tokenizer(file);
 		t.skipLines(4);
-		// 1
 		
+		int count= 0;
+		String MetricName;
 		while (t.hasMoreTokens()) {			
 			t.nextToken();t.nextToken();
-			CharSequence str = "STRAIGHT";
+			CharSequence str = "STRAIGHT";			
 			if (t.nextToken().contains(str)){
+				count++;
 				t.nextToken();t.nextToken();t.nextToken();
-				t.nextToken();t.nextToken();
-				System.out.println(t.nextToken());
+				t.nextToken();
+				MetricName = t.nextToken();
+				System.out.println(MetricName);
+				switch (MetricName) {
+				case "SPEED_MIN" :
+					sample.SPEED_MIN += t.nextDouble();
+					break;
+				case "SPEED_MAX" :
+					sample.SPEED_MAX += t.nextDouble();
+					break;
+				case "SPEED_AVG" :
+					sample.SPEED_AVG += t.nextDouble();
+					break;
+				case "SPEED_STD" :
+					sample.SPEED_STD += t.nextDouble();
+					break;
+				case "ACCEL_MIN" :
+					sample.ACCEL_MIN += t.nextDouble();
+					break;
+				case "ACCEL_MAX" :
+					sample.ACCEL_MAX += t.nextDouble();
+					break;
+				case "ACCEL_AVG" :
+					sample.ACCEL_AVG += t.nextDouble();
+					break;
+				case "ACCEL_STD" :
+					sample.ACCEL_STD += t.nextDouble();
+					break;
+				case "STEER_MIN" :
+					sample.STEER_MIN += t.nextDouble();
+					break;
+				case "STEER_MAX" :
+					sample.STEER_MAX += t.nextDouble();
+					break;
+				case "STEER_AVG" :
+					sample.STEER_AVG += t.nextDouble();
+					break;
+				case "STEER_STD" :
+					sample.STEER_STD += t.nextDouble();
+					break;
+				case "LANEDEV_MIN" :
+					sample.LANEDEV_MIN += t.nextDouble();
+					break;
+				case "LANEDEV_MAX" :
+					sample.LANEDEV_MAX += t.nextDouble();
+					break;
+				case "LANEDEV_AVG" :
+					sample.LANEDEV_AVG += t.nextDouble();
+					break;
+				case "LANEDEV_STD" :
+					sample.LANEDEV_STD += t.nextDouble();
+					break;
+				case "BRAKEPDL_MIN" :
+					sample.BRAKEPDL_MIN += t.nextDouble();
+					break;
+				case "BRAKEPDL_MAX" :
+					sample.BRAKEPDL_MAX += t.nextDouble();
+					break;
+				case "ACCELPDL_MIN" :
+					sample.ACCELPDL_MIN += t.nextDouble();
+					break;
+				case "ACCELPDL_MAX" :
+					sample.ACCELPDL_MAX += t.nextDouble();
+					break;
+				case "BRAKEPDL_COUNT" :
+					sample.BRAKEPDL_COUNT += t.nextDouble();
+					break;
+				case "TTBRAKE00" :
+					sample.TTBRAKE00 += t.nextDouble();
+					break;
+				case "TTACCREL00" :
+					sample.TTACCREL00 += t.nextDouble();
+					break;
+				case "MPG_AVG" :
+					sample.MPG_AVG += t.nextDouble();
+					break;
+				case "FUELUSED" :
+					sample.FUELUSED += t.nextDouble();
+					break;
+
+				default:
+					break;
+				}
+				
 			}
 			else
 				t.skipLine();
-		
+			System.out.println(count);
 		}
 		
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.SPEED_MIN += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.SPEED_MAX += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.SPEED_AVG += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.SPEED_STD += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.ACCEL_MIN += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.ACCEL_MAX += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.ACCEL_AVG += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.ACCEL_STD += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.STEER_MIN += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.STEER_MAX += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.STEER_AVG += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.STEER_STD += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.LANEDEV_MIN += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.LANEDEV_MAX += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.LANEDEV_AVG += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.LANEDEV_STD += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.BRAKEPDL_MIN += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.BRAKEPDL_MAX += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.ACCELPDL_MIN += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.ACCELPDL_MAX += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.BRAKEPDL_COUNT += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.TTACCREL00 += t.nextDouble();
-//		t.skipLines(2);
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.MPG_AVG += t.nextDouble();
-//		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-//		sample.FUELUSED += t.nextDouble();
-//		//2
-//		t.skipLines(26);
-//		captureData(t);
-//		//3
-//		t.skipLines(25);
-//		captureData(t);
-//		//4		
-//		captureData(t);
-//		//5
-//		captureData(t);
-//		//6
-//		captureData(t);
-//		//7
-//		captureData(t);
-//		//8
-//		
-//		
-//		
+
 //		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
 //		System.out.println(t.nextDouble());
 //		
@@ -166,57 +184,6 @@ public class Data {
 		// else System.out.println ("ERROR? -- no samples");
 	}
 
-	void captureData(Tokenizer t){
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.SPEED_MIN += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.SPEED_MAX += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.SPEED_AVG += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.SPEED_STD += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.ACCEL_MIN += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.ACCEL_MAX += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.ACCEL_AVG += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.ACCEL_STD += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.STEER_MIN += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.STEER_MAX += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.STEER_AVG += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.STEER_STD += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.LANEDEV_MIN += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.LANEDEV_MAX += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.LANEDEV_AVG += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.LANEDEV_STD += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.BRAKEPDL_MIN += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.BRAKEPDL_MAX += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.ACCELPDL_MIN += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.ACCELPDL_MAX += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.BRAKEPDL_COUNT += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.TTACCREL00 += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.MPG_AVG += t.nextDouble();
-		t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();t.nextToken();
-		sample.FUELUSED += t.nextDouble();
-
-	}
 	// Data trimTask(double startTime, double endTime) {
 	// Data d2 = new Data();
 	// for (int i = 0; i < samples.size(); i++) {

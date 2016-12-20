@@ -43,9 +43,9 @@ public class Data {
 			condition = "BestCase";
 		
 		
-		System.out.println(Utilities.arrayContains (worstCasesNum, ID));
-		System.out.println(ID);
-		System.out.println(condition);
+//		System.out.println(Utilities.arrayContains (worstCasesNum, ID));
+//		System.out.println(ID);
+//		System.out.println(condition);
 		
 		//samples = new Vector<Sample>();
 		sample = new Sample();

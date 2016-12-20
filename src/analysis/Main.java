@@ -8,12 +8,14 @@ public class Main {
 	private static Vector<Data> datas;
 	public static void main(String[] args) {
 		
-		Vector<Vector<Sample>> worstCase = new Vector<Vector<Sample>>(8);
-		Vector<Vector<Sample>> bestCase = new Vector<Vector<Sample>>(8);
+		
+		// bestcase and worstcase base on the time points 
+		Vector<TimePointData> worstCase = new Vector<TimePointData>(8);
+		Vector<TimePointData> bestCase = new Vector<TimePointData>(8);
 		
 		for (int i = 0; i < 8; i++) {
-			worstCase.add(new Vector<Sample>());
-			bestCase.add(new Vector<Sample>());
+			worstCase.add(new TimePointData());
+			bestCase.add(new TimePointData());
 		}
 		
 		
@@ -80,8 +82,29 @@ public class Main {
 				else
 					bestCase.elementAt(7).add(d.sample);
 		}
+
+
+		System.out.println("TimePoint" + "\t" + "SPEED_MIN" + "\t" + "SPEED_MAX" + "\t" + "SPEED_AVG" + 
+				"\t" + "SPEED_STD" + "\t" + "ACCEL_MIN" + "\t" + 
+				"ACCEL_MAX" + "\t" + "ACCEL_AVG" + "\t" + 
+				"ACCEL_STD" + "\t" + "STEER_MIN" + "\t" + "STEER_MAX" + 
+				"\t" + "STEER_AVG" + "\t" + "STEER_STD" + "\t" + 
+				"LANEDEV_MIN" + "\t" + "LANEDEV_MAX" + "\t" + "LANEDEV_AVG" + 
+				"\t" + "LANEDEV_STD" + "\t" + "BRAKEPDL_MIN" + "\t" + 
+				"BRAKEPDL_MAX" + "\t" + "ACCELPDL_MIN" + "\t" + "ACCELPDL_MAX" + 
+				"\t" + "BRAKEPDL_COUNT" + "\t" + "TTBRAKE00" + "\t" + 
+				"TTACCREL00" + "\t" + "TTACCREL01" + "\t" + "TTACCREL02" + "\t" + 
+				"MPG_AVG" + "\t" + "FUELUSED");
+
+		System.out.println("Best Case");
+		for (int i = 0; i < 8; i++) {
+			System.out.println( i + "\t" + bestCase.elementAt(i).getAverage().toString());	
+		}
 		
-		System.out.println(bestCase.elementAt(2).size());
-		System.out.println(worstCase.elementAt(2).size());
+		System.out.println("Worst Case");
+		for (int i = 0; i < 8; i++) {
+			System.out.println( i + "\t" + worstCase.elementAt(i).getAverage().toString());	
+		}
+		
 	}
 }

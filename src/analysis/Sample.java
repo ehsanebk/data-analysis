@@ -44,10 +44,40 @@ public class Sample {
 	double distanceTraveled;
 	double distanceToStopSign;
 
-//	Sample(long record, Tokenizer t) {
-//		this.record = record; // t.nextToken(); // already read
-//		t.nextToken(); // count
-//		time = t.nextDouble(); // elap
+	public String toString() {
+		return Utilities.df3.format(SPEED_MIN)+ "\t"+
+				Utilities.df3.format(SPEED_MAX)+ "\t"+
+				Utilities.df3.format(SPEED_AVG)+ "\t"+
+				Utilities.df3.format(SPEED_STD)+ "\t"+
+				Utilities.df3.format(ACCEL_MIN)+ "\t"+
+				Utilities.df3.format(ACCEL_MAX)+ "\t"+
+				Utilities.df3.format(ACCEL_AVG)+ "\t"+
+				Utilities.df3.format(ACCEL_STD)+ "\t"+
+				Utilities.df3.format(STEER_MIN)+ "\t"+
+				Utilities.df3.format(STEER_MAX)+ "\t"+
+				Utilities.df3.format(STEER_AVG)+ "\t"+
+				Utilities.df3.format(STEER_STD)+ "\t"+
+				Utilities.df3.format(LANEDEV_MIN)+ "\t"+
+				Utilities.df3.format(LANEDEV_MAX)+ "\t"+
+				Utilities.df3.format(LANEDEV_AVG)+ "\t"+
+				Utilities.df3.format(LANEDEV_STD)+ "\t"+
+				Utilities.df3.format(BRAKEPDL_MIN)+ "\t"+
+				Utilities.df3.format(BRAKEPDL_MAX)+ "\t"+
+				Utilities.df3.format(ACCELPDL_MIN)+ "\t"+
+				Utilities.df3.format(ACCELPDL_MAX)+ "\t"+
+				Utilities.df3.format(BRAKEPDL_COUNT)+ "\t"+
+				Utilities.df3.format(TTBRAKE00)+ "\t"+
+				Utilities.df3.format(TTACCREL00)+ "\t"+
+				Utilities.df3.format(TTACCREL01)+ "\t"+
+				Utilities.df3.format(TTACCREL02)+ "\t"+
+				Utilities.df3.format(MPG_AVG)+ "\t"+
+				Utilities.df3.format(FUELUSED);
+	}
+
+	//	Sample(long record, Tokenizer t) {
+	//		this.record = record; // t.nextToken(); // already read
+	//		t.nextToken(); // count
+	//		time = t.nextDouble(); // elap
 //		carX = t.nextDouble(); // carX
 //		carY = t.nextDouble(); // carY
 //		t.nextToken(); // carZ

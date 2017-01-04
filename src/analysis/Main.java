@@ -106,5 +106,9 @@ public class Main {
 			System.out.println( i + "\t" + worstCase.elementAt(i).getAverage().toString());	
 		}
 		
+		System.out.println("-----------------");
+		
+		System.out.println(bestCase.elementAt(0).SPEED_AVG.size() );
+		
 	}
 }

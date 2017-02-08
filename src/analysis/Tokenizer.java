@@ -99,7 +99,7 @@ public class Tokenizer {
 				advance();
 			if (c != -1) {
 				advance();
-				advance();
+				//advance();
 			}
 		}
 	}

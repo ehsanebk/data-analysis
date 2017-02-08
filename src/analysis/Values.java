@@ -6,33 +6,33 @@ import java.util.*;
 public class Values {
 	Vector<Double> v;
 
-	Values() {
+	public Values() {
 		v = new Vector<Double>();
 	}
 
-	void add(double d) {
+	public void add(double d) {
 		v.add(d);
 	}
 
-	void add(Values vals2) {
+	public void add(Values vals2) {
 		for (int i = 0; i < vals2.size(); i++)
 			v.add(vals2.get(i));
 	}
 
-	double get(int i) {
+	public double get(int i) {
 		return v.elementAt(i);
 	}
 
-	void removeLast() {
+	public void removeLast() {
 		if (v.size() > 0)
 			v.removeElementAt(v.size() - 1);
 	}
 
-	int size() {
+	public int size() {
 		return v.size();
 	}
 
-	double min() {
+	public double min() {
 		if (v.size() == 0)
 			return 0;
 		double min = v.elementAt(0);
@@ -42,7 +42,7 @@ public class Values {
 		return min;
 	}
 
-	double max() {
+	public double max() {
 		if (v.size() == 0)
 			return 0;
 		double max = v.elementAt(0);
@@ -52,7 +52,7 @@ public class Values {
 		return max;
 	}
 
-	double mean() {
+	public double mean() {
 		if (v.size() == 0)
 			return 0;
 		double sum = 0;
@@ -61,11 +61,11 @@ public class Values {
 		return sum / (1.0 * v.size());
 	}
 
-	double average() {
+	public double average() {
 		return mean();
 	}
 
-	double stddev() {
+	public double stddev() {
 		if (v.size() < 2)
 			return 0;
 		double mean = mean();
@@ -75,17 +75,17 @@ public class Values {
 		return Math.sqrt(sum / (1.0 * (v.size() - 1)));
 	}
 
-	double stderr() {
+	public double stderr() {
 		if (v.size() < 2)
 			return 0;
 		return stddev() / Math.sqrt(1.0 * v.size());
 	}
 
-	double confint() {
+	public double confint() {
 		return 1.96 * stderr();
 	}
 
-	double rmse(double expected) {
+	public double rmse(double expected) {
 		if (v.size() == 0)
 			return 0;
 		double sum = 0;
@@ -94,11 +94,11 @@ public class Values {
 		return Math.sqrt(sum / (1.0 * v.size()));
 	}
 
-	double rmse() {
+	public double rmse() {
 		return rmse(0);
 	}
 
-	double meanCrossings() {
+	public double meanCrossings() {
 		if (v.size() == 0)
 			return 0;
 		double mean = mean();
@@ -114,11 +114,11 @@ public class Values {
 		return count;
 	}
 
-	boolean inRange(double x, double min, double max) {
+	public boolean inRange(double x, double min, double max) {
 		return (x >= min && x <= max);
 	}
 
-	double stddevCrossings(double stddevs) {
+	public double stddevCrossings(double stddevs) {
 		if (v.size() == 0)
 			return 0;
 		double mean = mean();
@@ -137,7 +137,7 @@ public class Values {
 		return count;
 	}
 
-	double nonZeroRuns() {
+	public double nonZeroRuns() {
 		if (v.size() == 0)
 			return 0;
 		double count = 0;

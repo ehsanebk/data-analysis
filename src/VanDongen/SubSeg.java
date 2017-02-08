@@ -1,4 +1,6 @@
-package analysis;
+package VanDongen;
+
+import analysis.Values;
 
 public class SubSeg {
 	Values speeds, steers, accels;

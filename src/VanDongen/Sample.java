@@ -1,4 +1,6 @@
-package analysis;
+package VanDongen;
+
+import analysis.Utilities;
 
 public class Sample {
 	double SPEED_MIN;

@@ -1,4 +1,4 @@
-package analysis;
+package VanDongen;
 
 import java.io.File;
 import java.util.Vector;

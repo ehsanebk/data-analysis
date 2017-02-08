@@ -1,8 +1,8 @@
-package excel;
+package singapore;
 
 import analysis.Utilities;
 
-public class SampleSingapore {
+public class SampleSingaporeDriving {
 	double Video;
 	double Time;
 	double LeftRho;

@@ -7,13 +7,13 @@ import java.io.PrintStream;
 import java.text.DecimalFormat;
 
 public class Utilities {
-	static DecimalFormat df0 = new DecimalFormat("0");
-	static DecimalFormat df1 = new DecimalFormat("#.0");
-	static DecimalFormat df2 = new DecimalFormat("#.00");
-	static DecimalFormat df3 = new DecimalFormat("#.000");
-	static DecimalFormat df4 = new DecimalFormat("#.0000");
-	static DecimalFormat df5 = new DecimalFormat("#.00000");
-	static DecimalFormat df8 = new DecimalFormat("#.00000000");
+	public static DecimalFormat df0 = new DecimalFormat("0");
+	public static DecimalFormat df1 = new DecimalFormat("#.0");
+	public static DecimalFormat df2 = new DecimalFormat("#.00");
+	public static DecimalFormat df3 = new DecimalFormat("#.000");
+	public static DecimalFormat df4 = new DecimalFormat("#.0000");
+	public static DecimalFormat df5 = new DecimalFormat("#.00000");
+	public static DecimalFormat df8 = new DecimalFormat("#.00000000");
 
 	static int sign(double x) {
 		return (x >= 0) ? 1 : -1;

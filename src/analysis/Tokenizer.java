@@ -2,6 +2,8 @@ package analysis;
 
 import java.io.*;
 
+import org.apache.poi.ss.usermodel.Chart;
+
 public class Tokenizer {
 	FileReader fr = null;
 	int c = 0;
@@ -99,7 +101,8 @@ public class Tokenizer {
 				advance();
 			if (c != -1) {
 				advance();
-				//advance();
+				if (c == '\n')
+					advance();
 			}
 		}
 	}

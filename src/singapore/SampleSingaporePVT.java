@@ -45,11 +45,16 @@ public class SampleSingaporePVT {
 	public String getTrialdate() {
 		return trialdate.replace("\"", "");
 	}
-	public String getTrialtime() {
+	public String getTrialtimeString() {
 		return trialtime.replace("\"", "");
+	}
+	public int getTrialtime() {
+		return Integer.valueOf(trialtime.replace("\"", "")).intValue();
 	}
 	public Values getRT() {
 		return RT;
 	}
-	
+	public String getTrial() {
+		return trial;
+	}
 }

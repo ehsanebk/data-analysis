@@ -36,7 +36,7 @@ public class SingaporeDriving {
 		
 		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
-				+ "MFPD_Driving_vs_PVT.txt");		
+				+ "MFPD_Driving_vs_PVT.csv");		
 
 		PrintWriter fout = null;
 		try {
@@ -44,7 +44,14 @@ public class SingaporeDriving {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		fout.println("protocol	id		trial	trialdate	trialtime	RTaverage	LanePosAverage	LanePosSD	FrameCount");
+//		fout.println("pro	id	trial	trialdate	PVTtime(before)	"
+//				+ "RTaverage(before)	PVTtime(after)	RTaverage(after)	"
+//				+ "LanePosAverage	LanePosSD	FrameCount");
+		fout.println("pro,id,trial,trialdate,PVTtime(before),"
+				+ "RTaverage(before),PVTtime(after),RTaverage(after),"
+				+ "LanePosAverage,LanePosSD,FrameCount");
+
+		fout.flush();
 
 		for (int i = 0; i < samples.size()-1; i++) {
 			Values LateralPositions = new Values();
@@ -57,7 +64,7 @@ public class SingaporeDriving {
 			int frameCount = 0;
 			if (ID.equals(samples.elementAt(i+1).getId())){  // check to see if it's the last trial of the day or not
 				System.out.println("time pvt : " + trialTime);
-				if (protocol.equals("A")){
+				if (protocol.equals("A") && Integer.valueOf(trial).intValue()!=5){
 					for (File file : directoryA.listFiles())
 						if (file.getName().startsWith(ID)){
 							Vector<Double> LanePosAve= new Vector<Double>();
@@ -86,7 +93,7 @@ public class SingaporeDriving {
 								int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); // getting the time in hhmm format
 
 
-								if (timeDrivingFrame >trialTime && timeDrivingFrame < samples.elementAt(i+1).getTrialtime()){
+								if (timeDrivingFrame > addTime(trialTime,5) && timeDrivingFrame <= addTime(samples.elementAt(i+1).getTrialtime(),5)){
 									LateralPositions.add(LateralPosition);
 									frameCount++;
 								}
@@ -95,16 +102,24 @@ public class SingaporeDriving {
 
 							}
 							if (frameCount > 0){
-								fout.println(protocol+ "\t\t\t"+ ID +"\t\t"+ trial + "\t\t" + trialDate +"\t"+ trialTimeString + "\t\t"  +
-										Utilities.df3.format(samples.elementAt(i).RT.average()) + "\t\t" +
-										Utilities.df5.format(LateralPositions.average())+ "\t\t\t"+ 
-										Utilities.df5.format(LateralPositions.stddev())+ "\t\t" + frameCount);
+//								fout.println(protocol+ "\t"+ ID +"\t"+ trial + "\t\t" + trialDate +"\t"+ 
+//								trialTimeString + "\t\t\t"  + Utilities.df3.format(samples.elementAt(i).RT.average()) + "\t\t\t\t" +
+//								samples.elementAt(i+1).getTrialtime() + "\t\t\t"  + 
+//								Utilities.df3.format(samples.elementAt(i+1).RT.average()) + "\t\t\t\t" +
+//								Utilities.df5.format(LateralPositions.average())+ "\t\t\t"+ 
+//								Utilities.df5.format(LateralPositions.stddev())+ "\t\t" + frameCount);
+						fout.println(protocol+ ","+ ID +","+ trial + "," + trialDate +","+ 
+								trialTimeString + ","  + Utilities.df3.format(samples.elementAt(i).RT.average()) + "," +
+								samples.elementAt(i+1).getTrialtime() + ","  + 
+								Utilities.df3.format(samples.elementAt(i+1).RT.average()) + "," +
+								Utilities.df5.format(LateralPositions.average())+ ","+ 
+								Utilities.df5.format(LateralPositions.stddev())+ "," + frameCount);
 								fout.flush();
 							}
 							break;
 						}
 				}	
-				else if (protocol.equals("B")){
+				else if (protocol.equals("B") && Integer.valueOf(trial).intValue() != 2){
 					for (File file : directoryB.listFiles())
 						if (file.getName().startsWith(ID)){
 							Vector<Double> LanePosAve= new Vector<Double>();
@@ -133,7 +148,7 @@ public class SingaporeDriving {
 								int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); // getting the time in hhmm format
 
 
-								if (timeDrivingFrame >trialTime && timeDrivingFrame < samples.elementAt(i+1).getTrialtime()){
+								if (timeDrivingFrame > addTime(trialTime,5) && timeDrivingFrame <= addTime(samples.elementAt(i+1).getTrialtime(),5)){
 									LateralPositions.add(LateralPosition);
 									frameCount++;
 								}
@@ -143,10 +158,18 @@ public class SingaporeDriving {
 							}
 
 							if (frameCount > 0){
-								fout.println(protocol+ "\t\t\t"+ ID +"\t\t"+ trial + "\t\t" + trialDate +"\t"+ trialTimeString + "\t\t"  +
-										Utilities.df3.format(samples.elementAt(i).RT.average()) + "\t\t" +
-										Utilities.df5.format(LateralPositions.average())+ "\t\t\t"+ 
-										Utilities.df5.format(LateralPositions.stddev())+ "\t\t" + frameCount);
+//								fout.println(protocol+ "\t"+ ID +"\t"+ trial + "\t\t" + trialDate +"\t"+ 
+//										trialTimeString + "\t\t\t"  + Utilities.df3.format(samples.elementAt(i).RT.average()) + "\t\t\t\t" +
+//										samples.elementAt(i+1).getTrialtime() + "\t\t\t"  + 
+//										Utilities.df3.format(samples.elementAt(i+1).RT.average()) + "\t\t\t\t" +
+//										Utilities.df5.format(LateralPositions.average())+ "\t\t\t"+ 
+//										Utilities.df5.format(LateralPositions.stddev())+ "\t\t" + frameCount);
+								fout.println(protocol+ ","+ ID +","+ trial + "," + trialDate +","+ 
+										trialTimeString + ","  + Utilities.df3.format(samples.elementAt(i).RT.average()) + "," +
+										samples.elementAt(i+1).getTrialtime() + ","  + 
+										Utilities.df3.format(samples.elementAt(i+1).RT.average()) + "," +
+										Utilities.df5.format(LateralPositions.average())+ ","+ 
+										Utilities.df5.format(LateralPositions.stddev())+ "," + frameCount);
 								fout.flush();
 							}
 							break;
@@ -158,4 +181,12 @@ public class SingaporeDriving {
 		fout.close(); //closing the output file
 	}
 
+	private static int addTime(int time, int add) {
+		int m =(time%100) + add;
+		if ( m >= 60 ){
+			return ((time/100) +(m/60))*100 + (m % 60);
+		}
+		else
+			return time +add;
+	}
 }

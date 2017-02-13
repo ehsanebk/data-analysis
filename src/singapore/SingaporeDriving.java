@@ -15,16 +15,57 @@ import analysis.Values;
 public class SingaporeDriving {
 
 	public static void main(String[] args){
+
+		//Driving_vs_PVT_pure();
+		Driving_vs_PVT_processed();
+
+	}
+	
+
+	public static void 	Driving_vs_PVT_processed(){
+		Vector<SampleSingaporePVT> PVTsamples = new Vector<SampleSingaporePVT>();
+		SampleSingaporePVT_Processed  PVTprocessed= new SampleSingaporePVT_Processed();
 		
-		
-		// getting all the pvt data 
-		Vector<SampleSingaporePVT> samples = new Vector<SampleSingaporePVT>();
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "MFPD_PVT_all.txt");
-		samples = (new SingaporePVT(PVTfile)).samples;
+		PVTsamples = (new SingaporePVT(PVTfile)).samples;
+		
+		File PVTfileOutPutProcessed = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "MFPD_Driving_vs_PVT_processed.csv");
+		PrintWriter foutPVT = null;
+		try {
+			foutPVT = new PrintWriter(PVTfileOutPutProcessed);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		foutPVT.println("protocol,id,trialdate,,lapses 0, lapses 1,lapses 2,lapses 3,lapses 4,lapses 5,lapses 6,lapses 7,"
+				+ ",alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7");
+		foutPVT.flush();
+		
+
+		for (int i = 0; i < PVTsamples.size(); i++) {
+			PVTprocessed.add(PVTsamples.elementAt(i));
+		}	
+		for (int i = 0; i < PVTprocessed.size(); i++) {
+			foutPVT.println(PVTprocessed.toString(i));
+			foutPVT.flush();
+		}
+		foutPVT.flush();
+		foutPVT.close();
+	}
+	
+	public static void 	Driving_vs_PVT_pure(){
+		// getting all the pvt data 
+		Vector<SampleSingaporePVT> PVTsamples = new Vector<SampleSingaporePVT>();
 		
 		
+		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "MFPD_PVT_all.txt");
+		PVTsamples = (new SingaporePVT(PVTfile)).samples;
+	
 		
 		File directoryA = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
@@ -34,10 +75,10 @@ public class SingaporeDriving {
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data/Protocol B filtered");
 		
+		
 		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "MFPD_Driving_vs_PVT.csv");		
-
 		PrintWriter fout = null;
 		try {
 			fout = new PrintWriter(PVTfileOutPut);
@@ -53,16 +94,19 @@ public class SingaporeDriving {
 
 		fout.flush();
 
-		for (int i = 0; i < samples.size()-1; i++) {
+		for (int i = 0; i < PVTsamples.size()-1; i++) {
 			Values LateralPositions = new Values();
-			String protocol = samples.elementAt(i).getProtocol();
-			String ID = samples.elementAt(i).getId();
-			String trial = samples.elementAt(i).getTrial();
-			String trialDate =samples.elementAt(i).getTrialdate();
-			String trialTimeString =samples.elementAt(i).getTrialtimeString();
-			int trialTime = samples.elementAt(i).getTrialtime();
+			String protocol = PVTsamples.elementAt(i).getProtocol();
+			String ID = PVTsamples.elementAt(i).getId();
+			String trial = PVTsamples.elementAt(i).getTrial();
+			String trialDate =PVTsamples.elementAt(i).getTrialdate();
+			String trialTimeString =PVTsamples.elementAt(i).getTrialtimeString();
+			int trialTime = PVTsamples.elementAt(i).getTrialtime();
 			int frameCount = 0;
-			if (ID.equals(samples.elementAt(i+1).getId())){  // check to see if it's the last trial of the day or not
+
+			
+			
+			if (ID.equals(PVTsamples.elementAt(i+1).getId())){  // check to see if it's the last trial of the day or not
 				System.out.println("time pvt : " + trialTime);
 				if (protocol.equals("A") && Integer.valueOf(trial).intValue()!=5){
 					for (File file : directoryA.listFiles())
@@ -93,11 +137,11 @@ public class SingaporeDriving {
 								int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); // getting the time in hhmm format
 
 
-								if (timeDrivingFrame > addTime(trialTime,5) && timeDrivingFrame <= addTime(samples.elementAt(i+1).getTrialtime(),5)){
+								if (timeDrivingFrame > addTime(trialTime,5) && timeDrivingFrame <= addTime(PVTsamples.elementAt(i+1).getTrialtime(),5)){
 									LateralPositions.add(LateralPosition);
 									frameCount++;
 								}
-								else if (timeDrivingFrame > samples.elementAt(i+1).getTrialtime())
+								else if (timeDrivingFrame > PVTsamples.elementAt(i+1).getTrialtime())
 									break; //breaking the while loop
 
 							}
@@ -109,9 +153,9 @@ public class SingaporeDriving {
 //								Utilities.df5.format(LateralPositions.average())+ "\t\t\t"+ 
 //								Utilities.df5.format(LateralPositions.stddev())+ "\t\t" + frameCount);
 						fout.println(protocol+ ","+ ID +","+ trial + "," + trialDate +","+ 
-								trialTimeString + ","  + Utilities.df3.format(samples.elementAt(i).RT.average()) + "," +
-								samples.elementAt(i+1).getTrialtime() + ","  + 
-								Utilities.df3.format(samples.elementAt(i+1).RT.average()) + "," +
+								trialTimeString + ","  + Utilities.df3.format(PVTsamples.elementAt(i).RT.average()) + "," +
+								PVTsamples.elementAt(i+1).getTrialtime() + ","  + 
+								Utilities.df3.format(PVTsamples.elementAt(i+1).RT.average()) + "," +
 								Utilities.df5.format(LateralPositions.average())+ ","+ 
 								Utilities.df5.format(LateralPositions.stddev())+ "," + frameCount);
 								fout.flush();
@@ -148,11 +192,11 @@ public class SingaporeDriving {
 								int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); // getting the time in hhmm format
 
 
-								if (timeDrivingFrame > addTime(trialTime,5) && timeDrivingFrame <= addTime(samples.elementAt(i+1).getTrialtime(),5)){
+								if (timeDrivingFrame > addTime(trialTime,5) && timeDrivingFrame <= addTime(PVTsamples.elementAt(i+1).getTrialtime(),5)){
 									LateralPositions.add(LateralPosition);
 									frameCount++;
 								}
-								else if (timeDrivingFrame > samples.elementAt(i+1).getTrialtime())
+								else if (timeDrivingFrame > PVTsamples.elementAt(i+1).getTrialtime())
 									break; //breaking the while loop
 
 							}
@@ -165,9 +209,9 @@ public class SingaporeDriving {
 //										Utilities.df5.format(LateralPositions.average())+ "\t\t\t"+ 
 //										Utilities.df5.format(LateralPositions.stddev())+ "\t\t" + frameCount);
 								fout.println(protocol+ ","+ ID +","+ trial + "," + trialDate +","+ 
-										trialTimeString + ","  + Utilities.df3.format(samples.elementAt(i).RT.average()) + "," +
-										samples.elementAt(i+1).getTrialtime() + ","  + 
-										Utilities.df3.format(samples.elementAt(i+1).RT.average()) + "," +
+										trialTimeString + ","  + Utilities.df3.format(PVTsamples.elementAt(i).RT.average()) + "," +
+										PVTsamples.elementAt(i+1).getTrialtime() + ","  + 
+										Utilities.df3.format(PVTsamples.elementAt(i+1).RT.average()) + "," +
 										Utilities.df5.format(LateralPositions.average())+ ","+ 
 										Utilities.df5.format(LateralPositions.stddev())+ "," + frameCount);
 								fout.flush();
@@ -189,4 +233,6 @@ public class SingaporeDriving {
 		else
 			return time +add;
 	}
+	
+	
 }

@@ -18,7 +18,6 @@ public class SampleSingaporePVT {
 	public SampleSingaporePVT() {
 		time = new Values();
 		RT = new Values();
-		
 	}
 	
 	

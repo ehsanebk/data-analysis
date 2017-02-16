@@ -3,11 +3,6 @@ package singapore;
 import java.awt.font.FontRenderContext;
 // class for saving the processed PVT data
 import java.util.Vector;
-
-import javax.print.attribute.standard.RequestingUserName;
-
-import org.apache.commons.collections4.functors.ForClosure;
-
 import analysis.Utilities;
 import analysis.Values;
 
@@ -29,15 +24,11 @@ public class SampleSingaporePVT_Processed {
 				lapses[i] = -1;
 			for (int i = 0; i < lanePosSD.length; i++) 
 				lanePosSD[i] = -1;
-			
 		}
 	}
 	
-
 	public SampleSingaporePVT_Processed() {
-		samples = new Vector<DrivingPVTsamples>();
-		
-		
+		samples = new Vector<DrivingPVTsamples>();	
 	}
 
 	public DrivingPVTsamples get(int i) {
@@ -83,7 +74,6 @@ public class SampleSingaporePVT_Processed {
 			}
 		}		
 		
-		
 		boolean newData = true;
 		for (int i = 0; i < samples.size(); i++) {
 			if (samples.get(i).protocol.equals(sample.getProtocol()) && samples.get(i).ID.equals(sample.getId())
@@ -101,9 +91,7 @@ public class SampleSingaporePVT_Processed {
 			s.lapses[Integer.parseInt(sample.getTrial())] = lapses;
 			s.alertAve[Integer.parseInt(sample.getTrial())] = alertResponses.average();
 			samples.add(s);
-
 		}	
-		
 	}
 
 	public void addDrivingSample(String Protocol, String ID, String trialDate, String trial, double lanePosSD){
@@ -127,9 +115,7 @@ public class SampleSingaporePVT_Processed {
 		}	
 
 	}
-
 	public int size(){
 		return samples.size();
 	}
-
 }

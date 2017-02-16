@@ -2,7 +2,7 @@ package singapore;
 
 import analysis.Utilities;
 
-public class SampleSingaporeDriving {
+public class SampleSingaporeDrivingFrame {
 	double Video;
 	double Time;
 	double LeftRho;

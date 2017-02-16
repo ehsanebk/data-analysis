@@ -109,13 +109,10 @@ public class SingaporeDriving {
 								}
 								else if (timeDrivingFrame > PVTsamples.elementAt(i+1).getTrialtime())
 									break; //breaking the while loop
-
 							}
 							if (frameCount > 0){
-
 								PVTprocessed.addDrivingSample(protocol, ID, trialDate, trial, LateralPositions.stddev());
 								 // LateralPositions.average()
-	
 							}
 							break;
 						}
@@ -346,6 +343,7 @@ public class SingaporeDriving {
 		fout.close(); //closing the output file
 	}
 
+	// adding osme minutes to a time in the form of hhmm
 	private static int addTime(int time, int add) {
 		int m =(time%100) + add;
 		if ( m >= 60 ){
@@ -354,6 +352,5 @@ public class SingaporeDriving {
 		else
 			return time +add;
 	}
-	
-	
+		
 }

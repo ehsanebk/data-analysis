@@ -99,5 +99,25 @@ public class Utilities {
 		}
 		return false;
 	}
-
+	public static double toDouble(String s){
+		try {
+			return Double.valueOf(s).doubleValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	public static int toInt(String s){
+		try {
+			return Integer.valueOf(s).intValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
+	public static long toLong(String s){
+		try {
+			return Long.valueOf(s).longValue();
+		} catch (Exception e) {
+			return 0;
+		}
+	}
 }

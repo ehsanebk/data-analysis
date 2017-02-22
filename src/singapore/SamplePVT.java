@@ -3,7 +3,7 @@ package singapore;
 import analysis.Utilities;
 import analysis.Values;
 
-public class SampleSingaporePVT {
+public class SamplePVT {
 	String pre;	
 	String post;
 	String protocol;
@@ -15,7 +15,7 @@ public class SampleSingaporePVT {
 	Values time;
 	Values RT;
 	
-	public SampleSingaporePVT() {
+	public SamplePVT() {
 		time = new Values();
 		RT = new Values();
 	}

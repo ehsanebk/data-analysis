@@ -2,13 +2,12 @@ package analysis;
 
 import java.io.*;
 
-import org.apache.poi.ss.usermodel.Chart;
-
 public class Tokenizer {
 	FileReader fr = null;
 	int c = 0;
 	int line = 1;
-
+	String[] CSVheaders = null;
+	
 	public Tokenizer(String filename) {
 		this(new File(filename));
 	}
@@ -23,7 +22,44 @@ public class Tokenizer {
 			System.err.println("IOException: " + exc.getMessage());
 		}
 	}
+	
+	public void readHeaderCSV(){
+		StringWriter sr = new StringWriter();
+		while (c != -1 && c != '\n' && c != '\r'){
+			sr.write(c);
+			advance();
+		}
+		if (c != -1) {
+			advance();
+			if (c == '\n')
+				advance();
+			}
+		CSVheaders = sr.toString().split(",",-1);
+	}
+	
+	public String[] readNextLineCSV(){
+		StringWriter sr = new StringWriter();
+		while (c != -1 && c != '\n' && c != '\r'){
+			sr.write(c);
+			advance();
+		}
+		if (c != -1) {
+			advance();
+			if (c == '\n')
+				advance();
+			}
+		
+		return sr.toString().split(",",-1);
+	}
 
+	public int getIndexByHeaderCSV(String s){
+		for (int i = 0; i < CSVheaders.length; i++) {
+			if (CSVheaders[i].equals(s))
+				return i;
+		}
+		return -1;
+	}
+	
 	public boolean hasMoreTokens() {
 		return (c != -1);
 	}

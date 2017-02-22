@@ -6,21 +6,20 @@ import java.io.PrintWriter;
 import java.util.Vector;
 import analysis.Tokenizer;
 
-public class SingaporePVT {
+public class SamplesPVT {
 	
-	public Vector<SampleSingaporePVT> samples;
+	Vector<SamplePVT> samples;
 	
-	SingaporePVT(File PVTfile){
-		
+	SamplesPVT(File PVTfile){
 		Tokenizer t = new Tokenizer(PVTfile);
 		
 		//skip the column titles
 		t.skipLine();
 		
 		//reading the first line
-		samples = new Vector<SampleSingaporePVT>();
+		samples = new Vector<SamplePVT>();
 		
-		SampleSingaporePVT currentSample = new SampleSingaporePVT();
+		SamplePVT currentSample = new SamplePVT();
 		
 		String pre;	
 		String post;
@@ -70,7 +69,7 @@ public class SingaporePVT {
 			}
 			else{
 				samples.add(currentSample);
-				currentSample = new SampleSingaporePVT();
+				currentSample = new SamplePVT();
 				
 				currentSample.pre = pre;
 				currentSample.post = post;
@@ -85,11 +84,9 @@ public class SingaporePVT {
 							
 			}		
 		}
-		
-		
-		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
-				+ "Driving data - standard deviation lateral position (Singapore)/"
-				+ "MFPD_PVT_average.txt");		
+	}
+	
+	public void toFile(File PVTfileOutPut){
 		try {
 			PrintWriter fout = new PrintWriter(PVTfileOutPut);
 			fout.println("pre	post	protocol	id		trial	trialdate	trialtime	pvtsn	RTaverage");
@@ -100,12 +97,25 @@ public class SingaporePVT {
 			System.err.println("IOException: " + exc.getMessage());
 		}
 	}
+	
+	public SamplePVT get(int i){
+		return samples.elementAt(i);
+	}
+	public int size(){
+		return samples.size();
+	}
+	
 	public static void main(String[] args) {
 		
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "MFPD_PVT_all.txt");
-		SingaporePVT singapore = new SingaporePVT(PVTfile);
+		SamplesPVT singaporePVT = new SamplesPVT(PVTfile);
+		
+		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "MFPD_PVT_average.txt");
+		singaporePVT.toFile(PVTfileOutPut); 
 	}
 
 }

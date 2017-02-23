@@ -12,13 +12,13 @@ import singapore.SamplesLP.SampleLP;
 
 public class Samples_Processed {
 
-	private Vector<SampleDrivingPVT> samples;
+	private Vector<SamplePVTDrivingLP> samples;
 
 	public Samples_Processed() {
-		samples = new Vector<SampleDrivingPVT>();	
+		samples = new Vector<SamplePVTDrivingLP>();	
 	}
 
-	public SampleDrivingPVT get(int i) {
+	public SamplePVTDrivingLP get(int i) {
 		return samples.elementAt(i);
 		
 	}
@@ -35,7 +35,7 @@ public class Samples_Processed {
 		while (t.hasMoreTokens()){
 			String[] lineCSV = t.readNextLineCSV();
 			
-			SampleDrivingPVT sample = new SampleDrivingPVT();
+			SamplePVTDrivingLP sample = new SamplePVTDrivingLP();
 			sample.protocol = lineCSV[0];
 			sample.ID = lineCSV[1];
 			sample.trialdate = lineCSV[2];
@@ -75,6 +75,15 @@ public class Samples_Processed {
 					}
 			}
 
+			for (int i = 0; i < sample.distanceBetweenMinMaxAve.length; i++) {
+				if (t.getIndexByHeaderCSV("MinMaxDis Ave 0") > 0)
+					try {
+						if (!lineCSV[t.getIndexByHeaderCSV("MinMaxDis Ave 0") + i].equals(""))
+							sample.distanceBetweenMinMaxAve[i] = Utilities.toDouble(lineCSV[t.getIndexByHeaderCSV("MinMaxDis Ave 0") + i]);
+					} catch (ArrayIndexOutOfBoundsException e) {
+					}
+			}
+			
 			addDrivingPVTsample(sample);
 		}
 
@@ -92,7 +101,9 @@ public class Samples_Processed {
 		foutPVT.println("protocol,id,trialdate,,lapses 0,lapses 1,lapses 2,lapses 3,lapses 4,lapses 5,lapses 6,lapses 7,"
 				+ ",alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
 				+ ",LPSD 0,LPSD 1,LPSD 2,LPSD 3,LPSD 4,"
-				+ ",MinMax Ave 0,MinMax Ave 1,MinMax Ave 2,MinMax Ave 3,MinMax Ave 4");
+				+ ",# seg 0,# seg 1,# seg 2,# seg 3,# seg 4,"
+				+ ",MinMax Ave 0,MinMax Ave 1,MinMax Ave 2,MinMax Ave 3,MinMax Ave 4,"
+				+ ",MinMaxDis Ave 0,MinMaxDis Ave 1,MinMaxDis Ave 2,MinMaxDis Ave 3,MinMaxDis Ave 4");
 		foutPVT.flush();
 		
 		for (int i = 0; i < samples.size(); i++) {
@@ -104,7 +115,7 @@ public class Samples_Processed {
 		
 	}
 	
-	public void addDrivingPVTsample( SampleDrivingPVT sample){
+	public void addDrivingPVTsample( SamplePVTDrivingLP sample){
 		boolean newData = true;
 		for (int i = 0; i < samples.size(); i++) {
 			if (samples.get(i).protocol.equals(sample.getProtocol()) && samples.get(i).ID.equals(sample.getID())
@@ -156,7 +167,7 @@ public class Samples_Processed {
 			}
 		}
 		if (newData) {
-			SampleDrivingPVT s = new SampleDrivingPVT();
+			SamplePVTDrivingLP s = new SamplePVTDrivingLP();
 			s.ID = sample.getId();
 			s.protocol = sample.getProtocol();
 			s.trialdate = sample.getTrialdate();
@@ -177,7 +188,7 @@ public class Samples_Processed {
 			}
 		}
 		if (newData) {
-			SampleDrivingPVT s = new SampleDrivingPVT();
+			SamplePVTDrivingLP s = new SamplePVTDrivingLP();
 			s.ID = drivingS.id;
 			s.protocol = drivingS.protocol;
 			s.trialdate = drivingS.trialdate;
@@ -190,26 +201,26 @@ public class Samples_Processed {
 	public void addMinMaxAve(SampleLP sample){
 		boolean newData = true;
 		//check to see if there is any valid segments in the sampleLP
-		if (sample.segments.size()>0){
+		if (sample.numberOfValidSegments > 0){
 			for (int i = 0; i < samples.size(); i++) {
 				if (samples.get(i).protocol.equals(sample.protocol) && samples.get(i).ID.equals(sample.id)
 						&& samples.get(i).trialdate.equals(sample.trialdate)){
-					samples.get(i).numberOfMinMaxAve[Utilities.toInt(sample.trial)] = sample.numberOfMinMaxAve();
-					//samples.get(i).distanceBetweenMinMaxAve[Integer.parseInt(trial)] = distanceBetweenMinMaxAve;
+					samples.get(i).numberOfMinMaxAve[Utilities.toInt(sample.trial)] = sample.numberOfMinMaxAve();		
+					samples.get(i).numberOfValidSegments[Utilities.toInt(sample.trial)] = sample.numberOfValidSegments;
+					samples.get(i).distanceBetweenMinMaxAve[Utilities.toInt(sample.trial)] = sample.distanceBetweenMinMaxAve();
 					newData =false;
 				}
 			}
 			if (newData) {
-				SampleDrivingPVT s = new SampleDrivingPVT();
+				SamplePVTDrivingLP s = new SamplePVTDrivingLP();
 				s.ID = sample.id;
 				s.protocol = sample.protocol;
 				s.trialdate = sample.trialdate;
 				s.numberOfMinMaxAve[Utilities.toInt(sample.trial)] = sample.numberOfMinMaxAve();
-				//s.distanceBetweenMinMaxAve[Integer.parseInt(trial)] = distanceBetweenMinMaxAve;
+				s.numberOfValidSegments[Utilities.toInt(sample.trial)] = sample.numberOfValidSegments;
+				s.distanceBetweenMinMaxAve[Utilities.toInt(sample.trial)] = sample.distanceBetweenMinMaxAve();
 				samples.add(s);
 			}	
 		}
-	}
-
-	
+	}	
 }

@@ -1,29 +1,30 @@
 package singapore;
 
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
-
 import analysis.Utilities;
 import analysis.Values;
 
-public class SampleDrivingPVT {
+public class SamplePVTDrivingLP {
 	String protocol;
 	String ID;
 	String trialdate;
 	int[] lapses = new int[8];
 	double[] alertAve = new double[8];
 	double[] lanePosSD = new double[5];
+	int[] numberOfValidSegments = new int[5];
 	double[] numberOfMinMaxAve = new double[5];
 	double[] distanceBetweenMinMaxAve  = new double[5];
 
 	Values[] lanePos = new Values[5];
 	
-	public SampleDrivingPVT() {
+	public SamplePVTDrivingLP() {
 		for (int i = 0; i < alertAve.length; i++) 
 			alertAve[i] = -1;
 		for (int i = 0; i < lapses.length; i++) 
 			lapses[i] = -1;
 		for (int i = 0; i < lanePosSD.length; i++) 
 			lanePosSD[i] = -1;
+		for (int i = 0; i < numberOfValidSegments.length; i++) 
+			numberOfValidSegments[i] = -1;
 		for (int i = 0; i < numberOfMinMaxAve.length; i++) 
 			numberOfMinMaxAve[i] = -1;
 		for (int i = 0; i < distanceBetweenMinMaxAve.length; i++) 
@@ -53,9 +54,21 @@ public class SampleDrivingPVT {
 			s+= ",";
 		}
 		s += ",";
+		for (int j = 0; j < numberOfValidSegments.length; j++) {
+			if (numberOfValidSegments[j] >= 0)
+				s+= numberOfValidSegments[j];
+			s+= ",";
+		}
+		s += ",";
 		for (int j = 0; j < numberOfMinMaxAve.length; j++) {
 			if (numberOfMinMaxAve[j] >= 0)
 				s+= Utilities.df2.format(numberOfMinMaxAve[j]);
+			s+= ",";
+		}
+		s += ",";
+		for (int j = 0; j < distanceBetweenMinMaxAve.length; j++) {
+			if (distanceBetweenMinMaxAve[j] >= 0)
+				s+= Utilities.df2.format(distanceBetweenMinMaxAve[j]);
 			s+= ",";
 		}
 		

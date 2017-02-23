@@ -21,21 +21,21 @@ public class SingaporeDriving_LP_Anlysis {
 	static SamplesLP samplesLP;
 
 	// PVT data Raw file
-//	static File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+	static File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+			+ "Driving data - standard deviation lateral position (Singapore)/"
+			+ "PVT Raw Data/MFPD_PVT_all.txt");
+//	static File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 //			+ "Driving data - standard deviation lateral position (Singapore)/"
 //			+ "/PVT Raw Data/MFPD_PVT_all.txt");
-	static File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
-			+ "Driving data - standard deviation lateral position (Singapore)/"
-			+ "/PVT Raw Data/MFPD_PVT_all.txt");
 	
 	
 	//reading previous processed data into the PVTprocessed
-//	static File PVTfileProcessedOld = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
-//			+ "Driving data - standard deviation lateral position (Singapore)/"
-//			+ "SDLP_PVT Raw Data Analysis/MFPD_Driving_vs_PVT_processed.csv");
-	static File PVTfileProcessedOld = new File("/Users/Ehsan/OneDrive - drexel.edu/"
+	static File PVTfileProcessedOld = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 			+ "Driving data - standard deviation lateral position (Singapore)/"
 			+ "SDLP_PVT Raw Data Analysis/MFPD_Driving_vs_PVT_processed.csv");
+//	static File PVTfileProcessedOld = new File("/Users/Ehsan/OneDrive - drexel.edu/"
+//			+ "Driving data - standard deviation lateral position (Singapore)/"
+//			+ "SDLP_PVT Raw Data Analysis/MFPD_Driving_vs_PVT_processed.csv");
 
 	public static void 	Test() {
 		
@@ -65,11 +65,15 @@ public class SingaporeDriving_LP_Anlysis {
 		//reading the data available from other old files
 		SamplesProcessed.readProcessedFile(PVTfileProcessedOld);
 
-//		File LPfileOutLP_SegmentsA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
-//				+ "Driving data - standard deviation lateral position (Singapore)/"
-//				+ "Driving Data Raw/Protocol A LP data.csv");
-		File LPfileOutLP_SegmentsA = new File("/Users/Ehsan/Desktop/Protocol A LP Segments Data.csv");
-		File LPfileOutLP_SeriesA = new File("/Users/Ehsan/Desktop/Protocol A LP Series Data.csv");
+		File LPfileOutLP_SegmentsA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Protocol A LP Segments.csv");
+		File LPfileOutLP_SeriesA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Protocol A LP Series.csv");
+//		File LPfileOutLP_SegmentsA = new File("/Users/Ehsan/Desktop/Protocol A LP Segments Data.csv");
+//		File LPfileOutLP_SeriesA = new File("/Users/Ehsan/Desktop/Protocol A LP Series Data.csv");
+		
 		PrintWriter foutLPSegmentsA = null;
 		PrintWriter foutLPSeriesA = null;
 		try {
@@ -80,11 +84,16 @@ public class SingaporeDriving_LP_Anlysis {
 		}
 		foutLPSegmentsA.println("Protocol A \n");
 
-//		File PVTfileOutPutProcessedB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
-//				+ "Driving data - standard deviation lateral position (Singapore)/"
-//				+ "Driving Data Raw/Protocol B LP data.csv");
-		File LPfileOutLP_SegmentsB = new File("/Users/Ehsan/Desktop/Protocol B LP Segments.csv");
-		File LPfileOutLP_SeriesB = new File("/Users/Ehsan/Desktop/Protocol B LP Series Data.csv");
+		File LPfileOutLP_SegmentsB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Protocol B LP Segments.csv");
+		File LPfileOutLP_SeriesB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Protocol B LP Series.csv");
+		
+//		File LPfileOutLP_SegmentsB = new File("/Users/Ehsan/Desktop/Protocol B LP Segments.csv");
+//		File LPfileOutLP_SeriesB = new File("/Users/Ehsan/Desktop/Protocol B LP Series Data.csv");
+		
 		PrintWriter foutLPSegmentsB = null;
 		PrintWriter foutLPSeriesB = null;
 		try {
@@ -96,7 +105,7 @@ public class SingaporeDriving_LP_Anlysis {
 		foutLPSegmentsB.println("Protocol B \n");
 
 
-		PrintWriter fout= null;
+		PrintWriter foutSegments= null;
 		PrintWriter foutSeries =null;
 		
 		//Analyzing the data based on the raw csv data and PVTsamples and make the samplesPL structure
@@ -113,42 +122,44 @@ public class SingaporeDriving_LP_Anlysis {
 			
 			//writing the segments in two segments files
 			if (protocol.equals("A"))
-				fout = foutLPSegmentsA;
+				foutSegments = foutLPSegmentsA;
 			else if (protocol.equals("B"))
-				fout = foutLPSegmentsB;
+				foutSegments = foutLPSegmentsB;
 			
-			fout.print( "*"+ id + "*" + ",PVT time:," + trialtime+ "\n");
-			fout.flush();
+			foutSegments.print( "*"+ id + "*" + ",PVT time:," + trialtime+ "\n");
+			foutSegments.flush();
 
 			for (int j = 0; j < samplesLP.get(i).segments.size(); j++) {
 
 				int numberOfFrames =samplesLP.get(i).segments.elementAt(j).numberOfFrames;
 				int numberOfMinMax = samplesLP.get(i).segments.elementAt(j).numberOfMinMax;
 				int startTimeOfTheSegment  = samplesLP.get(i).segments.elementAt(j).startTime;
+				//System.out.println(numberOfFrames);
 				
-				fout.print(samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax + " "+ "Time:" + startTimeOfTheSegment+
+				foutSegments.print(samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax + " "+ "Time:" + startTimeOfTheSegment+
 						samplesLP.get(i).segments.elementAt(j).MinMixFrameNumbers.toString().replaceAll(",", "") + ",");
+				foutSegments.flush();
 				for (int l = 0; l < samplesLP.get(i).segments.elementAt(j).lanePos.size(); l++) {
 					if (samplesLP.get(i).segments.elementAt(j).lanePos.get(l) > -100){
-						fout.print(samplesLP.get(i).segments.elementAt(j).lanePos.get(l) + ",");
-						fout.flush();
+						foutSegments.print(samplesLP.get(i).segments.elementAt(j).lanePos.get(l) + ",");
+						foutSegments.flush();
 					}
 					else{
-						fout.print(",");
-						fout.flush();
+						foutSegments.print(",");
+						foutSegments.flush();
 					}
 				}
-				fout.print("\n");
-				fout.flush();
+				foutSegments.print("\n");
+				foutSegments.flush();
 			}
-
+			
 			
 			//writing the LP series
 			if (protocol.equals("A"))
 				foutSeries = foutLPSeriesA;
 			else if (protocol.equals("B"))
 				foutSeries = foutLPSeriesB;
-			
+		
 			foutSeries.print( "*"+ id + "*" + " PVT time: " + trialtime);
 			foutSeries.flush();
 			for (int j = 0; j < samplesLP.get(i).MinMaxSeries.size(); j++) {
@@ -164,22 +175,20 @@ public class SingaporeDriving_LP_Anlysis {
 			//There were no driving after trial 5 PVT so we stop adding when trail is >5.
 			if (Utilities.toInt(samplesLP.get(i).trial) < 5 )
 				SamplesProcessed.addMinMaxAve(samplesLP.get(i));
-
 		}
-
-		foutLPSegmentsA.close();
-		foutLPSegmentsB.close();	
-
-		foutLPSeriesA.close();
-		foutLPSeriesB.close();
+		foutSegments.close();
+		foutSegments.close();
+		foutSeries.close();
+		foutSeries.close();
 		
 
 		// outputing the processed file
-//		File PVTfileOutPutProcessed = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
-//				+ "Driving data - standard deviation lateral position (Singapore)/"
-//				+ "SDLP_PVT Raw Data Analysis/MFPD_Driving_vs_PVT_processed_LP.csv");
-		File PVTfileOutPutProcessed = new File("/Users/Ehsan/Desktop/TEST__MFPD_Driving_vs_PVT_processed_LP.csv");
-		SamplesProcessed.writeToFile(PVTfileOutPutProcessed);
+		File OutPutProcessed = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Driving_vs_PVT_vs_LP_processed.csv");
+		
+		//File OutPutProcessed = new File("/Users/Ehsan/Desktop/Driving_vs_PVT_vs_LP_processed.csv");
+		SamplesProcessed.writeToFile(OutPutProcessed);
 
 	}
 }

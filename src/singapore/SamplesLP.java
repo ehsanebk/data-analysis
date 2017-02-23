@@ -37,9 +37,11 @@ public class SamplesLP {
 		String trial;
 		String trialdate;
 		String trialtime;
-
+		int numberOfValidSegments = 0;
+		
 		Vector<Segment> segments = new Vector<Segment>();
 		Vector<Integer> MinMaxSeries = new Vector<Integer>();
+		Vector<Double> distanceBetweenMinMaxSeries = new Vector<Double>();
 
 		public double numberOfMinMaxAve() {
 			Values ave = new Values();
@@ -109,22 +111,18 @@ public class SamplesLP {
 			newSample.trial = trial;
 			newSample.trialdate = trialDate;
 			newSample.trialtime = trialTimeString;
-
-			if (ID.equals(PVTsamples.get(i + 1).getId())) { // check to see if
-															// it's the last
-															// trial of the day
-															// or not
+			
+			// check to see if it's the last trial of the day or not
+			if (ID.equals(PVTsamples.get(i + 1).getId())) { 
 
 				// the directories that the raw driving csv datais being kept.
 				// This data is not filtered and it does have the invalid
 				// values.
-				// File directory = new File ("/Users/ehsanebk/OneDrive -
-				// drexel.edu/"
-				// + "Driving data - standard deviation lateral position
-				// (Singapore)/"
-				// + "Driving Data Raw/Protocol "+protocol+" driving data
-				// (csv)");
-				File directory = new File("/Users/Ehsan/Desktop/Protocol " + protocol + " driving data (csv)");
+				
+				File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
+						+ "Driving data - standard deviation lateral position (Singapore)/"
+						+ "Driving Data Raw/Protocol "+protocol+" driving data (csv)");
+				//File directory = new File("/Users/Ehsan/Desktop/Protocol " + protocol + " driving data (csv)");
 				// System.out.println(ID+ " time pvt : " + trialTime);
 
 				for (File file : directory.listFiles())
@@ -156,12 +154,8 @@ public class SamplesLP {
 							int LaneWidthOK = Utilities.toInt(lineCSV[15]);
 							int isDriving = Utilities.toInt(lineCSV[16]);
 
-							int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); // getting
-																														// the
-																														// time
-																														// in
-																														// hhmm
-																														// format
+							// getting the time in hhmm format
+							int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); 
 
 							// processing the frames and see if the invalid
 							// frames between valid frames are more than 1
@@ -198,19 +192,25 @@ public class SamplesLP {
 										newsegment.numberOfMinMax = MaxMinValues.size();
 										newsegment.MinMixFrameNumbers = MaxMinValues;
 
-										// computing average
-										double aveDis = 0;
-										for (int j = 0; j < (MaxMinValues.size() - 1); j++) {
-											aveDis += MaxMinValues.get(j + 1) - MaxMinValues.get(j);
-										}
-										newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues.size() - 1);
+										// computing average for distans in a segment
+//										double aveDis = 0;
+//										for (int j = 0; j < (MaxMinValues.size() - 1); j++) {
+//											aveDis += MaxMinValues.get(j + 1) - MaxMinValues.get(j);
+//										}
+//										System.out.println(aveDis / (MaxMinValues.size() - 1));
+//										newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues.size() - 1);
 										newsegment.numberOfFrames = LanePosition.size();
 										newsegment.lanePos = LanePosition;
 										newsegment.startTime = startTimeOfsegment;
 
+										// new segments are added to the new sample regardless of whether they are valid or not
+										newSample.segments.add(newsegment);
 										if (newsegment.valid()) {
+											
 											newSample.MinMaxSeries.add(MaxMinValues.size());
-											newSample.segments.add(newsegment);
+//											if (newsegment.AverageDistanseBetweenMaxMin > 0)
+//												newSample.distanceBetweenMinMaxSeries.add(newsegment.AverageDistanseBetweenMaxMin);
+											newSample.numberOfValidSegments ++ ;
 										}
 
 										// }

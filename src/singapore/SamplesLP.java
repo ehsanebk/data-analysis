@@ -74,7 +74,7 @@ public class SamplesLP {
 		}
 
 		public boolean valid() {
-			return (numberOfFrames > validLowerNumberOfFrames && numberOfFrames > validUpperNumberOfFrames);
+			return (numberOfFrames > validLowerNumberOfFrames && numberOfFrames < validUpperNumberOfFrames);
 		}
 	}
 

@@ -21,8 +21,8 @@ public class SamplesLP {
 
 
 	static int validIntervals = 2000;  // the acceptable interval in millisecond between two valid frames
-	static int validNumberOfFrames = 600; // the number of frames in each straight segment that is printed out to the file
-	
+	static int validLowerNumberOfFrames = 500; // the number of frames in each straight segment that is printed out to the file
+	static int validUpperNumberOfFrames = 1500;
 	Vector<SampleLP> samples;
 
 	public SamplesLP() {
@@ -36,6 +36,7 @@ public class SamplesLP {
 		String trialtime;
 
 		Vector<Segment> segments = new Vector<Segment>();
+		Vector<Integer> MinMaxSeries = new Vector<Integer>();
 
 		public double numberOfMinMaxAve(){
 			Values ave = new Values();
@@ -65,6 +66,9 @@ public class SamplesLP {
 		public Segment() {
 			lanePos = new Values();
 			MinMixFrameNumbers = new Vector<Integer>();
+		}
+		public boolean valid(){
+			return (numberOfFrames > validLowerNumberOfFrames && numberOfFrames > validUpperNumberOfFrames);
 		}
 	}
 	
@@ -100,14 +104,15 @@ public class SamplesLP {
 			newSample.protocol = protocol;
 			newSample.trial = trial;
 			newSample.trialdate = trialDate;
-
+			newSample.trialtime = trialTimeString;
 
 			if (ID.equals(PVTsamples.get(i+1).getId())){  // check to see if it's the last trial of the day or not
 
 				// the directories that the raw driving csv datais being kept. This data is not filtered and it does have the invalid values. 
-				File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
-						+ "Driving data - standard deviation lateral position (Singapore)/"
-						+ "Driving Data Raw/Protocol "+protocol+" driving data (csv)");
+//				File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
+//						+ "Driving data - standard deviation lateral position (Singapore)/"
+//						+ "Driving Data Raw/Protocol "+protocol+" driving data (csv)");
+				File directory = new File ("/Users/Ehsan/Desktop/Protocol "+protocol+" driving data (csv)");
 
 				System.out.println(ID+ " time pvt : " + trialTime);
 				
@@ -168,24 +173,30 @@ public class SamplesLP {
 											LanePosition.add(-100);
 										}
 									}else{										
-										if (LanePosition.size() > validNumberOfFrames){
-											System.out.println(LanePosition.size());
-											List<Integer> MaxMinValues = MaxMinValues(LanePosition);
-											Segment newsegment = new Segment();
-											newsegment.numberOfMinMax = MaxMinValues.size();
-											newsegment.MinMixFrameNumbers = MaxMinValues;
-											
-											// computing average
-											double aveDis = 0;
-											for (int j = 0; j < (MaxMinValues.size()-1); j++) {
-												aveDis += MaxMinValues.get(j+1)- MaxMinValues.get(j);
-											}
-											newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues.size()-1);
-											newsegment.numberOfFrames = LanePosition.size();
-											newsegment.lanePos = LanePosition;
-											newSample.segments.add(newsegment);
-											newsegment.startTime = startTimeOfsegment;
+										//if (LanePosition.size() > validNumberOfFrames){
+										System.out.println(LanePosition.size());
+										List<Integer> MaxMinValues = MaxMinValues(LanePosition);
+										Segment newsegment = new Segment();
+										newsegment.numberOfMinMax = MaxMinValues.size();
+										newsegment.MinMixFrameNumbers = MaxMinValues;
+
+										// computing average
+										double aveDis = 0;
+										for (int j = 0; j < (MaxMinValues.size()-1); j++) {
+											aveDis += MaxMinValues.get(j+1)- MaxMinValues.get(j);
 										}
+										newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues.size()-1);
+										newsegment.numberOfFrames = LanePosition.size();
+										newsegment.lanePos = LanePosition;
+										newsegment.startTime = startTimeOfsegment;
+										
+										if (newsegment.valid()){
+											newSample.MinMaxSeries.add(MaxMinValues.size());
+											newSample.segments.add(newsegment);
+										}
+										
+										
+										//}
 										LanePosition = new Values();
 									}
 									invalidFrameCounter = 0;

@@ -24,7 +24,7 @@ public class SingaporeDriving {
 
 	public static void 	Driving_vs_PVT_processed(){
 		SamplesDriving samplesDriving = new SamplesDriving(); 
-		Sample_Processed  PVTprocessed= new Sample_Processed();
+		Samples_Processed  PVTprocessed= new Samples_Processed();
 		
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"

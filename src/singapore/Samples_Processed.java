@@ -10,13 +10,11 @@ import analysis.Values;
 import singapore.SamplesDriving.SampleDriving;
 import singapore.SamplesLP.SampleLP;
 
-public class Sample_Processed {
+public class Samples_Processed {
 
 	private Vector<SampleDrivingPVT> samples;
 
-	
-	
-	public Sample_Processed() {
+	public Samples_Processed() {
 		samples = new Vector<SampleDrivingPVT>();	
 	}
 
@@ -94,7 +92,7 @@ public class Sample_Processed {
 		foutPVT.println("protocol,id,trialdate,,lapses 0,lapses 1,lapses 2,lapses 3,lapses 4,lapses 5,lapses 6,lapses 7,"
 				+ ",alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
 				+ ",LPSD 0,LPSD 1,LPSD 2,LPSD 3,LPSD 4,"
-				+ ",MinMax Ave 0,MinMax Ave 1,MinMax Ave 2,MinMax Ave 3");
+				+ ",MinMax Ave 0,MinMax Ave 1,MinMax Ave 2,MinMax Ave 3,MinMax Ave 4");
 		foutPVT.flush();
 		
 		for (int i = 0; i < samples.size(); i++) {
@@ -174,7 +172,7 @@ public class Sample_Processed {
 		for (int i = 0; i < samples.size(); i++) {
 			if (samples.get(i).protocol.equals(drivingS.protocol) && samples.get(i).ID.equals(drivingS.id)
 					&& samples.get(i).trialdate.equals(drivingS.trialdate)){
-				samples.get(i).lanePosSD[Integer.parseInt(drivingS.trial)] = drivingS.lanePos.stddev();
+				samples.get(i).lanePosSD[Utilities.toInt(drivingS.trial)] = drivingS.lanePos.stddev();
 				newData =false;
 			}
 		}
@@ -183,7 +181,7 @@ public class Sample_Processed {
 			s.ID = drivingS.id;
 			s.protocol = drivingS.protocol;
 			s.trialdate = drivingS.trialdate;
-			s.lanePosSD[Integer.parseInt(drivingS.trial)] = drivingS.lanePos.stddev();
+			s.lanePosSD[Utilities.toInt(drivingS.trial)] = drivingS.lanePos.stddev();
 			samples.add(s);
 		}	
 
@@ -191,24 +189,27 @@ public class Sample_Processed {
 	
 	public void addMinMaxAve(SampleLP sample){
 		boolean newData = true;
-		for (int i = 0; i < samples.size(); i++) {
-			if (samples.get(i).protocol.equals(sample.protocol) && samples.get(i).ID.equals(sample.id)
-					&& samples.get(i).trialdate.equals(sample.trialdate)){
-				samples.get(i).numberOfMinMaxAve[Integer.parseInt(sample.trial)] = sample.numberOfMinMaxAve();
-				//samples.get(i).distanceBetweenMinMaxAve[Integer.parseInt(trial)] = distanceBetweenMinMaxAve;
-				newData =false;
+		//check to see if there is any valid segments in the sampleLP
+		if (sample.segments.size()>0){
+			for (int i = 0; i < samples.size(); i++) {
+				if (samples.get(i).protocol.equals(sample.protocol) && samples.get(i).ID.equals(sample.id)
+						&& samples.get(i).trialdate.equals(sample.trialdate)){
+					samples.get(i).numberOfMinMaxAve[Utilities.toInt(sample.trial)] = sample.numberOfMinMaxAve();
+					//samples.get(i).distanceBetweenMinMaxAve[Integer.parseInt(trial)] = distanceBetweenMinMaxAve;
+					newData =false;
+				}
 			}
+			if (newData) {
+				SampleDrivingPVT s = new SampleDrivingPVT();
+				s.ID = sample.id;
+				s.protocol = sample.protocol;
+				s.trialdate = sample.trialdate;
+				s.numberOfMinMaxAve[Utilities.toInt(sample.trial)] = sample.numberOfMinMaxAve();
+				//s.distanceBetweenMinMaxAve[Integer.parseInt(trial)] = distanceBetweenMinMaxAve;
+				samples.add(s);
+			}	
 		}
-		if (newData) {
-			SampleDrivingPVT s = new SampleDrivingPVT();
-			s.ID = sample.id;
-			s.protocol = sample.protocol;
-			s.trialdate = sample.trialdate;
-			s.numberOfMinMaxAve[Integer.parseInt(sample.trial)] = sample.numberOfMinMaxAve();
-			//s.distanceBetweenMinMaxAve[Integer.parseInt(trial)] = distanceBetweenMinMaxAve;
-			samples.add(s);
-		}	
 	}
-	
+
 	
 }

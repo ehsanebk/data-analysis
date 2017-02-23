@@ -109,7 +109,7 @@ public class SingaporeDriving_LP_Anlysis {
 			String protocol =samplesLP.get(i).protocol;
 			String id = samplesLP.get(i).id;
 			String trialtime = samplesLP.get(i).trialtime;
-			System.out.println(trialtime);
+			//System.out.println(trialtime);
 			
 			//writing the segments in two segments files
 			if (protocol.equals("A"))

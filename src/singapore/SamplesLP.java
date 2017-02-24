@@ -65,13 +65,17 @@ public class SamplesLP {
 	class Segment {
 		int numberOfFrames;
 		int numberOfMinMax;
-		double AverageDistanseBetweenMaxMin;
+		double AverageDistanseBetweenMaxMin; // time in ml
 		List<Integer> MinMixFrameNumbers;
+		
+		// lane positions and their time in the frame for each segment
 		Values lanePos; // -100 for any value which is not valid
+		Vector<Date> timesOfFrames;  // null for any value which is not valid
 		int startTime;
 
 		public Segment() {
 			lanePos = new Values();
+			timesOfFrames = new Vector<Date>();
 			MinMixFrameNumbers = new Vector<Integer>();
 		}
 
@@ -92,19 +96,15 @@ public class SamplesLP {
 
 		// adding driving data
 		for (int i = 0; i < PVTsamples.size() - 1; i++) {
-			Values numberOfMinMaxAve = new Values();
-			Values distanceBetweenMinMaxAve = new Values();
-
-			Values LanePosition = new Values();
+			
 			String protocol = PVTsamples.get(i).getProtocol();
 			String ID = PVTsamples.get(i).getId();
 			String trial = PVTsamples.get(i).getTrial();
 			String trialDate = PVTsamples.get(i).getTrialdate();
 			String trialTimeString = PVTsamples.get(i).getTrialtimeString();
 			int trialTime = PVTsamples.get(i).getTrialtime();
-			int frameCount = 0;
-			int startTimeOfsegment = 0;
 
+			Segment newsegment = new Segment(); 
 			SampleLP newSample = new SampleLP();
 			newSample.id = ID;
 			newSample.protocol = protocol;
@@ -165,7 +165,7 @@ public class SamplesLP {
 								boolean validFrame = (LeftRhoThetaOK == 1 && RightRhoThetaOK == 1 && LeftSigSpikeOK == 1
 										&& RightSigSpikeOK == 1 && LaneWidthOK == 1 && isDriving == 1);
 
-								frameCount++;
+								newsegment.numberOfFrames ++;
 								DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");
 								Date date = null;
 								try {
@@ -173,48 +173,53 @@ public class SamplesLP {
 								} catch (ParseException e) {
 									e.printStackTrace();
 								}
+								
 								if (validFrame && invalidFrameCounter == 0) {
-									if (LanePosition.size() == 0)
-										startTimeOfsegment = timeDrivingFrame;
-									LanePosition.add(LateralPosition);
+									if (newsegment.lanePos.size() == 0)
+										newsegment.startTime = timeDrivingFrame;
+									newsegment.lanePos.add(LateralPosition);
+									newsegment.timesOfFrames.add(date);
 									lastValidFrameTime = date.getTime();
 								} else if (validFrame && invalidFrameCounter > 0) {
 									if (date.getTime() - lastValidFrameTime < validIntervals) {
 										for (int j = 0; j < invalidFrameCounter; j++) {
-											LanePosition.add(-100);
+											newsegment.lanePos.add(-100);
+											newsegment.timesOfFrames.add(null);
+											newsegment.numberOfFrames ++;
 										}
 									} else {
 										// if (LanePosition.size() >
 										// validNumberOfFrames){
 										//System.out.println(LanePosition.size());
-										List<Integer> MaxMinValues = MaxMinValues(LanePosition);
-										Segment newsegment = new Segment();
-										newsegment.numberOfMinMax = MaxMinValues.size();
-										newsegment.MinMixFrameNumbers = MaxMinValues;
+										
+										newsegment.numberOfMinMax = MaxMinValues(newsegment.lanePos).size();
+										newsegment.MinMixFrameNumbers = MaxMinValues(newsegment.lanePos);
 
 										// computing average for distans in a segment
-//										double aveDis = 0;
-//										for (int j = 0; j < (MaxMinValues.size() - 1); j++) {
-//											aveDis += MaxMinValues.get(j + 1) - MaxMinValues.get(j);
-//										}
-//										System.out.println(aveDis / (MaxMinValues.size() - 1));
-//										newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues.size() - 1);
-										newsegment.numberOfFrames = LanePosition.size();
-										newsegment.lanePos = LanePosition;
-										newsegment.startTime = startTimeOfsegment;
-
+										if (MaxMinValues(newsegment.lanePos).size() > 1){
+											double aveDis = 0;
+											for (int j = 0; j < (newsegment.numberOfMinMax - 1); j++) {
+												Date time1 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j));
+												Date time2 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j + 1));
+												aveDis += time2.getTime() - time1.getTime();
+											}
+											newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues(newsegment.lanePos).size() - 1);
+											//System.out.println(aveDis / (MaxMinValues(newsegment.lanePos).size() - 1));
+										}
+																		
+										
 										// new segments are added to the new sample regardless of whether they are valid or not
 										newSample.segments.add(newsegment);
 										if (newsegment.valid()) {
-											
-											newSample.MinMaxSeries.add(MaxMinValues.size());
-//											if (newsegment.AverageDistanseBetweenMaxMin > 0)
-//												newSample.distanceBetweenMinMaxSeries.add(newsegment.AverageDistanseBetweenMaxMin);
+											newSample.MinMaxSeries.add(newsegment.numberOfMinMax);
+											//System.out.println(newsegment.AverageDistanseBetweenMaxMin);
+											if (newsegment.AverageDistanseBetweenMaxMin > 0)
+												newSample.distanceBetweenMinMaxSeries.add(newsegment.AverageDistanseBetweenMaxMin);
 											newSample.numberOfValidSegments ++ ;
 										}
+										// being done with the segment and starting a new one
+										newsegment = new Segment(); 
 
-										// }
-										LanePosition = new Values();
 									}
 									invalidFrameCounter = 0;
 									lastValidFrameTime = date.getTime();

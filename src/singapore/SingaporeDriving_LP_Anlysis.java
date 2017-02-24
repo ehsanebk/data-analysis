@@ -71,14 +71,19 @@ public class SingaporeDriving_LP_Anlysis {
 		File LPfileOutLP_SeriesA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol A LP Series.csv");
+		File LPfileOutLPMinMaxDistance_SeriesA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Protocol A LP Distance Series.csv");
 //		File LPfileOutLP_SegmentsA = new File("/Users/Ehsan/Desktop/Protocol A LP Segments Data.csv");
 //		File LPfileOutLP_SeriesA = new File("/Users/Ehsan/Desktop/Protocol A LP Series Data.csv");
 		
 		PrintWriter foutLPSegmentsA = null;
 		PrintWriter foutLPSeriesA = null;
+		PrintWriter foutLPDistanceSeriesA = null;
 		try {
 			foutLPSegmentsA = new PrintWriter(LPfileOutLP_SegmentsA);
 			foutLPSeriesA = new PrintWriter(LPfileOutLP_SeriesA);
+			foutLPDistanceSeriesA = new PrintWriter(LPfileOutLPMinMaxDistance_SeriesA);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -90,15 +95,20 @@ public class SingaporeDriving_LP_Anlysis {
 		File LPfileOutLP_SeriesB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol B LP Series.csv");
+		File LPfileOutLPMinMaxDistance_SeriesB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "Driving Data Raw/Protocol B LP Distance Series.csv");
 		
 //		File LPfileOutLP_SegmentsB = new File("/Users/Ehsan/Desktop/Protocol B LP Segments.csv");
 //		File LPfileOutLP_SeriesB = new File("/Users/Ehsan/Desktop/Protocol B LP Series Data.csv");
 		
 		PrintWriter foutLPSegmentsB = null;
 		PrintWriter foutLPSeriesB = null;
+		PrintWriter foutLPDistanceSeriesB = null;
 		try {
 			foutLPSegmentsB = new PrintWriter(LPfileOutLP_SegmentsB);
 			foutLPSeriesB = new PrintWriter(LPfileOutLP_SeriesB);
+			foutLPDistanceSeriesB = new PrintWriter(LPfileOutLPMinMaxDistance_SeriesB);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -107,6 +117,7 @@ public class SingaporeDriving_LP_Anlysis {
 
 		PrintWriter foutSegments= null;
 		PrintWriter foutSeries =null;
+		PrintWriter foutDistanceSeries =null;
 		
 		//Analyzing the data based on the raw csv data and PVTsamples and make the samplesPL structure
 		samplesLP.analysis(PVTsamples);
@@ -154,7 +165,7 @@ public class SingaporeDriving_LP_Anlysis {
 			}
 			
 			
-			//writing the LP series
+			/////writing the LP series ///////
 			if (protocol.equals("A"))
 				foutSeries = foutLPSeriesA;
 			else if (protocol.equals("B"))
@@ -162,25 +173,44 @@ public class SingaporeDriving_LP_Anlysis {
 		
 			foutSeries.print( "*"+ id + "*" + " PVT time: " + trialtime);
 			foutSeries.flush();
+			
 			for (int j = 0; j < samplesLP.get(i).MinMaxSeries.size(); j++) {
 				if (samplesLP.get(i).MinMaxSeries.get(j)> 0)
 					foutSeries.print("," +samplesLP.get(i).MinMaxSeries.get(j) );
 				else
 					foutSeries.print(",");
+				foutSeries.flush();
 			}
 			foutSeries.print("\n");
+			foutSeries.flush();
 			
+			////writing the Distance series ///////////
+			if (protocol.equals("A"))
+				foutDistanceSeries = foutLPDistanceSeriesA;
+			else if (protocol.equals("B"))
+				foutDistanceSeries = foutLPDistanceSeriesB;
+		
+			foutDistanceSeries.print( "*"+ id + "*" + " PVT time: " + trialtime);
+			foutDistanceSeries.flush();
+			for (int j = 0; j < samplesLP.get(i).distanceBetweenMinMaxSeries.size(); j++) {
+				if (samplesLP.get(i).distanceBetweenMinMaxSeries.get(j)> 0)
+					foutDistanceSeries.print("," +samplesLP.get(i).distanceBetweenMinMaxSeries.get(j) );
+				else
+					foutDistanceSeries.print(",");
+				foutDistanceSeries.flush();
+			}
+			foutDistanceSeries.print("\n");
+			foutDistanceSeries.flush();
 			
 			//Adding the SampleLP to sample processed.
 			//There were no driving after trial 5 PVT so we stop adding when trail is >5.
 			if (Utilities.toInt(samplesLP.get(i).trial) < 5 )
 				SamplesProcessed.addMinMaxAve(samplesLP.get(i));
+			
 		}
 		foutSegments.close();
-		foutSegments.close();
 		foutSeries.close();
-		foutSeries.close();
-		
+		foutDistanceSeries.close();
 
 		// outputing the processed file
 		File OutPutProcessed = new File("/Users/ehsanebk/OneDrive - drexel.edu/"

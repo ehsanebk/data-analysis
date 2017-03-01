@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import analysis.Utilities;
-import singapore.SamplesLP.SampleLP;
+import analysis.Values;
+import singapore.SampleLP;
 
 
 public class SingaporeDriving_LP_Anlysis {
@@ -88,6 +89,11 @@ public class SingaporeDriving_LP_Anlysis {
 			e1.printStackTrace();
 		}
 		foutLPSegmentsA.println("Protocol A \n");
+		foutLPSegmentsA.flush();
+		foutLPSeriesA.println("Protocol A \n");
+		foutLPSeriesA.flush();
+		foutLPDistanceSeriesA.println("Protocol A \n");
+		foutLPDistanceSeriesA.flush();
 
 		File LPfileOutLP_SegmentsB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
@@ -113,7 +119,12 @@ public class SingaporeDriving_LP_Anlysis {
 			e1.printStackTrace();
 		}
 		foutLPSegmentsB.println("Protocol B \n");
-
+		foutLPSegmentsB.flush();
+		foutLPSeriesB.println("Protocol B \n");
+		foutLPSeriesB.flush();
+		foutLPDistanceSeriesB.println("Protocol B \n");
+		foutLPDistanceSeriesB.flush();
+		
 
 		PrintWriter foutSegments= null;
 		PrintWriter foutSeries =null;
@@ -145,11 +156,14 @@ public class SingaporeDriving_LP_Anlysis {
 				int numberOfFrames =samplesLP.get(i).segments.elementAt(j).numberOfFrames;
 				int numberOfMinMax = samplesLP.get(i).segments.elementAt(j).numberOfMinMax;
 				int startTimeOfTheSegment  = samplesLP.get(i).segments.elementAt(j).startTime;
-				//System.out.println(numberOfFrames);
+				long totalTimeOfTheSegment =  samplesLP.get(i).segments.elementAt(j).segmentTime;
 				
-				foutSegments.print(samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax + " "+ "Time:" + startTimeOfTheSegment+
-						samplesLP.get(i).segments.elementAt(j).MinMixFrameNumbers.toString().replaceAll(",", "") + ",");
+				foutSegments.print(j + "-" +samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax + " "
+						+ "StartTime:" + startTimeOfTheSegment + " " + "Total(ms):" + totalTimeOfTheSegment + " "
+						+ samplesLP.get(i).segments.elementAt(j).MinMixFrameNumbers.toString().replaceAll(",", "") + ",");
 				foutSegments.flush();
+				
+				
 				for (int l = 0; l < samplesLP.get(i).segments.elementAt(j).lanePos.size(); l++) {
 					if (samplesLP.get(i).segments.elementAt(j).lanePos.get(l) > -100){
 						foutSegments.print(samplesLP.get(i).segments.elementAt(j).lanePos.get(l) + ",");
@@ -162,6 +176,25 @@ public class SingaporeDriving_LP_Anlysis {
 				}
 				foutSegments.print("\n");
 				foutSegments.flush();
+				
+//				//writing low pass filter for the segments with alpha = 0.1
+//				foutSegments.print(j + "-" +samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax + " "+ "Time:" + startTimeOfTheSegment+
+//						samplesLP.get(i).segments.elementAt(j).MinMixFrameNumbers.toString().replaceAll(",", "") + ",");
+//				foutSegments.flush();
+//				
+//				Values lowpass = Utilities.lowpass(samplesLP.get(i).segments.elementAt(j).lanePos ,.10); // with alpha = 0.1
+//				for (int l = 0; l < lowpass.size(); l++) {
+//					if (lowpass.get(l) > -100){
+//						foutSegments.print(lowpass.get(l) + ",");
+//						foutSegments.flush();
+//					}
+//					else{
+//						foutSegments.print(",");
+//						foutSegments.flush();
+//					}
+//				}
+//				foutSegments.print("\n");
+//				foutSegments.flush();
 			}
 			
 			
@@ -192,9 +225,9 @@ public class SingaporeDriving_LP_Anlysis {
 		
 			foutDistanceSeries.print( "*"+ id + "*" + " PVT time: " + trialtime);
 			foutDistanceSeries.flush();
-			for (int j = 0; j < samplesLP.get(i).distanceBetweenMinMaxSeries.size(); j++) {
-				if (samplesLP.get(i).distanceBetweenMinMaxSeries.get(j)> 0)
-					foutDistanceSeries.print("," +samplesLP.get(i).distanceBetweenMinMaxSeries.get(j) );
+			for (int j = 0; j < samplesLP.get(i).longestDistanceBetweenMinMaxSeries.size(); j++) {
+				if (samplesLP.get(i).longestDistanceBetweenMinMaxSeries.get(j)> 0)
+					foutDistanceSeries.print("," +samplesLP.get(i).longestDistanceBetweenMinMaxSeries.get(j) );
 				else
 					foutDistanceSeries.print(",");
 				foutDistanceSeries.flush();

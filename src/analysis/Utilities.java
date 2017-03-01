@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.Vector;
 
 public class Utilities {
 	public static DecimalFormat df0 = new DecimalFormat("0");
@@ -120,4 +121,82 @@ public class Utilities {
 			return 0;
 		}
 	}
+	
+	// values:    an array of numbers that will be modified in place
+	// smoothing: the strength of the smoothing filter; 1=no change, larger values smoothes more
+	// since the invalid values are -100 there are if statements which check how the values are before and after
+	public static Values smoothArray( Values values, int smoothing ){
+	  
+		Values output = new Values();
+		double  value = values.get(0); // start with the first input
+		output.add(value);
+		for (int i =1; i < values.size(); ++i){
+			if (!(values.get(i-1) == -100) && !(values.get(i) == -100) ){
+				double currentValue = values.get(i);
+				value += (currentValue - value) / smoothing;
+				output.add(value);
+			}
+			else if ((values.get(i) == -100) ){
+				output.add(-100.0);
+			}
+			else if ((values.get(i-1) == -100) && !(values.get(i) == -100) ){
+				value = values.get(i); // start again
+				output.add(value);
+			}
+		}
+		return output;
+	}
+
+	// Return RC low-pass filter output samples, given input samples,
+	// time interval dt, and time constant RC
+	public static Values lowpass( Values values,double CUTOFF, double SAMPLE_RATE){
+		  
+		Values output = new Values();
+		double  value = values.get(0); // start with the first input
+		output.add(value);
+		
+		double RC = 1.0/(CUTOFF*2*3.14); 
+	    double dt = 1.0/SAMPLE_RATE; 
+	    double alpha = dt/(RC+dt);
+		
+		for (int i =1; i < values.size(); ++i){
+			if (!(values.get(i-1) == -100) && !(values.get(i) == -100) ){
+				value = output.get(i-1) + (alpha*(values.get(i) - output.get(i-1)));
+				output.add(value);
+			}
+			else if ((values.get(i) == -100) ){
+				output.add(-100.0);
+			}
+			else if ((values.get(i-1) == -100) && !(values.get(i) == -100) ){
+				value = values.get(i); // start again
+				output.add(value);
+			}
+		}
+		return output;
+	}
+	// Return RC low-pass filter output samples, given input samples,
+	// value of alpha is between 0 and 1. the curve will be smoother if alpha is closer to 0 
+	public static Values lowpass( Values values,double alpha){
+
+		Values output = new Values();
+		double  value = values.get(0); // start with the first input
+		output.add(value);
+
+		for (int i =1; i < values.size(); ++i){
+			if (!(values.get(i-1) == -100) && !(values.get(i) == -100) ){
+				value = output.get(i-1) + (alpha*(values.get(i) - output.get(i-1)));
+				output.add(value);
+			}
+			else if ((values.get(i) == -100) ){
+				output.add(-100.0);
+			}
+			else if ((values.get(i-1) == -100) && !(values.get(i) == -100) ){
+				value = values.get(i); // start again
+				output.add(value);
+			}
+		}
+		return output;
+	}
+
+
 }

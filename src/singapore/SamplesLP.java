@@ -20,69 +20,14 @@ import analysis.Utilities;
 public class SamplesLP {
 
 	static int validIntervals = 2000; // the acceptable interval in millisecond
-										// between two valid frames
-	static int validLowerNumberOfFrames = 500; // the number of frames in each
-												// straight segment that is
-												// printed out to the file
-	static int validUpperNumberOfFrames = 1500;
+	// between two valid frames
+	
 	Vector<SampleLP> samples;
 
 	public SamplesLP() {
 		samples = new Vector<SampleLP>();
 	}
 
-	class SampleLP {
-		String protocol;
-		String id;
-		String trial;
-		String trialdate;
-		String trialtime;
-		int numberOfValidSegments = 0;
-		
-		Vector<Segment> segments = new Vector<Segment>();
-		Vector<Integer> MinMaxSeries = new Vector<Integer>();
-		Vector<Double> distanceBetweenMinMaxSeries = new Vector<Double>();
-
-		public double numberOfMinMaxAve() {
-			Values ave = new Values();
-			for (int i = 0; i < segments.size(); i++) {
-				ave.add(segments.get(i).numberOfMinMax);
-			}
-			return ave.average();
-		}
-
-		public double distanceBetweenMinMaxAve() {
-
-			Values ave = new Values();
-			for (int i = 0; i < segments.size(); i++) {
-				ave.add(segments.get(i).AverageDistanseBetweenMaxMin);
-			}
-			return ave.average();
-		}
-
-	}
-
-	class Segment {
-		int numberOfFrames;
-		int numberOfMinMax;
-		double AverageDistanseBetweenMaxMin; // time in ml
-		List<Integer> MinMixFrameNumbers;
-		
-		// lane positions and their time in the frame for each segment
-		Values lanePos; // -100 for any value which is not valid
-		Vector<Date> timesOfFrames;  // null for any value which is not valid
-		int startTime;
-
-		public Segment() {
-			lanePos = new Values();
-			timesOfFrames = new Vector<Date>();
-			MinMixFrameNumbers = new Vector<Integer>();
-		}
-
-		public boolean valid() {
-			return (numberOfFrames > validLowerNumberOfFrames && numberOfFrames < validUpperNumberOfFrames);
-		}
-	}
 
 	public int size() {
 		return samples.size();
@@ -96,7 +41,7 @@ public class SamplesLP {
 
 		// adding driving data
 		for (int i = 0; i < PVTsamples.size() - 1; i++) {
-			
+
 			String protocol = PVTsamples.get(i).getProtocol();
 			String ID = PVTsamples.get(i).getId();
 			String trial = PVTsamples.get(i).getTrial();
@@ -111,14 +56,14 @@ public class SamplesLP {
 			newSample.trial = trial;
 			newSample.trialdate = trialDate;
 			newSample.trialtime = trialTimeString;
-			
+
 			// check to see if it's the last trial of the day or not
 			if (ID.equals(PVTsamples.get(i + 1).getId())) { 
 
 				// the directories that the raw driving csv datais being kept.
 				// This data is not filtered and it does have the invalid
 				// values.
-				
+
 				File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
 						+ "Driving data - standard deviation lateral position (Singapore)/"
 						+ "Driving Data Raw/Protocol "+protocol+" driving data (csv)");
@@ -155,17 +100,17 @@ public class SamplesLP {
 							int isDriving = Utilities.toInt(lineCSV[16]);
 
 							// getting the time in hhmm format
-							int timeDrivingFrame = Integer.valueOf(Time.substring(0, 5).replace(":", "")).intValue(); 
+							int timeDrivingFrame = Utilities.toInt(Time.substring(0, 5).replace(":", "")); 
 
 							// processing the frames and see if the invalid
 							// frames between valid frames are more than 1
 							// seconds
 							if (timeDrivingFrame > addTime(trialTime, 5)
 									&& timeDrivingFrame <= addTime(PVTsamples.get(i + 1).getTrialtime(), 5)) {
+								
 								boolean validFrame = (LeftRhoThetaOK == 1 && RightRhoThetaOK == 1 && LeftSigSpikeOK == 1
 										&& RightSigSpikeOK == 1 && LaneWidthOK == 1 && isDriving == 1);
 
-								newsegment.numberOfFrames ++;
 								DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");
 								Date date = null;
 								try {
@@ -173,10 +118,10 @@ public class SamplesLP {
 								} catch (ParseException e) {
 									e.printStackTrace();
 								}
+
 								
-								if (validFrame && invalidFrameCounter == 0) {
-									if (newsegment.lanePos.size() == 0)
-										newsegment.startTime = timeDrivingFrame;
+								if (validFrame && (invalidFrameCounter == 0)) {
+									newsegment.numberOfFrames ++;
 									newsegment.lanePos.add(LateralPosition);
 									newsegment.timesOfFrames.add(date);
 									lastValidFrameTime = date.getTime();
@@ -187,40 +132,79 @@ public class SamplesLP {
 											newsegment.timesOfFrames.add(null);
 											newsegment.numberOfFrames ++;
 										}
+										//adding the data from the current valid frame
+										newsegment.numberOfFrames ++;
+										newsegment.lanePos.add(LateralPosition);
+										newsegment.timesOfFrames.add(date);
+										
 									} else {
-										// if (LanePosition.size() >
-										// validNumberOfFrames){
-										//System.out.println(LanePosition.size());
-										
-										newsegment.numberOfMinMax = MaxMinValues(newsegment.lanePos).size();
-										newsegment.MinMixFrameNumbers = MaxMinValues(newsegment.lanePos);
-
-										// computing average for distans in a segment
-										if (MaxMinValues(newsegment.lanePos).size() > 1){
-											double aveDis = 0;
-											for (int j = 0; j < (newsegment.numberOfMinMax - 1); j++) {
-												Date time1 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j));
-												Date time2 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j + 1));
-												aveDis += time2.getTime() - time1.getTime();
-											}
-											newsegment.AverageDistanseBetweenMaxMin = aveDis / (MaxMinValues(newsegment.lanePos).size() - 1);
-											//System.out.println(aveDis / (MaxMinValues(newsegment.lanePos).size() - 1));
-										}
-																		
-										
-										// new segments are added to the new sample regardless of whether they are valid or not
-										newSample.segments.add(newsegment);
 										if (newsegment.valid()) {
+											newsegment.lanePos =Utilities.lowpass(newsegment.lanePos ,.10); // smoothing the lane position
+											newsegment.numberOfMinMax = MaxMinValues(newsegment.lanePos).size();
+											newsegment.MinMixFrameNumbers = MaxMinValues(newsegment.lanePos);
+
+											
+											// computing average and maximum for distances in a segment
+											if (newsegment.numberOfMinMax > 1){
+												double aveDis = 0;
+												long longestDis = 0;
+												for (int j = 0; j < (newsegment.numberOfMinMax - 1); j++) {
+													Date time1 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j));
+													Date time2 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j + 1));
+													long Dis = time2.getTime() - time1.getTime();
+													aveDis += Dis;
+													if (Dis > longestDis)
+														longestDis = Dis;
+												}
+												newsegment.averageTimeBetweenMaxMin = aveDis / (MaxMinValues(newsegment.lanePos).size() - 1);
+												newsegment.longestTimeBetweenMaxMin = longestDis;	
+											}
+											
+											if (newsegment.numberOfMinMax == 1){
+												long longestDis = 0;
+												Date time1 =  newsegment.timesOfFrames.firstElement();
+												Date time2 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(0));
+												Date time3 =  newsegment.timesOfFrames.lastElement();
+												longestDis = time2.getTime() - time1.getTime();
+												if (time3.getTime() - time2.getTime() >longestDis )
+													longestDis = time3.getTime() - time2.getTime();
+												newsegment.longestTimeBetweenMaxMin = longestDis;
+											}
+											
+											if (newsegment.numberOfMinMax == 0){
+												long longestDis = 0;
+												Date time1 =  newsegment.timesOfFrames.firstElement();
+												Date time2 =  newsegment.timesOfFrames.lastElement();
+												longestDis = time2.getTime() - time1.getTime();
+												newsegment.longestTimeBetweenMaxMin = longestDis;
+											}
+											
+											
+											// computing the time of the segment
+											newsegment.segmentTime = newsegment.timesOfFrames.lastElement().getTime() 
+													- newsegment.timesOfFrames.firstElement().getTime();
+											
 											newSample.MinMaxSeries.add(newsegment.numberOfMinMax);
-											//System.out.println(newsegment.AverageDistanseBetweenMaxMin);
-											if (newsegment.AverageDistanseBetweenMaxMin > 0)
-												newSample.distanceBetweenMinMaxSeries.add(newsegment.AverageDistanseBetweenMaxMin);
+											
+											if (newsegment.averageTimeBetweenMaxMin > 0)
+												newSample.distanceBetweenMinMaxSeries.add(newsegment.averageTimeBetweenMaxMin);
+											if (newsegment.longestTimeBetweenMaxMin > 0)
+												newSample.longestDistanceBetweenMinMaxSeries.add(newsegment.longestTimeBetweenMaxMin);
 											newSample.numberOfValidSegments ++ ;
+											// new segments are added to the new sample
+											newSample.segments.add(newsegment);
 										}
-										// being done with the segment and starting a new one
+										
+										// being done with the segment and starting a new segment
 										newsegment = new Segment(); 
+										newsegment.startTime = timeDrivingFrame;
+										//adding the data from the current valid frame
+										newsegment.numberOfFrames ++;
+										newsegment.lanePos.add(LateralPosition);
+										newsegment.timesOfFrames.add(date);
 
 									}
+									// setting back the values
 									invalidFrameCounter = 0;
 									lastValidFrameTime = date.getTime();
 								} else if (!validFrame)
@@ -237,7 +221,7 @@ public class SamplesLP {
 		}
 	}
 
-	// adding osme minutes to a time in the form of hhmm
+	// adding minutes to a time in the form of hhmm
 	private static int addTime(int time, int add) {
 		int m = (time % 100) + add;
 		if (m >= 60) {

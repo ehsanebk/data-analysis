@@ -11,6 +11,7 @@ public class SamplePVTDrivingLP {
 	double[] alertAve = new double[8];
 	double[] lanePosSD = new double[5];
 	int[] numberOfValidSegments = new int[5];
+	double[] longestDistanceBetweenMinMaxAve  = new double[5];
 	double[] numberOfMinMaxAve = new double[5];
 	double[] distanceBetweenMinMaxAve  = new double[5];
 
@@ -25,6 +26,8 @@ public class SamplePVTDrivingLP {
 			lanePosSD[i] = -1;
 		for (int i = 0; i < numberOfValidSegments.length; i++) 
 			numberOfValidSegments[i] = -1;
+		for (int i = 0; i < longestDistanceBetweenMinMaxAve.length; i++) 
+			longestDistanceBetweenMinMaxAve[i] = -1;
 		for (int i = 0; i < numberOfMinMaxAve.length; i++) 
 			numberOfMinMaxAve[i] = -1;
 		for (int i = 0; i < distanceBetweenMinMaxAve.length; i++) 
@@ -57,6 +60,12 @@ public class SamplePVTDrivingLP {
 		for (int j = 0; j < numberOfValidSegments.length; j++) {
 			if (numberOfValidSegments[j] >= 0)
 				s+= numberOfValidSegments[j];
+			s+= ",";
+		}
+		s += ",";
+		for (int j = 0; j < longestDistanceBetweenMinMaxAve.length; j++) {
+			if (longestDistanceBetweenMinMaxAve[j] >= 0)
+				s+=  Utilities.df2.format(longestDistanceBetweenMinMaxAve[j]);
 			s+= ",";
 		}
 		s += ",";

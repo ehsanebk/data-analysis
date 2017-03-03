@@ -3,14 +3,17 @@ package singapore;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
-
 import analysis.Values;
 
+/**
+ * @author ehsanebk
+ *
+ */
 public class Segment {
 	// the number of frames in each
 	// straight segment that is
 	// printed out to the file
-	static int validLowerNumberOfFrames = 500; 
+	static int validLowerNumberOfFrames = 400; 
 	static int validUpperNumberOfFrames = 5000;
 
 
@@ -23,7 +26,7 @@ public class Segment {
 
 	// lane positions and their time in the frame for each segment
 	Values lanePos; // -100 for any value which is not valid
-	Vector<Date> timesOfFrames;  // null for any value which is not valid
+	Vector<Date> timesOfFrames;  // -100 for any value which is not valid
 	int startTime;
 
 	public Segment() {

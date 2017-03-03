@@ -6,6 +6,10 @@ import java.io.PrintWriter;
 import java.util.Vector;
 import analysis.Tokenizer;
 
+/**
+ * @author ehsanebk
+ *
+ */
 public class SamplesPVT {
 	
 	Vector<SamplePVT> samples;

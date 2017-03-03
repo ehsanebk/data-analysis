@@ -12,7 +12,11 @@ import analysis.Utilities;
 import analysis.Values;
 
 
-public class SingaporeDriving {
+/**
+ * @author ehsanebk
+ *
+ */
+public class SingaporeDriving_Analysis {
 
 	public static void main(String[] args){
 

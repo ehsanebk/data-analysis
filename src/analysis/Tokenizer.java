@@ -34,7 +34,7 @@ public class Tokenizer {
 			if (c == '\n')
 				advance();
 			}
-		CSVheaders = sr.toString().split(",",-1);
+		CSVheaders = sr.toString().replaceAll("\"", "").split(",",-1);
 	}
 	
 	public String[] readNextLineCSV(){
@@ -49,7 +49,7 @@ public class Tokenizer {
 				advance();
 			}
 		
-		return sr.toString().split(",",-1);
+		return sr.toString().replaceAll("\"", "").split(",",-1);
 	}
 
 	public int getIndexByHeaderCSV(String s){

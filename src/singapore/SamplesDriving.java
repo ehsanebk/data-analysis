@@ -7,6 +7,10 @@ import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
 
+/**
+ * @author ehsanebk
+ *
+ */
 public class SamplesDriving {
 	
 	

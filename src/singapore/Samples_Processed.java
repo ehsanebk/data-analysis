@@ -10,6 +10,10 @@ import analysis.Values;
 import singapore.SamplesDriving.SampleDriving;
 import singapore.SampleLP;
 
+/**
+ * @author ehsanebk
+ *
+ */
 public class Samples_Processed {
 
 	private Vector<SamplePVTDrivingLP> samples;
@@ -120,8 +124,8 @@ public class Samples_Processed {
 				+ ",alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
 				+ ",LPSD 0,LPSD 1,LPSD 2,LPSD 3,LPSD 4,"
 				+ ",# seg 0,# seg 1,# seg 2,# seg 3,# seg 4,"
-				+ ",Longnest Ave 0,Longnest Ave 1,Longnest Ave 2,Longnest Ave 3,Longnest Ave 4,"
-				+ ",MinMax Ave 0,MinMax Ave 1,MinMax Ave 2,MinMax Ave 3,MinMax Ave 4,"
+				+ ",Longnest Ave 0,Longnest Ave 1,Longnest Ave 2,Longnest Ave 3,Longnest Ave 4," // average longest time between min and max
+				+ ",MinMax Ave 0,MinMax Ave 1,MinMax Ave 2,MinMax Ave 3,MinMax Ave 4,"  // average number of min and max
 				+ ",MinMaxDis Ave 0,MinMaxDis Ave 1,MinMaxDis Ave 2,MinMaxDis Ave 3,MinMaxDis Ave 4");
 		foutPVT.flush();
 		

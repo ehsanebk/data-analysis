@@ -17,6 +17,10 @@ import analysis.Tokenizer;
 import analysis.Values;
 import analysis.Utilities;
 
+/**
+ * @author ehsanebk
+ *
+ */
 public class SamplesLP {
 
 	static int validIntervals = 2000; // the acceptable interval in millisecond
@@ -111,8 +115,8 @@ public class SamplesLP {
 								boolean validFrame = (LeftRhoThetaOK == 1 && RightRhoThetaOK == 1 && LeftSigSpikeOK == 1
 										&& RightSigSpikeOK == 1 && LaneWidthOK == 1 && isDriving == 1);
 
-								DateFormat formatter = new SimpleDateFormat("hh:mm:ss:SSS");
-								Date date = null;
+								SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS");
+								Date date=null;
 								try {
 									date = formatter.parse(Time);
 								} catch (ParseException e) {
@@ -139,24 +143,38 @@ public class SamplesLP {
 										
 									} else {
 										if (newsegment.valid()) {
-											newsegment.lanePos =Utilities.lowpass(newsegment.lanePos ,.10); // smoothing the lane position
-											newsegment.numberOfMinMax = MaxMinValues(newsegment.lanePos).size();
-											newsegment.MinMixFrameNumbers = MaxMinValues(newsegment.lanePos);
+											newsegment.lanePos =Utilities.lowpass(newsegment.lanePos ,.09); // smoothing the lane position
+											newsegment.numberOfMinMax = MaxMinValues(newsegment.lanePos, 100).size();
+											newsegment.MinMixFrameNumbers = MaxMinValues(newsegment.lanePos, 100);
 
 											
 											// computing average and maximum for distances in a segment
 											if (newsegment.numberOfMinMax > 1){
 												double aveDis = 0;
 												long longestDis = 0;
+												Date time1 =  newsegment.timesOfFrames.firstElement();
+												Date time2 = newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(0));
+												long Dis = time2.getTime() - time1.getTime();
+												aveDis += Dis;
+												if ( Dis > longestDis )
+													longestDis = Dis;
+												
 												for (int j = 0; j < (newsegment.numberOfMinMax - 1); j++) {
-													Date time1 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j));
-													Date time2 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j + 1));
-													long Dis = time2.getTime() - time1.getTime();
+													time1 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j));
+													time2 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(j + 1));
+													Dis = time2.getTime() - time1.getTime();
 													aveDis += Dis;
 													if (Dis > longestDis)
 														longestDis = Dis;
 												}
-												newsegment.averageTimeBetweenMaxMin = aveDis / (MaxMinValues(newsegment.lanePos).size() - 1);
+												time1 =  newsegment.timesOfFrames.get(newsegment.MinMixFrameNumbers.get(newsegment.numberOfMinMax-1));
+												time2 =  newsegment.timesOfFrames.lastElement();
+												Dis = time2.getTime() - time1.getTime();
+												aveDis += Dis;
+												if (Dis > longestDis)
+													longestDis = Dis;
+												
+												newsegment.averageTimeBetweenMaxMin = aveDis / (newsegment.numberOfMinMax);
 												newsegment.longestTimeBetweenMaxMin = longestDis;	
 											}
 											
@@ -221,7 +239,13 @@ public class SamplesLP {
 		}
 	}
 
-	// adding minutes to a time in the form of hhmm
+	/**
+	 * adding minutes to a time in the form of hhmm
+	 * 
+	 * @param time
+	 * @param add
+	 * @return
+	 */
 	private static int addTime(int time, int add) {
 		int m = (time % 100) + add;
 		if (m >= 60) {
@@ -230,17 +254,19 @@ public class SamplesLP {
 			return time + add;
 	}
 
-	// This function finds the local Min and Max based on the valid intervals in
-	// the LanePositions values which is an array
-	// In the LanePos Values the invalid values have the value of -100
-	private static List<Integer> MaxMinValues(Values LanePositions) {
-
-		int window = 140;
+	
+	/**
+	 * This function finds the local Min and Max based on the valid intervals in
+	 * the LanePositions values which is an array
+	 * In the LanePos Values the invalid values have the value of -100
+	 * @param LanePositions
+	 * @param window size by frame
+	 * @return  a list of integers that indicates the frame numbers
+	 */
+	private static List<Integer> MaxMinValues(Values LanePositions,int window) {
 
 		List<Integer> MaxMin = new ArrayList<Integer>();
 		// the values which are not available are represented with -100
-		int numberMax = 0;
-		int numberMin = 0;
 		boolean max;
 		boolean min;
 
@@ -265,7 +291,6 @@ public class SamplesLP {
 					}
 					if (max) {
 						MaxMin.add(i);
-						numberMax++;
 						i += (window / 2);
 					}
 				}
@@ -283,7 +308,6 @@ public class SamplesLP {
 					}
 					if (min) {
 						MaxMin.add(i);
-						numberMin++;
 						i += (window / 2);
 					}
 				}

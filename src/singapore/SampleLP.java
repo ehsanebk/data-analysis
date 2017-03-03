@@ -4,6 +4,10 @@ import java.util.Vector;
 import analysis.Values;
 import singapore.Segment;
 
+/**
+ * @author ehsanebk
+ *
+ */
 public class SampleLP {
 
 	String protocol;

@@ -2,13 +2,14 @@ package singapore;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
-
 import analysis.Utilities;
 import analysis.Values;
-import singapore.SampleLP;
 
+/**
+ * @author ehsanebk
+ *
+ */
 
 public class SingaporeDriving_LP_Anlysis {
 
@@ -54,7 +55,6 @@ public class SingaporeDriving_LP_Anlysis {
 		
 	}
 
-
 	public static void 	Driving_vs_PVT_processed() {
 
 		SamplesProcessed= new Samples_Processed();
@@ -74,17 +74,17 @@ public class SingaporeDriving_LP_Anlysis {
 				+ "Driving Data Raw/Protocol A LP Series.csv");
 		File LPfileOutLPMinMaxDistance_SeriesA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
-				+ "Driving Data Raw/Protocol A LP Distance Series.csv");
+				+ "Driving Data Raw/Protocol A LP Longest Distance Series.csv");
 //		File LPfileOutLP_SegmentsA = new File("/Users/Ehsan/Desktop/Protocol A LP Segments Data.csv");
 //		File LPfileOutLP_SeriesA = new File("/Users/Ehsan/Desktop/Protocol A LP Series Data.csv");
 		
 		PrintWriter foutLPSegmentsA = null;
 		PrintWriter foutLPSeriesA = null;
-		PrintWriter foutLPDistanceSeriesA = null;
+		PrintWriter foutLPLongestDistanceSeriesA = null;
 		try {
 			foutLPSegmentsA = new PrintWriter(LPfileOutLP_SegmentsA);
 			foutLPSeriesA = new PrintWriter(LPfileOutLP_SeriesA);
-			foutLPDistanceSeriesA = new PrintWriter(LPfileOutLPMinMaxDistance_SeriesA);
+			foutLPLongestDistanceSeriesA = new PrintWriter(LPfileOutLPMinMaxDistance_SeriesA);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -92,8 +92,8 @@ public class SingaporeDriving_LP_Anlysis {
 		foutLPSegmentsA.flush();
 		foutLPSeriesA.println("Protocol A \n");
 		foutLPSeriesA.flush();
-		foutLPDistanceSeriesA.println("Protocol A \n");
-		foutLPDistanceSeriesA.flush();
+		foutLPLongestDistanceSeriesA.println("Protocol A \n");
+		foutLPLongestDistanceSeriesA.flush();
 
 		File LPfileOutLP_SegmentsB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
@@ -103,18 +103,18 @@ public class SingaporeDriving_LP_Anlysis {
 				+ "Driving Data Raw/Protocol B LP Series.csv");
 		File LPfileOutLPMinMaxDistance_SeriesB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
-				+ "Driving Data Raw/Protocol B LP Distance Series.csv");
+				+ "Driving Data Raw/Protocol B LP Longest Distance Series.csv");
 		
 //		File LPfileOutLP_SegmentsB = new File("/Users/Ehsan/Desktop/Protocol B LP Segments.csv");
 //		File LPfileOutLP_SeriesB = new File("/Users/Ehsan/Desktop/Protocol B LP Series Data.csv");
 		
 		PrintWriter foutLPSegmentsB = null;
 		PrintWriter foutLPSeriesB = null;
-		PrintWriter foutLPDistanceSeriesB = null;
+		PrintWriter foutLPLongestDistanceSeriesB = null;
 		try {
 			foutLPSegmentsB = new PrintWriter(LPfileOutLP_SegmentsB);
 			foutLPSeriesB = new PrintWriter(LPfileOutLP_SeriesB);
-			foutLPDistanceSeriesB = new PrintWriter(LPfileOutLPMinMaxDistance_SeriesB);
+			foutLPLongestDistanceSeriesB = new PrintWriter(LPfileOutLPMinMaxDistance_SeriesB);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
@@ -122,8 +122,8 @@ public class SingaporeDriving_LP_Anlysis {
 		foutLPSegmentsB.flush();
 		foutLPSeriesB.println("Protocol B \n");
 		foutLPSeriesB.flush();
-		foutLPDistanceSeriesB.println("Protocol B \n");
-		foutLPDistanceSeriesB.flush();
+		foutLPLongestDistanceSeriesB.println("Protocol B \n");
+		foutLPLongestDistanceSeriesB.flush();
 		
 
 		PrintWriter foutSegments= null;
@@ -177,12 +177,46 @@ public class SingaporeDriving_LP_Anlysis {
 				foutSegments.print("\n");
 				foutSegments.flush();
 				
-//				//writing low pass filter for the segments with alpha = 0.1
+				// checking the timing
+				foutSegments.print(j + "-" +samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax 
+						+ " "+ "Time:" + startTimeOfTheSegment+
+						" Times,");
+				foutSegments.flush();
+
+				for (int l = 0; l < samplesLP.get(i).segments.elementAt(j).timesOfFrames.size(); l++) {
+					if (samplesLP.get(i).segments.elementAt(j).timesOfFrames.get(l) != null){
+						foutSegments.print(samplesLP.get(i).segments.elementAt(j).timesOfFrames.get(l).getTime() + ",");
+						foutSegments.flush();
+					}
+					else{
+						foutSegments.print(",");
+						foutSegments.flush();
+					}
+				}
+				foutSegments.print("\n");
+				foutSegments.flush();
+				
+				for (int l = 0; l < samplesLP.get(i).segments.elementAt(j).timesOfFrames.size(); l++) {
+					if (samplesLP.get(i).segments.elementAt(j).timesOfFrames.get(l) != null){
+						foutSegments.print(samplesLP.get(i).segments.elementAt(j).timesOfFrames.get(l) + ",");
+						foutSegments.flush();
+					}
+					else{
+						foutSegments.print(",");
+						foutSegments.flush();
+					}
+				}
+				foutSegments.print("\n");
+				foutSegments.flush();
+				
+				
+				// For testing
+				// writing low pass filter for the segments with alpha = 0.09
 //				foutSegments.print(j + "-" +samplesLP.get(i).protocol +" #F: " + numberOfFrames+" #MN " + numberOfMinMax + " "+ "Time:" + startTimeOfTheSegment+
 //						samplesLP.get(i).segments.elementAt(j).MinMixFrameNumbers.toString().replaceAll(",", "") + ",");
 //				foutSegments.flush();
 //				
-//				Values lowpass = Utilities.lowpass(samplesLP.get(i).segments.elementAt(j).lanePos ,.10); // with alpha = 0.1
+//				Values lowpass = Utilities.lowpass(samplesLP.get(i).segments.elementAt(j).lanePos ,.09); // with alpha = 0.1
 //				for (int l = 0; l < lowpass.size(); l++) {
 //					if (lowpass.get(l) > -100){
 //						foutSegments.print(lowpass.get(l) + ",");
@@ -195,6 +229,8 @@ public class SingaporeDriving_LP_Anlysis {
 //				}
 //				foutSegments.print("\n");
 //				foutSegments.flush();
+				//////
+				
 			}
 			
 			
@@ -219,9 +255,9 @@ public class SingaporeDriving_LP_Anlysis {
 			
 			////writing the Distance series ///////////
 			if (protocol.equals("A"))
-				foutDistanceSeries = foutLPDistanceSeriesA;
+				foutDistanceSeries = foutLPLongestDistanceSeriesA;
 			else if (protocol.equals("B"))
-				foutDistanceSeries = foutLPDistanceSeriesB;
+				foutDistanceSeries = foutLPLongestDistanceSeriesB;
 		
 			foutDistanceSeries.print( "*"+ id + "*" + " PVT time: " + trialtime);
 			foutDistanceSeries.flush();

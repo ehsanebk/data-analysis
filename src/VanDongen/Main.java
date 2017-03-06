@@ -3,22 +3,21 @@ package VanDongen;
 import java.io.File;
 import java.util.Vector;
 
+import analysis.Utilities;
+
 public class Main {
 
 	private static Vector<Data> datas;
+	
+	private static String[] bestCasesNum = {"3001","3025","3040","3086",
+			"3206","3232","3256","3275","3386","3408",
+			"3440","3574","3579","3620"};
+	private static String[] worstCasesNum = {"3047",
+			"3122","3171","3207","3215","3220",
+			"3309","3311","3359","3421","3512","3570","3674"};
+
 	public static void main(String[] args) {
-		
-		
-		// bestcase and worstcase base on the time points 
-		Vector<TimePointData> worstCase = new Vector<TimePointData>(8);
-		Vector<TimePointData> bestCase = new Vector<TimePointData>(8);
-		
-		for (int i = 0; i < 8; i++) {
-			worstCase.add(new TimePointData());
-			bestCase.add(new TimePointData());
-		}
-		
-		
+				
 		datas = new Vector<Data>();
 		//File directory = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data");
 		//File test = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data\\3040B04.rpt");
@@ -27,9 +26,28 @@ public class Main {
 		
 		for (File file : directory.listFiles())
 			if (file.getName().endsWith(".rpt")) {
-				Data data = new Data(file);
-				datas.add(data);
-				//System.out.println(file.getName());
+				
+				String ID = file.getName().substring(0,4);
+				boolean newData = true;
+				
+				Data data=  new Data();	
+				for (int i = 0; i < datas.size(); i++) {
+					if (datas.get(i).ID.equals(ID)){
+						data = datas.get(i);
+						newData= false;
+						break;
+					}
+				}
+				
+				data.sessions.add(new Session(file));
+				
+				if (newData)
+					if (Utilities.arrayContains(worstCasesNum, ID))
+						condition = "WorstCase";
+					else
+						condition = "BestCase";
+					datas.add(data);
+
 			}
 		//Data data = new Data(test);
 		//System.out.println(datas.get(0).sample.LANEDEV_MAX);

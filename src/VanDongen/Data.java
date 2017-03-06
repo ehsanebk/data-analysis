@@ -7,28 +7,11 @@ import analysis.Tokenizer;
 import analysis.Utilities;
 
 public class Data {
-	int ID;
-	int session;
+	String ID;
+	Vector<Session> sessions;
 	String condition;
-	private long from;
-	private long to;
-	private Vector<Sample> samples;
-	Sample sample;
 	
-	// Values speeds = new Values();
-	// Values accels = new Values();
-	// Values brakes = new Values();
-	// Values steers = new Values();
-	// Values laterals = new Values();
-	// Values decelerations = new Values();
-	// static final double extraTime = 5.0; // extra time added onto end of task
-	// // for analysis
-	// static final double halfLaneWidth = 123; // half of lane width for
-	// highway
-	// // (246")
-	// static final double laneDepartThreshold = halfLaneWidth - 41; // car is
-	// 82"
-	// // wide
+
 	
 	private int[] bestCasesNum = {3001,3025,3040,3086,
 			3206,3232,3256,3275,3386,3408,
@@ -37,8 +20,7 @@ public class Data {
 			3122,3171,3207,3215,3220,
 			3309,3311,3359,3421,3512,3570,3674};
 
-	Data(File file) {
-		ID = Integer.parseInt(file.getName().substring(0,4));
+	Data() {
 		session  = Integer.parseInt(file.getName().substring(5, 7));
 		if (Utilities.arrayContains(worstCasesNum, ID))
 			condition = "WorstCase";

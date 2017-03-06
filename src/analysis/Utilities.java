@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import java.util.Vector;
 
 public class Utilities {
@@ -93,13 +94,18 @@ public class Utilities {
 		return stream;
 	}
 	
-	public static boolean arrayContains (int [] IDs, int ID){
-		for ( int id: IDs){
-			if ( id == ID)
+	public static boolean arrayContains (int [] array, int element){
+		for ( int a: array){
+			if ( a == element)
 				return true;
 		}
 		return false;
 	}
+	
+	public static boolean arrayContains (String [] array, String element){
+		return Arrays.asList(array).contains(element);
+	}
+
 	public static double toDouble(String s){
 		try {
 			return Double.valueOf(s).doubleValue();

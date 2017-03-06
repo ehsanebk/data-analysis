@@ -3,6 +3,7 @@ package singapore;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Vector;
 import analysis.Tokenizer;
 import analysis.Utilities;

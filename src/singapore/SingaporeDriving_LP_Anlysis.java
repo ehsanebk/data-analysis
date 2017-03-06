@@ -3,8 +3,8 @@ package singapore;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import analysis.Utilities;
-import analysis.Values;
 
 /**
  * @author ehsanebk
@@ -19,6 +19,9 @@ public class SingaporeDriving_LP_Anlysis {
 		//Test();
 	}
 
+	public static String[] completedA ={"520","521","522","525","526","529","531","533","536","538","540","541","542","544","545","546","552","555","556","564"};
+	public static String[] completedB ={"508","520","525","526","528","529","530","531","532","540","541","542","545","556","561","564"};
+			
 	static Samples_Processed  SamplesProcessed;
 	static SamplesLP samplesLP;
 
@@ -61,7 +64,7 @@ public class SingaporeDriving_LP_Anlysis {
 		samplesLP = new SamplesLP();
 		
 		//reading all the PVT data and add them to PVTsamples data structure
-		SamplesPVT PVTsamples = new SamplesPVT(PVTfile);
+		SamplesPVT samplesPVT = new SamplesPVT(PVTfile);
 
 		//reading the data available from other old files
 		SamplesProcessed.readProcessedFile(PVTfileProcessedOld);
@@ -131,7 +134,7 @@ public class SingaporeDriving_LP_Anlysis {
 		PrintWriter foutDistanceSeries =null;
 		
 		//Analyzing the data based on the raw csv data and PVTsamples and make the samplesPL structure
-		samplesLP.analysis(PVTsamples);
+		samplesLP.analysis(samplesPVT);
 
 
 		for (int i = 0; i < samplesLP.size(); i++) {
@@ -142,7 +145,13 @@ public class SingaporeDriving_LP_Anlysis {
 			String trialtime = samplesLP.get(i).trialtime;
 			//System.out.println(trialtime);
 			
-			//writing the segments in two segments files
+
+//			// to check if the trial is a completed trial
+//			if (!(protocol.equals("A") && Arrays.asList(SingaporeDriving_LP_Anlysis.completedA).contains(id)) || 
+//					!(protocol.equals("B") && Arrays.asList(SingaporeDriving_LP_Anlysis.completedB).contains(id)))
+//				continue;
+			
+			//writing the segments in to two segments files
 			if (protocol.equals("A"))
 				foutSegments = foutLPSegmentsA;
 			else if (protocol.equals("B"))

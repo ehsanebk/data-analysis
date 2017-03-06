@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -41,17 +42,18 @@ public class SamplesLP {
 		return samples.elementAt(i);
 	}
 
-	public void analysis(SamplesPVT PVTsamples) {
+	public void analysis(SamplesPVT samplesPVT) {
 
 		// adding driving data
-		for (int i = 0; i < PVTsamples.size() - 1; i++) {
+		for (int i = 0; i < samplesPVT.size() - 1; i++) {
 
-			String protocol = PVTsamples.get(i).getProtocol();
-			String ID = PVTsamples.get(i).getId();
-			String trial = PVTsamples.get(i).getTrial();
-			String trialDate = PVTsamples.get(i).getTrialdate();
-			String trialTimeString = PVTsamples.get(i).getTrialtimeString();
-			int trialTime = PVTsamples.get(i).getTrialtime();
+			String protocol = samplesPVT.get(i).getProtocol();
+			String ID = samplesPVT.get(i).getId();
+			String trial = samplesPVT.get(i).getTrial();
+			String trialDate = samplesPVT.get(i).getTrialdate();
+			String trialTimeString = samplesPVT.get(i).getTrialtimeString();
+			int trialTime = samplesPVT.get(i).getTrialtime();
+
 
 			Segment newsegment = new Segment(); 
 			SampleLP newSample = new SampleLP();
@@ -62,7 +64,7 @@ public class SamplesLP {
 			newSample.trialtime = trialTimeString;
 
 			// check to see if it's the last trial of the day or not
-			if (ID.equals(PVTsamples.get(i + 1).getId())) { 
+			if (ID.equals(samplesPVT.get(i + 1).getId())) { 
 
 				// the directories that the raw driving csv datais being kept.
 				// This data is not filtered and it does have the invalid
@@ -110,7 +112,7 @@ public class SamplesLP {
 							// frames between valid frames are more than 1
 							// seconds
 							if (timeDrivingFrame > addTime(trialTime, 5)
-									&& timeDrivingFrame <= addTime(PVTsamples.get(i + 1).getTrialtime(), 5)) {
+									&& timeDrivingFrame <= addTime(samplesPVT.get(i + 1).getTrialtime(), 5)) {
 								
 								boolean validFrame = (LeftRhoThetaOK == 1 && RightRhoThetaOK == 1 && LeftSigSpikeOK == 1
 										&& RightSigSpikeOK == 1 && LaneWidthOK == 1 && isDriving == 1);
@@ -143,7 +145,7 @@ public class SamplesLP {
 										
 									} else {
 										if (newsegment.valid()) {
-											newsegment.lanePos =Utilities.lowpass(newsegment.lanePos ,.09); // smoothing the lane position
+											newsegment.lanePos = Utilities.lowpass(newsegment.lanePos ,.09); // smoothing the lane position
 											newsegment.numberOfMinMax = MaxMinValues(newsegment.lanePos, 100).size();
 											newsegment.MinMixFrameNumbers = MaxMinValues(newsegment.lanePos, 100);
 
@@ -229,7 +231,7 @@ public class SamplesLP {
 									invalidFrameCounter++;
 							}
 							// break if the tame is after
-							if (timeDrivingFrame > PVTsamples.get(i + 1).getTrialtime())
+							if (timeDrivingFrame > samplesPVT.get(i + 1).getTrialtime())
 								break;
 						}
 

@@ -70,7 +70,7 @@ public class SamplesLP {
 				// This data is not filtered and it does have the invalid
 				// values.
 
-				File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
+				File directory = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
 						+ "Driving data - standard deviation lateral position (Singapore)/"
 						+ "Driving Data Raw/Protocol "+protocol+" driving data (csv)");
 				//File directory = new File("/Users/Ehsan/Desktop/Protocol " + protocol + " driving data (csv)");

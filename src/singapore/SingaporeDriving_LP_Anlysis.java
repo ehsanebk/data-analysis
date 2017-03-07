@@ -26,21 +26,14 @@ public class SingaporeDriving_LP_Anlysis {
 	static SamplesLP samplesLP;
 
 	// PVT data Raw file
-	static File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+	static File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 			+ "Driving data - standard deviation lateral position (Singapore)/"
 			+ "PVT Raw Data/MFPD_PVT_all.txt");
-//	static File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
-//			+ "Driving data - standard deviation lateral position (Singapore)/"
-//			+ "/PVT Raw Data/MFPD_PVT_all.txt");
-	
 	
 	//reading previous processed data into the PVTprocessed
-	static File PVTfileProcessedOld = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+	static File PVTfileProcessedOld = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 			+ "Driving data - standard deviation lateral position (Singapore)/"
 			+ "SDLP_PVT Raw Data Analysis/MFPD_Driving_vs_PVT_processed.csv");
-//	static File PVTfileProcessedOld = new File("/Users/Ehsan/OneDrive - drexel.edu/"
-//			+ "Driving data - standard deviation lateral position (Singapore)/"
-//			+ "SDLP_PVT Raw Data Analysis/MFPD_Driving_vs_PVT_processed.csv");
 
 	public static void 	Test() {
 		
@@ -69,18 +62,16 @@ public class SingaporeDriving_LP_Anlysis {
 		//reading the data available from other old files
 		SamplesProcessed.readProcessedFile(PVTfileProcessedOld);
 
-		File LPfileOutLP_SegmentsA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File LPfileOutLP_SegmentsA = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol A LP Segments.csv");
-		File LPfileOutLP_SeriesA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File LPfileOutLP_SeriesA = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol A LP Series.csv");
-		File LPfileOutLPMinMaxDistance_SeriesA = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File LPfileOutLPMinMaxDistance_SeriesA = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol A LP Longest Distance Series.csv");
-//		File LPfileOutLP_SegmentsA = new File("/Users/Ehsan/Desktop/Protocol A LP Segments Data.csv");
-//		File LPfileOutLP_SeriesA = new File("/Users/Ehsan/Desktop/Protocol A LP Series Data.csv");
-		
+	
 		PrintWriter foutLPSegmentsA = null;
 		PrintWriter foutLPSeriesA = null;
 		PrintWriter foutLPLongestDistanceSeriesA = null;
@@ -98,18 +89,15 @@ public class SingaporeDriving_LP_Anlysis {
 		foutLPLongestDistanceSeriesA.println("Protocol A \n");
 		foutLPLongestDistanceSeriesA.flush();
 
-		File LPfileOutLP_SegmentsB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File LPfileOutLP_SegmentsB = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol B LP Segments.csv");
-		File LPfileOutLP_SeriesB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File LPfileOutLP_SeriesB = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol B LP Series.csv");
-		File LPfileOutLPMinMaxDistance_SeriesB = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File LPfileOutLPMinMaxDistance_SeriesB = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Protocol B LP Longest Distance Series.csv");
-		
-//		File LPfileOutLP_SegmentsB = new File("/Users/Ehsan/Desktop/Protocol B LP Segments.csv");
-//		File LPfileOutLP_SeriesB = new File("/Users/Ehsan/Desktop/Protocol B LP Series Data.csv");
 		
 		PrintWriter foutLPSegmentsB = null;
 		PrintWriter foutLPSeriesB = null;
@@ -291,7 +279,7 @@ public class SingaporeDriving_LP_Anlysis {
 		foutDistanceSeries.close();
 
 		// outputing the processed file
-		File OutPutProcessed = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+		File OutPutProcessed = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "Driving Data Raw/Driving_vs_PVT_vs_LP_processed.csv");
 		

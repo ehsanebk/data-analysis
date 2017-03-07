@@ -42,7 +42,12 @@ public class StraightSegment {
 	double MPG_AVG;
 	double FUELUSED;
 	
+	Values MPH;
+	Values steer;
+	
 	public StraightSegment() {
+		MPH = new Values();
+		steer = new Values();
 		
 	}
 }

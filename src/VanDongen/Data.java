@@ -3,9 +3,6 @@ package VanDongen;
 import java.io.File;
 import java.util.*;
 
-import analysis.Tokenizer;
-import analysis.Utilities;
-
 public class Data {
 	String ID;
 	String condition;

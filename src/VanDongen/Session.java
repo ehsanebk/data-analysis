@@ -2,7 +2,6 @@ package VanDongen;
 
 import java.io.File;
 import java.util.Vector;
-
 import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
@@ -144,6 +143,27 @@ public class Session {
 		}	
 	}
 	
+	void addRawData(File file){
+		Tokenizer t = new Tokenizer(file);
+		t.skipLines(10);
+		int frame;
+		double X, Y, Z, P, R, H, steer, accel, brake, MPH, D_spd, elapsed, gear, cltch, rpm;
+		
+		while (t.hasMoreTokens()) {
+			String[] line = t.readNextLine().split("\\s+");
+			frame = Utilities.toInt(line[0]);
+			for (int i = 0; i < straightSegment.size(); i++) {
+				if (frame > straightSegment.get(i).frameStart && frame < straightSegment.get(i).frameStop){
+					steer = Utilities.toDouble(line[7]);
+					MPH = Utilities.toDouble(line[10]);
+					straightSegment.get(i).steer.add(steer);
+					straightSegment.get(i).MPH.add(MPH);
+				}				
+			}
+		}
+		
+	}
+
 	double getSessionAverageSPEED_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegment.size(); i++)

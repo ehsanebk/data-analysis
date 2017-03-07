@@ -52,6 +52,21 @@ public class Tokenizer {
 		return sr.toString().replaceAll("\"", "").split(",",-1);
 	}
 
+	public String readNextLine(){
+		StringWriter sr = new StringWriter();
+		while (c != -1 && c != '\n' && c != '\r'){
+			sr.write(c);
+			advance();
+		}
+		if (c != -1) {
+			advance();
+			if (c == '\n')
+				advance();
+			}
+		
+		return sr.toString();
+	}
+	
 	public int getIndexByHeaderCSV(String s){
 		for (int i = 0; i < CSVheaders.length; i++) {
 			if (CSVheaders[i].equals(s))

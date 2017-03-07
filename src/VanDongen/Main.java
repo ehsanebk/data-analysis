@@ -1,6 +1,8 @@
 package VanDongen;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Vector;
 
 import analysis.Utilities;
@@ -19,9 +21,7 @@ public class Main {
 	public static void main(String[] args) {
 				
 		datas = new Vector<Data>();
-		//File directory = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data");
-		//File test = new File("C:\\Users\\eb452\\OneDrive - drexel.edu\\Driving Data(Van Dongen)\\Data\\3040B04.rpt");
-		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
+		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
 
 		for (File file : directory.listFiles()){
 			if (file.getName().endsWith(".rpt")) {
@@ -51,14 +51,49 @@ public class Main {
 			}
 		}
 		
+		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		for (int i = 0; i < datas.size(); i++){
+			Data data = datas.get(i);
+			String id = data.ID;
+			for (int j = 0; j < data.sessions.size(); j++) {
+				Session s  = data.sessions.get(i);
+				String s_number = s.sessionNumber;
+				for (File file : rawDataDirectory.listFiles()) {
+					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
+						s.addRawData(file);
+					}
+				}		
+			}
+		}
+		
+		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_Steer.csv");
+		PrintWriter outputCSV = null;
+		try {
+			outputCSV = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		for (int i = 0; i < datas.size(); i++) {
 
 			Data data = datas.get(i);
+			outputCSV.println(data.ID);
+			outputCSV.flush();
 			System.out.println(data.ID);
 			for (int j = 0; j < data.sessions.size(); j++) {
-				System.out.print(data.sessions.get(j).sessionNumber );
+				outputCSV.println(","+data.sessions.get(j).sessionNumber );
+				outputCSV.flush();
+				for (int j2 = 0; j2 < data.sessions.get(j).straightSegment.size(); j2++) {
+					for (int k = 0; k < data.sessions.get(j).straightSegment.get(j2).steer.size(); k++) {
+						outputCSV.print(data.sessions.get(j).straightSegment.get(j2).steer.get(k)+",");
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					outputCSV.flush();
+				}
 			}
-			System.out.println();
+			outputCSV.close();
 			
 //			if ( data.sessions == 4 || session == 8 || session == 12 || session == 16 || session == 20 )
 //				if (d.condition == "WorstCase")	

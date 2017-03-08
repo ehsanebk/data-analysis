@@ -55,11 +55,14 @@ public class Main {
 		for (int i = 0; i < datas.size(); i++){
 			Data data = datas.get(i);
 			String id = data.ID;
+			System.out.println(data.ID);
 			for (int j = 0; j < data.sessions.size(); j++) {
-				Session s  = data.sessions.get(i);
+				Session s  = data.sessions.get(j);
 				String s_number = s.sessionNumber;
+				System.out.println(s_number);
 				for (File file : rawDataDirectory.listFiles()) {
 					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
+						System.out.println(file.getName());
 						s.addRawData(file);
 					}
 				}		

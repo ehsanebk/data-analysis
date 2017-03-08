@@ -23,6 +23,10 @@ public class Values {
 		return v.elementAt(i);
 	}
 
+	public void clear(){
+		v.clear();
+	}
+	
 	public void removeLast() {
 		if (v.size() > 0)
 			v.removeElementAt(v.size() - 1);

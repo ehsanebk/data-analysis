@@ -1,6 +1,8 @@
 package VanDongen;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Vector;
 import analysis.Tokenizer;
 import analysis.Utilities;
@@ -153,14 +155,44 @@ public class Session {
 			String[] line = t.readNextLine().split("\\s+");
 			frame = Utilities.toInt(line[0]);
 			for (int i = 0; i < straightSegment.size(); i++) {
-				if (frame > straightSegment.get(i).frameStart && frame < straightSegment.get(i).frameStop){
+				if (frame >= straightSegment.get(i).frameStart && frame <= straightSegment.get(i).frameStop){
 					steer = Utilities.toDouble(line[7]);
 					MPH = Utilities.toDouble(line[10]);
 					straightSegment.get(i).steer.add(steer);
-					straightSegment.get(i).MPH.add(MPH);
+					//straightSegment.get(i).MPH.add(MPH);
 				}				
 			}
 		}
+		
+		File directory = new File("/Users/ehsanebk/"
+				+ "OneDrive - drexel.edu/Driving Data(Van Dongen)/StraightSegmentsValues/" + ID );
+		
+		if (!directory.exists())
+			directory.mkdirs();
+		
+		File sessionFile = new File(directory.getPath() +"/" + sessionNumber + ".csv");
+		
+		PrintWriter output = null;
+		try {
+			output = new PrintWriter(sessionFile);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//writing to files
+		for (int i = 0; i < straightSegment.size(); i++){	 
+			for (int j = 0; j < straightSegment.get(i).steer.size(); j++) {
+				output.print(straightSegment.get(i).steer.get(j) + ",");
+				output.flush();
+			}
+			output.print("\n");
+			output.flush();
+			
+			straightSegment.get(i).steer.clear();			
+		}
+		
+		output.close();
 		
 	}
 

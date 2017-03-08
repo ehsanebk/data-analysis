@@ -5,7 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 public class Utilities {
@@ -204,5 +206,66 @@ public class Utilities {
 		return output;
 	}
 
+	/**
+	 * This function finds the local Min and Max based on the valid intervals in
+	 * the LanePositions values which is an array
+	 * In the LanePos Values the invalid values have the value of -100
+	 * @param LanePositions
+	 * @param window size by frame
+	 * @return  a list of integers that indicates the frame numbers
+	 */
+	public static List<Integer> MaxMinValues(Values LanePositions,int window) {
+
+		List<Integer> MaxMin = new ArrayList<Integer>();
+		// the values which are not available are represented with -100
+		boolean max;
+		boolean min;
+
+		// adding extra for capturing the end min and max
+		for (int j = 0; j < 20; j++) {
+			LanePositions.add(-100);
+		}
+
+		for (int i = (window / 2); i < LanePositions.size() - (window / 2); i++) {
+			if (LanePositions.get(i) > -100) {
+				// local max with the specified interval
+				if ((LanePositions.get(i - (window / 2)) < LanePositions.get(i)
+						|| LanePositions.get(i - (window / 2)) == -100)
+						&& (LanePositions.get(i) > LanePositions.get(i + (window / 2))
+								|| LanePositions.get(i + (window / 2)) == -100)) {
+					max = true;
+					for (int j = i - (window / 2); j <= i + (window / 2); j++) {
+						if (LanePositions.get(j) > LanePositions.get(i) && LanePositions.get(j) > -100) {
+							max = false;
+							break;
+						}
+					}
+					if (max) {
+						MaxMin.add(i);
+						i += (window / 2);
+					}
+				}
+				// local min with the specified interval
+				else if ((LanePositions.get(i - (window / 2)) > LanePositions.get(i)
+						|| LanePositions.get(i - (window / 2)) == -100)
+						&& (LanePositions.get(i) < LanePositions.get(i + (window / 2))
+								|| LanePositions.get(i + (window / 2)) == -100)) {
+					min = true;
+					for (int j = i - (window / 2); j <= i + (window / 2); j++) {
+						if (LanePositions.get(j) < LanePositions.get(i) && LanePositions.get(j) > -100) {
+							min = false;
+							break;
+						}
+					}
+					if (min) {
+						MaxMin.add(i);
+						i += (window / 2);
+					}
+				}
+			}
+		}
+		// return numberMax+numberMin;
+		return MaxMin;
+	}
 
 }

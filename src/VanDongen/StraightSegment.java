@@ -45,6 +45,12 @@ public class StraightSegment {
 	Values MPH;
 	Values steer;
 	
+	double MPH_STD;
+	double steer_STD;
+	
+	int numberOfMaxMin;
+	int distnaceOfMaxMin;
+	
 	public StraightSegment() {
 		MPH = new Values();
 		steer = new Values();

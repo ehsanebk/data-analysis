@@ -8,10 +8,13 @@ import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
 
+
+
 public class Session {
 
 	String ID;
 	String sessionNumber;
+	int timePoint;
 	Vector<StraightSegment> straightSegment;
 	
 	
@@ -20,8 +23,36 @@ public class Session {
 		ID = file.getName().substring(0,4);
 		sessionNumber  = file.getName().substring(5, 7);
 		
-		StraightSegment segment;
+		int sessionNumberInt = Utilities.toInt(sessionNumber);
 		
+		if ( sessionNumberInt == 4 || sessionNumberInt == 8 || sessionNumberInt == 12 
+				|| sessionNumberInt == 16 || sessionNumberInt == 20 )
+			timePoint = 1;
+		if ( sessionNumberInt == 5 || sessionNumberInt == 9 || sessionNumberInt == 13 
+				|| sessionNumberInt == 17 || sessionNumberInt == 21 )
+			timePoint = 2;
+		if ( sessionNumberInt == 6 || sessionNumberInt == 10 || sessionNumberInt == 14 
+				|| sessionNumberInt == 18 || sessionNumberInt == 22 )
+			timePoint = 3;
+		if ( sessionNumberInt == 7 || sessionNumberInt == 11 || sessionNumberInt == 15 
+				|| sessionNumberInt == 19 || sessionNumberInt == 23 )
+			timePoint = 4;
+
+		if ( sessionNumberInt == 24 || sessionNumberInt == 28 || sessionNumberInt == 32 
+				|| sessionNumberInt == 36 || sessionNumberInt == 40 )
+			timePoint = 6;
+		if ( sessionNumberInt == 25 || sessionNumberInt == 29 || sessionNumberInt == 33 
+				|| sessionNumberInt == 37 || sessionNumberInt == 41 )
+			timePoint = 7;
+		if ( sessionNumberInt == 26 || sessionNumberInt == 30 || sessionNumberInt == 34 
+				|| sessionNumberInt == 38 || sessionNumberInt == 42 )
+			timePoint = 8;
+		if ( sessionNumberInt == 27 || sessionNumberInt == 31 || sessionNumberInt == 35 
+				|| sessionNumberInt == 39 || sessionNumberInt == 43 )
+			timePoint = 9;
+		
+		
+		StraightSegment segment;
 		Tokenizer t = new Tokenizer(file);
 		t.skipLines(4);
 		String MetricName;
@@ -137,8 +168,7 @@ public class Session {
 					segment.timeStop = timeStop;
 					
 					straightSegment.add(segment);
-				}
-				
+				}	
 			}
 			else
 				t.skipLine();
@@ -159,41 +189,18 @@ public class Session {
 					steer = Utilities.toDouble(line[7]);
 					MPH = Utilities.toDouble(line[10]);
 					straightSegment.get(i).steer.add(steer);
-					//straightSegment.get(i).MPH.add(MPH);
+					straightSegment.get(i).MPH.add(MPH);
 				}				
 			}
 		}
 		
-		File directory = new File("/Users/ehsanebk/"
-				+ "OneDrive - drexel.edu/Driving Data(Van Dongen)/StraightSegmentsValues/" + ID );
-		
-		if (!directory.exists())
-			directory.mkdirs();
-		
-		File sessionFile = new File(directory.getPath() +"/" + sessionNumber + ".csv");
-		
-		PrintWriter output = null;
-		try {
-			output = new PrintWriter(sessionFile);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		//writing to files
 		for (int i = 0; i < straightSegment.size(); i++){	 
-			for (int j = 0; j < straightSegment.get(i).steer.size(); j++) {
-				output.print(straightSegment.get(i).steer.get(j) + ",");
-				output.flush();
-			}
-			output.print("\n");
-			output.flush();
-			
-			straightSegment.get(i).steer.clear();			
+			straightSegment.get(i).steer_STD = straightSegment.get(i).steer.stddev();
+			straightSegment.get(i).MPH_STD = straightSegment.get(i).MPH.stddev();
+			straightSegment.get(i).steer.clear();
+			straightSegment.get(i).MPH.clear();
 		}
-		
-		output.close();
-		
+			
 	}
 
 	double getSessionAverageSPEED_MIN (){
@@ -357,6 +364,20 @@ public class Session {
 		for (int i = 0; i < straightSegment.size(); i++)
 			values.add(straightSegment.get(i).FUELUSED);
 		return values.average();
-	} 
+	}
+	
+	// new values
+	double getSessionAveragesteer_DEV (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegment.size(); i++)
+			values.add(straightSegment.get(i).FUELUSED);
+		return values.average();
+	}
+	double getSessionAverageMPH_DEV (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegment.size(); i++)
+			values.add(straightSegment.get(i).FUELUSED);
+		return values.average();
+	}
 	
 }

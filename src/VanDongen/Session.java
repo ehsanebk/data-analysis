@@ -367,16 +367,16 @@ public class Session {
 	}
 	
 	// new values
-	double getSessionAveragesteer_DEV (){
+	double getSessionAveragesteer_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).FUELUSED);
+			values.add(straightSegment.get(i).steer_STD);
 		return values.average();
 	}
-	double getSessionAverageMPH_DEV (){
+	double getSessionAverageMPH_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).FUELUSED);
+			values.add(straightSegment.get(i).MPH_STD);
 		return values.average();
 	}
 	

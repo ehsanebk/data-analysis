@@ -84,40 +84,83 @@ public class Main {
 		Values [] MPH_BestCaseTimePoints =  new Values[10];
 		Values [] MPH_WorstCaseTimePoints =  new Values[10];
 		
-		
-		for (int i = 0; i < datas.size(); i++) {
-
-			Data data = datas.get(i);
-			
-			System.out.println(data.ID);
-			
-			
-			if( data.condition == Conditions.BestCase)
-			
-			
-			
-			for (int j = 0; j < data.sessions.size(); j++) {
-				
-				switch (data.condition){
-				case BestCase:
-					steer_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_DEV());
-					MPH_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_DEV());
-					break;
-				case WorstCase:
-					steer_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_DEV());
-					MPH_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_DEV());
-				}
-				
-			}
-			
+		for (int i = 0; i < 10; i++) {		
+			steer_BestCaseTimePoints[i] = new Values();
+			steer_WorstCaseTimePoints[i] = new Values();
+			MPH_BestCaseTimePoints[i] = new Values();
+			MPH_WorstCaseTimePoints[i] = new Values();
 		}
 		
+		
+		for (int i = 0; i < datas.size(); i++) {
+			Data data = datas.get(i);
+			System.out.println(data.ID);
+
+			for (int j = 0; j < data.sessions.size(); j++) {
+				switch (data.condition){
+				case BestCase:
+					steer_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_STD());
+					MPH_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_STD());
+					break;
+				case WorstCase:
+					steer_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_STD());
+					MPH_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_STD());
+				}
+
+			}
+
+		}
+
 		// writing to file
-		outputCSV.println("Measurment,Best Case,,,,,,,,,,");
 		outputCSV.println(",1,2,3,4,,5,6,7,8");
+		outputCSV.print("Best_steer_STD");
+		for (int i = 0; i < steer_BestCaseTimePoints.length; i++) {
+			double s=steer_BestCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
 		
+		outputCSV.print("Worst_steer_STD");
+		for (int i = 0; i < steer_WorstCaseTimePoints.length; i++) {
+			double s=steer_WorstCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
 		
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
 		
+		outputCSV.print("Best_MPH_STD");
+		for (int i = 0; i < MPH_BestCaseTimePoints.length; i++) {
+			double s=MPH_BestCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
 		
+		outputCSV.print("Worst_MPH_STD");
+		for (int i = 0; i < MPH_WorstCaseTimePoints.length; i++) {
+			double s=MPH_WorstCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+
+		
+		outputCSV.close();
 	}
 }

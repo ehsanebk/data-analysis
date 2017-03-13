@@ -197,6 +197,8 @@ public class Session {
 		for (int i = 0; i < straightSegment.size(); i++){	 
 			straightSegment.get(i).steer_STD = straightSegment.get(i).steer.stddev();
 			straightSegment.get(i).MPH_STD = straightSegment.get(i).MPH.stddev();
+			straightSegment.get(i).steer_Ave = straightSegment.get(i).steer.average();
+			straightSegment.get(i).MPH_Ave = straightSegment.get(i).MPH.average();
 			straightSegment.get(i).steer.clear();
 			straightSegment.get(i).MPH.clear();
 		}
@@ -379,5 +381,19 @@ public class Session {
 			values.add(straightSegment.get(i).MPH_STD);
 		return values.average();
 	}
+	
+	double getSessionAveragesteer_Ave (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegment.size(); i++)
+			values.add(straightSegment.get(i).steer_Ave);
+		return values.average();
+	}
+	double getSessionAverageMPH_Ave (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegment.size(); i++)
+			values.add(straightSegment.get(i).MPH_Ave);
+		return values.average();
+	}
+	
 	
 }

@@ -21,7 +21,7 @@ public class Main {
 	public static void main(String[] args) {
 				
 		datas = new Vector<Data>();
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
 
 		for (File file : directory.listFiles()){
 			if (file.getName().endsWith(".rpt")) {

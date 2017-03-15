@@ -199,6 +199,8 @@ public class Session {
 			straightSegment.get(i).MPH_STD = straightSegment.get(i).MPH.stddev();
 			straightSegment.get(i).steer_Ave = straightSegment.get(i).steer.average();
 			straightSegment.get(i).MPH_Ave = straightSegment.get(i).MPH.average();
+			straightSegment.get(i).steer_Max = straightSegment.get(i).steer.max();
+			straightSegment.get(i).MPH_Max = straightSegment.get(i).MPH.max();
 			straightSegment.get(i).steer.clear();
 			straightSegment.get(i).MPH.clear();
 		}

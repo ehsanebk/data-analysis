@@ -54,6 +54,8 @@ public class StraightSegment {
 	double MPH_Max;
 	double steer_Max;
 	
+	int number_Frames_Zero_SteerAngel = 0;
+	
 	int numberOfMaxMin;
 	int distnaceOfMaxMin;
 	

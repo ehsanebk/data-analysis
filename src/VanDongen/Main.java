@@ -21,7 +21,7 @@ public class Main {
 	public static void main(String[] args) {
 				
 		datas = new Vector<Data>();
-		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
+		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
 
 		for (File file : directory.listFiles()){
 			if (file.getName().endsWith(".rpt")) {
@@ -78,7 +78,10 @@ public class Main {
 			e.printStackTrace();
 		}
 				
-
+		WriteToFile(outputCSV);
+	}
+	
+	static void WriteToFile(PrintWriter outputCSV) {
 		Values [] steer_STD_BestCaseTimePoints =  new Values[10];
 		Values [] steer_STD_WorstCaseTimePoints =  new Values[10];
 		Values [] steer_Ave_BestCaseTimePoints =  new Values[10];
@@ -89,6 +92,10 @@ public class Main {
 		Values [] MPH_Ave_BestCaseTimePoints =  new Values[10];
 		Values [] MPH_Ave_WorstCaseTimePoints =  new Values[10];
 		
+		Values [] zeroSteer_Ave_BestCaseTimePoints =  new Values[10];
+		Values [] zeroSteer_Ave_WorstCaseTimePoints =  new Values[10];
+		
+		
 		for (int i = 0; i < 10; i++) {		
 			steer_STD_BestCaseTimePoints[i] = new Values();
 			steer_STD_WorstCaseTimePoints[i] = new Values();
@@ -98,6 +105,8 @@ public class Main {
 			MPH_STD_WorstCaseTimePoints[i] = new Values();
 			MPH_Ave_BestCaseTimePoints[i] = new Values();
 			MPH_Ave_WorstCaseTimePoints[i] = new Values();
+			zeroSteer_Ave_BestCaseTimePoints[i] = new Values();
+			zeroSteer_Ave_WorstCaseTimePoints[i] = new Values();
 		}
 		
 		
@@ -112,21 +121,21 @@ public class Main {
 					MPH_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_STD());
 					steer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_Ave());
 					MPH_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_Ave());
+					zeroSteer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer());
 					break;
 				case WorstCase:
 					steer_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_STD());
 					MPH_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_STD());
 					steer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_Ave());
 					MPH_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_Ave());
+					zeroSteer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer());
 				}
-
 			}
-
 		}
-
+		
 		// writing to file
 		outputCSV.println(",,1,2,3,4,,5,6,7,8");
-		
+
 		// steer STD
 		outputCSV.print("Best_steer_STD");
 		for (int i = 0; i < steer_STD_BestCaseTimePoints.length; i++) {
@@ -150,7 +159,7 @@ public class Main {
 		outputCSV.flush();		
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
-		
+
 		// steer Ave
 		outputCSV.print("Best_steer_Ave");
 		for (int i = 0; i < steer_Ave_BestCaseTimePoints.length; i++) {
@@ -174,7 +183,31 @@ public class Main {
 		outputCSV.flush();
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
-		
+
+		// Zero Steer Ave : Number of Frames
+		outputCSV.print("Best_ZeroSteer_Ave");
+		for (int i = 0; i < zeroSteer_Ave_BestCaseTimePoints.length; i++) {
+			double s= zeroSteer_Ave_BestCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_ZeroSteer_Ave");
+		for (int i = 0; i < zeroSteer_Ave_WorstCaseTimePoints.length; i++) {
+			double s= zeroSteer_Ave_WorstCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
 		// MPH STD
 		outputCSV.print("Best_MPH_STD");
 		for (int i = 0; i < MPH_STD_BestCaseTimePoints.length; i++) {
@@ -223,7 +256,8 @@ public class Main {
 		outputCSV.flush();
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
-
+		
+		
 		outputCSV.close();
 	}
 }

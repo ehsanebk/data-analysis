@@ -189,18 +189,22 @@ public class Session {
 					steer = Utilities.toDouble(line[7]);
 					MPH = Utilities.toDouble(line[10]);
 					straightSegment.get(i).steer.add(steer);
-					straightSegment.get(i).MPH.add(MPH);
+//					straightSegment.get(i).MPH.add(MPH);
 				}				
 			}
 		}
 		
 		for (int i = 0; i < straightSegment.size(); i++){	 
-			straightSegment.get(i).steer_STD = straightSegment.get(i).steer.stddev();
-			straightSegment.get(i).MPH_STD = straightSegment.get(i).MPH.stddev();
-			straightSegment.get(i).steer_Ave = straightSegment.get(i).steer.average();
-			straightSegment.get(i).MPH_Ave = straightSegment.get(i).MPH.average();
-			straightSegment.get(i).steer_Max = straightSegment.get(i).steer.max();
-			straightSegment.get(i).MPH_Max = straightSegment.get(i).MPH.max();
+//			straightSegment.get(i).steer_STD = straightSegment.get(i).steer.stddev();
+//			straightSegment.get(i).MPH_STD = straightSegment.get(i).MPH.stddev();
+//			straightSegment.get(i).steer_Ave = straightSegment.get(i).steer.average();
+//			straightSegment.get(i).MPH_Ave = straightSegment.get(i).MPH.average();
+//			straightSegment.get(i).steer_Max = straightSegment.get(i).steer.max();
+//			straightSegment.get(i).MPH_Max = straightSegment.get(i).MPH.max();
+			for (int j = 0; j < straightSegment.get(i).steer.size(); j++) {
+				if (straightSegment.get(i).steer.get(j) == 0)
+					straightSegment.get(i).number_Frames_Zero_SteerAngel ++;
+			}				
 			straightSegment.get(i).steer.clear();
 			straightSegment.get(i).MPH.clear();
 		}
@@ -397,5 +401,10 @@ public class Session {
 		return values.average();
 	}
 	
-	
+	double getSessionAverageZeroSteer (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegment.size(); i++)
+			values.add(straightSegment.get(i).number_Frames_Zero_SteerAngel);
+		return values.average();
+	}
 }

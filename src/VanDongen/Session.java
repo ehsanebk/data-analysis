@@ -202,7 +202,7 @@ public class Session {
 //			straightSegment.get(i).steer_Max = straightSegment.get(i).steer.max();
 //			straightSegment.get(i).MPH_Max = straightSegment.get(i).MPH.max();
 			for (int j = 0; j < straightSegment.get(i).steer.size(); j++) {
-				if (straightSegment.get(i).steer.get(j) == 0)
+				if (Math.abs(straightSegment.get(i).steer.get(j)) > 0.03)
 					straightSegment.get(i).number_Frames_Zero_SteerAngel ++;
 			}				
 			straightSegment.get(i).steer.clear();

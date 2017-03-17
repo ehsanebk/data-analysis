@@ -187,6 +187,8 @@ public class Utilities {
 	public static Values lowpass( Values values,double alpha){
 
 		Values output = new Values();
+		if (values.size() ==0)
+			return output;
 		double  value = values.get(0); // start with the first input
 		output.add(value);
 
@@ -268,4 +270,22 @@ public class Utilities {
 		return MaxMin;
 	}
 
+	/**
+	 * Using values of the previous three time steps, 
+	 * a second order Taylor expansion on time n-1 is performed 
+	 * to obtain the predicted value at time n.
+	 * 
+	 * @return prediction error value
+	 */
+	public Values predictionError(Values v){
+		Values e = new Values();
+		for (int i = 3; i < v.size(); i++) {
+			double predicted = v.get(i-1) +(v.get(i-1)-v.get(i-2)) +
+					(1/2)*((v.get(i-1)-v.get(i-2))- (v.get(i-2)-v.get(i-3)));
+			e.add(v.get(i) - predicted);
+		}
+		
+		
+		return e;
+	}
 }

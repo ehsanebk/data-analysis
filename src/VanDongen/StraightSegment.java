@@ -56,6 +56,8 @@ public class StraightSegment {
 	
 	int number_Frames_Zero_SteerAngel = 0;
 	
+	double predictionError_STD;
+	
 	int numberOfMaxMin;
 	int distnaceOfMaxMin;
 	

@@ -21,10 +21,10 @@ public class Main {
 	public static void main(String[] args) {
 				
 		datas = new Vector<Data>();
-		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
+		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
 
 		for (File file : directory.listFiles()){
-			if (file.getName().endsWith(".rpt")) {
+			if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) {
 				
 				String ID = file.getName().substring(0,4);
 				boolean newData = true;
@@ -51,7 +51,7 @@ public class Main {
 			}
 		}
 		
-		File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
 		for (int i = 0; i < datas.size(); i++){
 			Data data = datas.get(i);
 			String id = data.ID;
@@ -69,7 +69,7 @@ public class Main {
 			}
 		}
 		
-		File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
+		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
 		PrintWriter outputCSV = null;
 		try {
 			outputCSV = new PrintWriter(output);
@@ -94,7 +94,8 @@ public class Main {
 		
 		Values [] zeroSteer_Ave_BestCaseTimePoints =  new Values[10];
 		Values [] zeroSteer_Ave_WorstCaseTimePoints =  new Values[10];
-		
+		Values [] predicitonError_STD_BestCaseTimePoints =  new Values[10];
+		Values [] predicitonError_STD_WorstCaseTimePoints =  new Values[10];
 		
 		for (int i = 0; i < 10; i++) {		
 			steer_STD_BestCaseTimePoints[i] = new Values();
@@ -107,6 +108,8 @@ public class Main {
 			MPH_Ave_WorstCaseTimePoints[i] = new Values();
 			zeroSteer_Ave_BestCaseTimePoints[i] = new Values();
 			zeroSteer_Ave_WorstCaseTimePoints[i] = new Values();
+			predicitonError_STD_BestCaseTimePoints[i] = new Values();
+			predicitonError_STD_WorstCaseTimePoints[i] = new Values();
 		}
 		
 		
@@ -122,6 +125,7 @@ public class Main {
 					steer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_Ave());
 					MPH_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_Ave());
 					zeroSteer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer());
+					predicitonError_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragepredicitonError_STD());
 					break;
 				case WorstCase:
 					steer_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_STD());
@@ -129,6 +133,7 @@ public class Main {
 					steer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteer_Ave());
 					MPH_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageMPH_Ave());
 					zeroSteer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer());
+					predicitonError_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragepredicitonError_STD());
 				}
 			}
 		}
@@ -232,6 +237,29 @@ public class Main {
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
 
+		// predicitonError STD
+		outputCSV.print("Best_predictionError_STD");
+		for (int i = 0; i < predicitonError_STD_BestCaseTimePoints.length; i++) {
+			double s=predicitonError_STD_BestCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_predicitonError_STD");
+		for (int i = 0; i < predicitonError_STD_WorstCaseTimePoints.length; i++) {
+			double s=predicitonError_STD_WorstCaseTimePoints[i].average(); 
+			if (s > 0)
+				outputCSV.print(","+s);
+			else
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
 
 		// MPH Ave
 		outputCSV.print("Best_MPH_Ave");

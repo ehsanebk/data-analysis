@@ -200,23 +200,6 @@ public class Session {
 			
 			Values s = straightSegments.get(i).steer;
 			
-			// finding Fast Corrective Counter Steering in the values
-			
-			for (int j = 0; j < s.size()-100; j++) {
-				boolean drift = true;
-				for (int k = j; k < j+70; k++) {
-					if (s.get(k)!= s.get(j))
-						drift = false;
-				}
-				if(Math.abs(s.get(j) - s.get(j+100)) >= 0.2 && drift ){
-					straightSegments.get(i).number_FastCorrectiveCounterSteering ++ ;
-					j += 100;
-				}
-					
-			}
-			
-			// finding Prediction error values
-			Values e = Utilities.predictionError(straightSegments.get(i).steer);
 		
 			straightSegments.get(i).steer_STD = straightSegments.get(i).steer.stddev();
 			straightSegments.get(i).MPH_STD = straightSegments.get(i).MPH.stddev();
@@ -230,35 +213,38 @@ public class Session {
 			for (int j1 = 0; j1 < s.size(); j1++) {
 				if (Math.abs(s.get(j1)) == 0)
 					number_Frames_Zero_SteerAngel ++;
-				if (Math.abs(s.get(j1)) >= 0.2)
+				if (Math.abs(s.get(j1)) > 0.02)
 					number_Frames_2D_SteerAngel ++;
-				if (Math.abs(s.get(j1)) >= 0.3)
+				if (Math.abs(s.get(j1)) > 0.03)
 					number_Frames_3D_SteerAngel ++;
 			}
-			straightSegments.get(i).percentage_Frames_Zero_SteerAngel = number_Frames_Zero_SteerAngel / s.size() * 100;
-			straightSegments.get(i).percentage_Frames_2D_SteerAngel = number_Frames_2D_SteerAngel / s.size()  * 100;
-			straightSegments.get(i).percentage_Frames_3D_SteerAngel = number_Frames_3D_SteerAngel / s.size() * 100 ;
-			
-			// finding Fast Corrective Counter Steering in the values
+			straightSegments.get(i).percentage_Frames_Zero_SteerAngel = (double)number_Frames_Zero_SteerAngel / s.size() ;
+			straightSegments.get(i).percentage_Frames_2D_SteerAngel = (double)number_Frames_2D_SteerAngel / s.size() ;
+			straightSegments.get(i).percentage_Frames_3D_SteerAngel = (double)number_Frames_3D_SteerAngel / s.size() ;
+
+			// finding Fast Corrective Counter Steering in the values  : FCCS		
 			for (int j = 0; j < s.size()-100; j++) {
 				boolean drift = true;
 				for (int k = j; k < j+70; k++) {
 					if (s.get(k)!= s.get(j))
 						drift = false;
 				}
-				if(Math.abs(s.get(j) - s.get(j+100)) >= 0.2 && drift ){
+				if(Math.abs(s.get(j) - s.get(j+100)) >= 0.02 && drift ){	
 					straightSegments.get(i).number_FastCorrectiveCounterSteering ++ ;
 					j += 100;
 				}
 			}
-		
+
+			// finding Prediction error values
+			Values e = Utilities.predictionError(straightSegments.get(i).steer);
 			straightSegments.get(i).predictionError_STD = e.stddev();
+
 			straightSegments.get(i).steeringEntropy = Utilities.steeringEntropy(s);
 			// clearing the vectors for saving memory
 			straightSegments.get(i).steer.clear();
 			straightSegments.get(i).MPH.clear();
 		}
-			
+
 	}
 
 	double getSessionAverageSPEED_MIN (){
@@ -424,7 +410,7 @@ public class Session {
 		return values.average();
 	}
 	
-	// new values
+	////////////////// new values
 	double getSessionAveragesteer_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)

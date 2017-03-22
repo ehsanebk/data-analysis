@@ -321,13 +321,16 @@ public class Utilities {
 		}
 		double P[] = new double [9];
 		for (int i = 0; i < frequency.length; i++) {
-			P[i]  = frequency[i] / predictionError.size(); 
+			
+			P[i]  = (double)frequency[i] / predictionError.size(); 
 		}
 		
 		// Calculating the log base 9 of the different partitions
 		double entropy= 0;
 		for (int i = 0; i < P.length; i++) {
-			entropy  +=  -P[i]*(Math.log(P[i])/Math.log(9));
+			if ( !Double.isNaN(-P[i]*(Math.log(P[i])/Math.log(9)))){
+				entropy  +=  -P[i]*(Math.log(P[i])/Math.log(9));
+			}
 		}
 		return entropy;
 	}

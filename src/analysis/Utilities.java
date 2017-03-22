@@ -291,7 +291,7 @@ public class Utilities {
 	
 	public static double steeringEntropy (Values v){
 		Values smoothV = new Values();
-		for (int i = 0; i < v.size(); i= i+5) {
+		for (int i = 0; i < v.size()-5; i= i+5) {
 			smoothV.add((v.get(i)+v.get(i+1)+v.get(i+2)+v.get(i+3)+v.get(i+4))/5);
 		}
 		Values predictionError = predictionError(smoothV);

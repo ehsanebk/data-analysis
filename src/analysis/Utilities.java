@@ -277,7 +277,7 @@ public class Utilities {
 	 * 
 	 * @return prediction error value
 	 */
-	public Values predictionError(Values v){
+	public static Values predictionError(Values v){
 		Values e = new Values();
 		for (int i = 3; i < v.size(); i++) {
 			double predicted = v.get(i-1) +(v.get(i-1)-v.get(i-2)) +
@@ -288,4 +288,48 @@ public class Utilities {
 		
 		return e;
 	}
+	
+	public static double steeringEntropy (Values v){
+		Values smoothV = new Values();
+		for (int i = 0; i < v.size(); i= i+5) {
+			smoothV.add((v.get(i)+v.get(i+1)+v.get(i+2)+v.get(i+3)+v.get(i+4))/5);
+		}
+		Values predictionError = predictionError(smoothV);
+		double alpha = predictionError.stddev() * 1.645;
+		int frequency[] = new int [9];
+		double mean = predictionError.mean();
+		
+		for (int i = 0; i < predictionError.size(); i++) {
+			if (predictionError.get(i) <= mean-5*alpha)
+				frequency[0]++;
+			else if (predictionError.get(i)> mean-5*alpha && predictionError.get(i)<= mean-2.5*alpha)
+				frequency[1]++;
+			else if (predictionError.get(i)> mean-2.5*alpha && predictionError.get(i)<= mean-alpha)
+				frequency[2]++;
+			else if (predictionError.get(i)> mean-alpha && predictionError.get(i)<= mean-0.5*alpha)
+				frequency[3]++;
+			else if (predictionError.get(i)> mean-0.5*alpha && predictionError.get(i)< mean+0.5*alpha)
+				frequency[4]++;
+			else if (predictionError.get(i)>= mean+0.5*alpha && predictionError.get(i)< mean+alpha)
+				frequency[5]++;
+			else if (predictionError.get(i)>= mean+alpha && predictionError.get(i)< mean+2.5*alpha)
+				frequency[6]++;
+			else if (predictionError.get(i)>= mean+2.5*alpha && predictionError.get(i)< mean+5*alpha)
+				frequency[7]++;
+			else if (predictionError.get(i)>= mean+5*alpha)
+				frequency[8]++;
+		}
+		double P[] = new double [9];
+		for (int i = 0; i < frequency.length; i++) {
+			P[i]  = frequency[i] / predictionError.size(); 
+		}
+		
+		// Calculating the log base 9 of the different partitions
+		double entropy= 0;
+		for (int i = 0; i < P.length; i++) {
+			entropy  +=  -P[i]*(Math.log(P[i])/Math.log(9));
+		}
+		return entropy;
+	}
+	
 }

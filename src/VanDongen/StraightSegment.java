@@ -54,9 +54,13 @@ public class StraightSegment {
 	double MPH_Max;
 	double steer_Max;
 	
-	int number_Frames_Zero_SteerAngel = 0;
+	double percentage_Frames_Zero_SteerAngel = 0;
+	double percentage_Frames_3D_SteerAngel = 0;  // angle greater than 0.03
+	double percentage_Frames_2D_SteerAngel = 0;  // angle greater than 0.02
+	int number_FastCorrectiveCounterSteering = 0; // patterns of slow drifting and fast corrective counter steering in 50 frames   
 	
 	double predictionError_STD;
+	double steeringEntropy;
 	
 	int numberOfMaxMin;
 	int distnaceOfMaxMin;

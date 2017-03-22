@@ -15,11 +15,11 @@ public class Session {
 	String ID;
 	String sessionNumber;
 	int timePoint;
-	Vector<StraightSegment> straightSegment;
+	Vector<StraightSegment> straightSegments;
 	
 	
 	Session(File file){
-		straightSegment = new Vector<StraightSegment>();
+		straightSegments = new Vector<StraightSegment>();
 		ID = file.getName().substring(0,4);
 		sessionNumber  = file.getName().substring(5, 7);
 		
@@ -65,9 +65,9 @@ public class Session {
 				segment= new StraightSegment();
 				boolean newSegment = true;
 				
-				for (int i = 0; i < straightSegment.size(); i++) {
-					if (straightSegment.get(i).label.equals(label)){
-						segment = straightSegment.get(i);
+				for (int i = 0; i < straightSegments.size(); i++) {
+					if (straightSegments.get(i).label.equals(label)){
+						segment = straightSegments.get(i);
 						newSegment =false;
 						break;
 					}
@@ -167,7 +167,7 @@ public class Session {
 					segment.timeStart = timeStart;
 					segment.timeStop = timeStop;
 					
-					straightSegment.add(segment);
+					straightSegments.add(segment);
 				}	
 			}
 			else
@@ -184,250 +184,307 @@ public class Session {
 		while (t.hasMoreTokens()) {
 			String[] line = t.readNextLine().split("\\s+");
 			frame = Utilities.toInt(line[0]);
-			for (int i = 0; i < straightSegment.size(); i++) {
-				if (frame >= straightSegment.get(i).frameStart && frame <= straightSegment.get(i).frameStop){
+			for (int i = 0; i < straightSegments.size(); i++) {
+				if (frame >= straightSegments.get(i).frameStart && frame <= straightSegments.get(i).frameStop){
 					steer = Utilities.toDouble(line[7]);
 					MPH = Utilities.toDouble(line[10]);
-					straightSegment.get(i).steer.add(steer);
-					straightSegment.get(i).MPH.add(MPH);
+					straightSegments.get(i).steer.add(steer);
+					straightSegments.get(i).MPH.add(MPH);
 				}				
 			}
 		}
 		
-		for (int i = 0; i < straightSegment.size(); i++){
+		for (int i = 0; i < straightSegments.size(); i++){
 			
-			straightSegment.get(i).steer = Utilities.lowpass(straightSegment.get(i).steer, 0.3);
+			straightSegments.get(i).steer = Utilities.lowpass(straightSegments.get(i).steer, 0.5);
 			
-			// finding Prediction error std
-			Values e = new Values();
-			for (int i1 = 3; i1 < straightSegment.get(i).steer.size(); i1++) {
-				System.out.print(straightSegment.get(i).steer.get(i1) + ",");
-				double predicted = straightSegment.get(i).steer.get(i1-1) 
-						+(straightSegment.get(i).steer.get(i1-1)-straightSegment.get(i).steer.get(i1-2)) 
-						+(1/2)*((straightSegment.get(i).steer.get(i1-1)-straightSegment.get(i).steer.get(i1-2))
-								-(straightSegment.get(i).steer.get(i1-2)-straightSegment.get(i).steer.get(i1-3)));
-				e.add(straightSegment.get(i).steer.get(i1) - predicted);
+			Values s = straightSegments.get(i).steer;
+			
+			// finding Fast Corrective Counter Steering in the values
+			
+			for (int j = 0; j < s.size()-100; j++) {
+				boolean drift = true;
+				for (int k = j; k < j+70; k++) {
+					if (s.get(k)!= s.get(j))
+						drift = false;
+				}
+				if(Math.abs(s.get(j) - s.get(j+100)) >= 0.2 && drift ){
+					straightSegments.get(i).number_FastCorrectiveCounterSteering ++ ;
+					j += 100;
+				}
+					
 			}
-			System.out.println("\n");
-
-			straightSegment.get(i).steer_STD = straightSegment.get(i).steer.stddev();
-			straightSegment.get(i).MPH_STD = straightSegment.get(i).MPH.stddev();
-			straightSegment.get(i).steer_Ave = straightSegment.get(i).steer.average();
-			straightSegment.get(i).MPH_Ave = straightSegment.get(i).MPH.average();
-			straightSegment.get(i).steer_Max = straightSegment.get(i).steer.max();
-			straightSegment.get(i).MPH_Max = straightSegment.get(i).MPH.max();
-			for (int j = 0; j < straightSegment.get(i).steer.size(); j++) {
-				if (Math.abs(straightSegment.get(i).steer.get(j)) > 0.03)
-					straightSegment.get(i).number_Frames_Zero_SteerAngel ++;
-			}
-			straightSegment.get(i).predictionError_STD = e.stddev();
-			straightSegment.get(i).steer.clear();
-			straightSegment.get(i).MPH.clear();
+			
+			// finding Prediction error values
+			Values e = Utilities.predictionError(straightSegments.get(i).steer);
 		
+			straightSegments.get(i).steer_STD = straightSegments.get(i).steer.stddev();
+			straightSegments.get(i).MPH_STD = straightSegments.get(i).MPH.stddev();
+			straightSegments.get(i).steer_Ave = straightSegments.get(i).steer.average();
+			straightSegments.get(i).MPH_Ave = straightSegments.get(i).MPH.average();
+			straightSegments.get(i).steer_Max = straightSegments.get(i).steer.max();
+			straightSegments.get(i).MPH_Max = straightSegments.get(i).MPH.max();
+			int number_Frames_Zero_SteerAngel =0;
+			int number_Frames_2D_SteerAngel =0;
+			int number_Frames_3D_SteerAngel =0;
+			for (int j1 = 0; j1 < s.size(); j1++) {
+				if (Math.abs(s.get(j1)) == 0)
+					number_Frames_Zero_SteerAngel ++;
+				if (Math.abs(s.get(j1)) >= 0.2)
+					number_Frames_2D_SteerAngel ++;
+				if (Math.abs(s.get(j1)) >= 0.3)
+					number_Frames_3D_SteerAngel ++;
+			}
+			straightSegments.get(i).percentage_Frames_Zero_SteerAngel = number_Frames_Zero_SteerAngel / s.size() * 100;
+			straightSegments.get(i).percentage_Frames_2D_SteerAngel = number_Frames_2D_SteerAngel / s.size()  * 100;
+			straightSegments.get(i).percentage_Frames_3D_SteerAngel = number_Frames_3D_SteerAngel / s.size() * 100 ;
+			
+			// finding Fast Corrective Counter Steering in the values
+			for (int j = 0; j < s.size()-100; j++) {
+				boolean drift = true;
+				for (int k = j; k < j+70; k++) {
+					if (s.get(k)!= s.get(j))
+						drift = false;
+				}
+				if(Math.abs(s.get(j) - s.get(j+100)) >= 0.2 && drift ){
+					straightSegments.get(i).number_FastCorrectiveCounterSteering ++ ;
+					j += 100;
+				}
+			}
+		
+			straightSegments.get(i).predictionError_STD = e.stddev();
+			straightSegments.get(i).steeringEntropy = Utilities.steeringEntropy(s);
+			// clearing the vectors for saving memory
+			straightSegments.get(i).steer.clear();
+			straightSegments.get(i).MPH.clear();
 		}
 			
 	}
 
 	double getSessionAverageSPEED_MIN (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).SPEED_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).SPEED_MIN);
 		return values.average();
 	}
 	double getSessionAverageSPEED_MAX (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).SPEED_MAX);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).SPEED_MAX);
 		return values.average();
 	}
 	double getSessionAverageSPEED_AVG (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).SPEED_AVG);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).SPEED_AVG);
 		return values.average();
 	}
 	double getSessionAverageSPEED_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).SPEED_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).SPEED_STD);
 		return values.average();
 	}
 	double getSessionAverageACCEL_MIN (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).ACCEL_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).ACCEL_MIN);
 		return values.average();
 	}
 	double getSessionAverageACCEL_MAX (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).ACCEL_MAX);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).ACCEL_MAX);
 		return values.average();
 	}
 	double getSessionAverageACCEL_AVG (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).ACCEL_AVG);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).ACCEL_AVG);
 		return values.average();
 	}
 	double getSessionAverageACCEL_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).ACCEL_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).ACCEL_STD);
 		return values.average();
 	}
 	double getSessionAverageSTEER_MIN (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).STEER_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).STEER_MIN);
 		return values.average();
 	}
 	double getSessionAverageSTEER_MAX (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).STEER_MAX);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).STEER_MAX);
 		return values.average();
 	}
 	double getSessionAverageSTEER_AVG (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).STEER_AVG);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).STEER_AVG);
 		return values.average();
 	}
 	double getSessionAverageSTEER_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).STEER_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).STEER_STD);
 		return values.average();
 	}
 	double getSessionAverageLANEDEV_MIN (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).LANEDEV_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).LANEDEV_MIN);
 		return values.average();
 	}
 	double getSessionAverageLANEDEV_MAX (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).LANEDEV_MAX);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).LANEDEV_MAX);
 		return values.average();
 	}
 	double getSessionAverageLANEDEV_AVG (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).LANEDEV_AVG);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).LANEDEV_AVG);
 		return values.average();
 	}
 	double getSessionAverageLANEDEV_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).LANEDEV_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).LANEDEV_STD);
 		return values.average();
 	}
 	double getSessionAverageBRAKEPDL_MIN (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).BRAKEPDL_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).BRAKEPDL_MIN);
 		return values.average();
 	}
 	double getSessionAverageBRAKEPDL_MAX (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).BRAKEPDL_MAX);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).BRAKEPDL_MAX);
 		return values.average();
 	}
 	double getSessionAverageACCELPDL_MIN (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).ACCELPDL_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).ACCELPDL_MIN);
 		return values.average();
 	}
 	double getSessionAverageACCELPDL_MAX (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).ACCELPDL_MAX);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).ACCELPDL_MAX);
 		return values.average();
 	}
 	double getSessionAverageBRAKEPDL_COUNT (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).SPEED_MIN);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).SPEED_MIN);
 		return values.average();
 	}
 	double getSessionAverageTTBRAKE00 (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).TTBRAKE00);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).TTBRAKE00);
 		return values.average();
 	}
 	double getSessionAverageTTACCREL00 (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).TTACCREL00);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).TTACCREL00);
 		return values.average();
 	}
 	double getSessionAverageTTACCREL01 (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).TTACCREL01);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).TTACCREL01);
 		return values.average();
 	}
 	double getSessionAverageTTACCREL02 (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).TTACCREL02);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).TTACCREL02);
 		return values.average();
 	}
 	double getSessionAverageMPG_AVG (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).MPG_AVG);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).MPG_AVG);
 		return values.average();
 	}
 	double getSessionAverageFUELUSED (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).FUELUSED);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).FUELUSED);
 		return values.average();
 	}
 	
 	// new values
 	double getSessionAveragesteer_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).steer_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).steer_STD);
 		return values.average();
 	}
 	double getSessionAverageMPH_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).MPH_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).MPH_STD);
 		return values.average();
 	}
 	
 	double getSessionAveragesteer_Ave (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).steer_Ave);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).steer_Ave);
 		return values.average();
 	}
 	double getSessionAverageMPH_Ave (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).MPH_Ave);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).MPH_Ave);
+		return values.average();
+	}
+	double getSessionAverageZeroSteer (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).percentage_Frames_Zero_SteerAngel);
+		return values.average();
+	}
+	double getSessionAverage2DSteer (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).percentage_Frames_2D_SteerAngel);
+		return values.average();
+	}
+	double getSessionAverage3DSteer (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).percentage_Frames_3D_SteerAngel);
+		return values.average();
+	}
+	double getSessionAverageFastCorrectiveCounterSteering (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).number_FastCorrectiveCounterSteering);
 		return values.average();
 	}
 	
-	double getSessionAverageZeroSteer (){
-		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).number_Frames_Zero_SteerAngel);
-		return values.average();
-	}
 	double getSessionAveragepredicitonError_STD (){
 		Values values = new Values();
-		for (int i = 0; i < straightSegment.size(); i++)
-			values.add(straightSegment.get(i).predictionError_STD);
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).predictionError_STD);
+		return values.average();
+	}
+	double getSessionAveragesteeringEntorpy (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).steeringEntropy);
 		return values.average();
 	}
 }

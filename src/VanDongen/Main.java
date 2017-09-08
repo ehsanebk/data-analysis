@@ -9,7 +9,7 @@ import analysis.Values;
 
 public class Main {
 
-	private static Vector<Data> datas;
+	private static Vector<Data> participantsData;
 	
 	private static String[] bestCasesNum = {"3001","3025","3040","3086",
 			"3206","3232","3256","3275","3386","3408",
@@ -20,19 +20,20 @@ public class Main {
 
 	public static void main(String[] args) {
 				
-		datas = new Vector<Data>();
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data");
+		participantsData = new Vector<Data>();
+		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 
 		for (File file : directory.listFiles()){
-			if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) {
+			if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) { // what is wrong with 3620?
 				
 				String ID = file.getName().substring(0,4);
 				boolean newData = true;
 				
+				// trying to find whether the ID is new
 				Data data=  new Data();	
-				for (int i = 0; i < datas.size(); i++) {
-					if (datas.get(i).ID.equals(ID)){
-						data = datas.get(i);
+				for (int i = 0; i < participantsData.size(); i++) {
+					if (participantsData.get(i).ID.equals(ID)){
+						data = participantsData.get(i);
 						newData= false;
 						break;
 					}
@@ -46,14 +47,14 @@ public class Main {
 					else
 						data.condition = Conditions.BestCase;
 					data.ID = ID;
-					datas.add(data);
+					participantsData.add(data);
 				}
 			}
 		}
 		
 		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
-		for (int i = 0; i < datas.size(); i++){
-			Data data = datas.get(i);
+		for (int i = 0; i < participantsData.size(); i++){
+			Data data = participantsData.get(i);
 			String id = data.ID;
 			System.out.println(data.ID);
 			for (int j = 0; j < data.sessions.size(); j++) {
@@ -139,8 +140,8 @@ public class Main {
 		}
 		
 		
-		for (int i = 0; i < datas.size(); i++) {
-			Data data = datas.get(i);
+		for (int i = 0; i < participantsData.size(); i++) {
+			Data data = participantsData.get(i);
 			System.out.println(data.ID);
 
 			for (int j = 0; j < data.sessions.size(); j++) {

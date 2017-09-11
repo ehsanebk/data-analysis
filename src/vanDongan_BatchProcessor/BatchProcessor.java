@@ -1,4 +1,4 @@
-package VanDongan_BatchProcessor;
+package vanDongan_BatchProcessor;
 
 import java.io.PrintStream;
 import java.nio.file.Files;

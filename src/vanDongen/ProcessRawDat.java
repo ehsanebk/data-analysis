@@ -1,4 +1,4 @@
-package VanDongen;
+package vanDongen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,7 +7,7 @@ import java.util.Vector;
 import analysis.Utilities;
 import analysis.Values;
 
-public class Main {
+public class ProcessRawDat {
 
 	private static Vector<Data> participantsData;
 	
@@ -69,6 +69,9 @@ public class Main {
 				}		
 			}
 		}
+		
+		
+		
 		
 		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
 		PrintWriter outputCSV = null;

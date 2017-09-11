@@ -1,4 +1,4 @@
-package VanDongen;
+package vanDongen;
 
 import java.io.File;
 import java.util.*;

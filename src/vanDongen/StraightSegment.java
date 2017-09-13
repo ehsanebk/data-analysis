@@ -65,7 +65,7 @@ public class StraightSegment {
 	int numberOfMaxMin_rounded;
 	int distnaceOfMaxMin_rounded;
 	
-	// for processed data 
+	// for processed(Extracted) data 
 	Values frameCount;
 	Values elapsedTime;
 	Values travelDist;
@@ -81,7 +81,7 @@ public class StraightSegment {
 	double steerWheel_Ave, steerWheel_Max, steerWheel_STD;
 	double lanePos_Ave, lanePos_Max, lanePos_STD;
 	
-	//double percentage_Frames_Zero_SteerWheel = 0;
+	double percentage_Frames_Zero_SteerWheel = 0; // angle less than 0.0001
 	double percentage_Frames_3D_SteerWheel = 0;  // angle greater than 0.03
 	double percentage_Frames_2D_SteerWheel = 0;  // angle greater than 0.02
 	int number_FastCorrectiveCounterSteerWheel = 0; // patterns of slow drifting and fast corrective counter steering in 50 frames   
@@ -91,10 +91,7 @@ public class StraightSegment {
 	
 	int numberOfMaxMin;
 	int distnaceOfMaxMin;
-	
-	
-	
-	
+		
 	
 	public StraightSegment() {
 		MPH = new Values();

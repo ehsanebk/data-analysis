@@ -320,14 +320,14 @@ public class Session {
 			int number_Frames_2D_SteerAngel =0;
 			int number_Frames_3D_SteerAngel =0;
 			for (int j1 = 0; j1 < s.size(); j1++) {
-				if (Math.abs(s.get(j1)) == 0)
+				if (Math.abs(s.get(j1)) < 0.00001)
 					number_Frames_Zero_SteerAngel ++;
-				if (Math.abs(s.get(j1)) > 0.02)
+				if (Math.abs(s.get(j1)) > 0.002)
 					number_Frames_2D_SteerAngel ++;
-				if (Math.abs(s.get(j1)) > 0.03)
+				if (Math.abs(s.get(j1)) > 0.003)
 					number_Frames_3D_SteerAngel ++;
 			}
-			//straightSegments.get(i).percentage_Frames_Zero_SteerAngel = (double)number_Frames_Zero_SteerAngel / s.size() ;
+			straightSegments.get(i).percentage_Frames_Zero_SteerWheel = (double)number_Frames_Zero_SteerAngel / s.size() ;
 			straightSegments.get(i).percentage_Frames_2D_SteerWheel = (double)number_Frames_2D_SteerAngel / s.size() ;
 			straightSegments.get(i).percentage_Frames_3D_SteerWheel = (double)number_Frames_3D_SteerAngel / s.size() ;
 
@@ -670,22 +670,28 @@ public class Session {
 		return values.average();
 	}
 	// Steering
+	double getSessionAverageZeroSteer_Extracted (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).percentage_Frames_Zero_SteerWheel);
+		return values.average();
+	}
 	double getSessionAverage2DSteer_Extracted (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).percentage_Frames_2D_SteerAngel_rounded);
+			values.add(straightSegments.get(i).percentage_Frames_2D_SteerWheel);
 		return values.average();
 	}
 	double getSessionAverage3DSteer_Extracted (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).percentage_Frames_3D_SteerAngel_rounded);
+			values.add(straightSegments.get(i).percentage_Frames_3D_SteerWheel);
 		return values.average();
 	}
 	double getSessionAverageFastCorrectiveCounterSteering_Extracted (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).number_FastCorrectiveCounterSteering_rounded);
+			values.add(straightSegments.get(i).number_FastCorrectiveCounterSteerWheel);
 		return values.average();
 	}
 	

@@ -24,8 +24,8 @@ public class ProcessExtractedData {
 	public static void main(String[] args) {
 
 		participantsData = new Vector<Data>();
-		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
-		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		for (File file : directory.listFiles()){
 			if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) { // what is wrong with 3620?
 
@@ -74,13 +74,13 @@ public class ProcessExtractedData {
 //		}
 
 		
-		//File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
-		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		//File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
 
 
-		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
-		File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		//File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
 		PrintWriter outputCSV = null;
 		try {
 			outputCSV = new PrintWriter(output);
@@ -135,8 +135,8 @@ public class ProcessExtractedData {
 		Values [] lanePos_Ave_BestCaseTimePoints =  new Values[10];
 		Values [] lanePos_Ave_WorstCaseTimePoints =  new Values[10];
 
-//		Values [] zeroSteer_Percentage_BestCaseTimePoints =  new Values[10];
-//		Values [] zeroSteer_Percentage_WorstCaseTimePoints =  new Values[10];
+		Values [] zeroSteer_Percentage_BestCaseTimePoints =  new Values[10];
+		Values [] zeroSteer_Percentage_WorstCaseTimePoints =  new Values[10];
 
 		Values [] steer2D_Percentage_BestCaseTimePoints =  new Values[10];
 		Values [] steer2D_Percentage_WorstCaseTimePoints =  new Values[10];
@@ -167,6 +167,8 @@ public class ProcessExtractedData {
 			lanePos_Ave_BestCaseTimePoints[i] = new Values();
 			lanePos_Ave_WorstCaseTimePoints[i] = new Values();
 			
+			zeroSteer_Percentage_BestCaseTimePoints[i] =  new Values();
+			zeroSteer_Percentage_WorstCaseTimePoints[i] =  new Values();
 			steer2D_Percentage_BestCaseTimePoints[i] = new Values();
 			steer2D_Percentage_WorstCaseTimePoints[i] = new Values();
 			steer3D_Percentage_BestCaseTimePoints[i] = new Values();
@@ -194,7 +196,7 @@ public class ProcessExtractedData {
 					steer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_Ave_Extraxted());
 					lanePos_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extraxted());
 					
-					//zeroSteer_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer());
+					zeroSteer_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer_Extracted());
 					steer2D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage2DSteer_Extracted());
 					steer3D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage3DSteer_Extracted());
 					FCCS_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageFastCorrectiveCounterSteering_Extracted());
@@ -208,7 +210,7 @@ public class ProcessExtractedData {
 					steer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_Ave_Extraxted());
 					lanePos_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extraxted());
 					
-					//zeroSteer_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer());
+					zeroSteer_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer_Extracted());
 					steer2D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage2DSteer_Extracted());
 					steer3D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage3DSteer_Extracted());
 					FCCS_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageFastCorrectiveCounterSteering_Extracted());
@@ -303,25 +305,25 @@ public class ProcessExtractedData {
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
 
-//		// Zero Steer Ave : Percentage of Frames
-//		outputCSV.print("Best_ZeroSteer_Percentage");
-//		for (int i = 0; i < zeroSteer_Percentage_BestCaseTimePoints.length; i++) {
-//			double s= zeroSteer_Percentage_BestCaseTimePoints[i].average(); 
-//
-//			outputCSV.print(","+s);
-//		}
-//		outputCSV.print("\n");
-//		outputCSV.flush();
-//		outputCSV.print("Worst_ZeroSteer_Percentage");
-//		for (int i = 0; i < zeroSteer_Percentage_WorstCaseTimePoints.length; i++) {
-//			double s= zeroSteer_Percentage_WorstCaseTimePoints[i].average(); 
-//
-//			outputCSV.print(","+s);
-//		}
-//		outputCSV.print("\n");
-//		outputCSV.flush();
-//		outputCSV.print("\n\n\n");
-//		outputCSV.flush();
+		// Zero Steer Ave : Percentage of Frames
+		outputCSV.print("Best_ZeroSteer_Percentage");
+		for (int i = 0; i < zeroSteer_Percentage_BestCaseTimePoints.length; i++) {
+			double s= zeroSteer_Percentage_BestCaseTimePoints[i].average(); 
+
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_ZeroSteer_Percentage");
+		for (int i = 0; i < zeroSteer_Percentage_WorstCaseTimePoints.length; i++) {
+			double s= zeroSteer_Percentage_WorstCaseTimePoints[i].average(); 
+
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
 
 		// more than 0.2 degree Steer Ave : Percentage of Frames
 		outputCSV.print("Best_Steer2D_Percentage");

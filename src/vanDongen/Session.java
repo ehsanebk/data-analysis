@@ -9,7 +9,20 @@ import analysis.Utilities;
 import analysis.Values;
 
 
-
+/**
+ * In this code there are three type of data files:
+ * 
+ * 1- "Reported Data" which the the report summary reported  by the application
+ * 
+ * 2- "Raw Data" that is the Raw data with below fields
+ *     Frame	X	Y	Z	P	R	H	steer	accel	brake	MPH	D_spd	elapsed	gear	cltch	rpm
+ *  
+ * 3- "Extracted Data" which is the data that was extracted from the binary files and has the below fields
+ *     frameCount	elapsedTime	travelDist	simTime	accelPed	brakePed	steerWheel	lanePos	followDist
+ * 
+ * @author Ehsan
+ *
+ */
 public class Session {
 
 	String ID;
@@ -18,10 +31,10 @@ public class Session {
 	Vector<StraightSegment> straightSegments;
 	
 	
-	Session(File file){
+	Session(File reportedFile){
 		straightSegments = new Vector<StraightSegment>();
-		ID = file.getName().substring(0,4);
-		sessionNumber  = file.getName().substring(5, 7);
+		ID = reportedFile.getName().substring(0,4);
+		sessionNumber  = reportedFile.getName().substring(5, 7);
 		
 		int sessionNumberInt = Utilities.toInt(sessionNumber);
 		
@@ -53,7 +66,7 @@ public class Session {
 		
 		
 		StraightSegment segment;
-		Tokenizer t = new Tokenizer(file);
+		Tokenizer t = new Tokenizer(reportedFile);
 		t.skipLines(4);
 		String MetricName;
 		while (t.hasMoreTokens()) {			
@@ -248,6 +261,7 @@ public class Session {
 	}
 
 	public void addProssesedData(File file) {
+		System.out.println("Processing: " + file.getName());
 		Tokenizer t = new Tokenizer(file);
 		t.skipLines(10);
 		int frame;
@@ -298,6 +312,10 @@ public class Session {
 			straightSegments.get(i).steerWheel_Ave = straightSegments.get(i).steerWheel.average();
 			straightSegments.get(i).steerWheel_Max = straightSegments.get(i).steerWheel.max();
 			
+			straightSegments.get(i).lanePos_STD = straightSegments.get(i).lanePos.stddev();
+			straightSegments.get(i).lanePos_Ave = straightSegments.get(i).lanePos.average();
+			straightSegments.get(i).lanePos_Max = straightSegments.get(i).lanePos.max();
+			
 			int number_Frames_Zero_SteerAngel =0;
 			int number_Frames_2D_SteerAngel =0;
 			int number_Frames_3D_SteerAngel =0;
@@ -331,8 +349,17 @@ public class Session {
 			straightSegments.get(i).predictionError_STD = e.stddev();
 
 			straightSegments.get(i).steeringEntropy = Utilities.steeringEntropy(s);
+			
 			// clearing the vectors for saving memory
+			straightSegments.get(i).frameCount.clear();
+			straightSegments.get(i).elapsedTime.clear();
+			straightSegments.get(i).travelDist.clear();
+			straightSegments.get(i).simTime.clear();
+			straightSegments.get(i).accelPed.clear();
+			straightSegments.get(i).brakePed.clear();
 			straightSegments.get(i).steerWheel.clear();
+			straightSegments.get(i).lanePos.clear();
+			straightSegments.get(i).followDist.clear();
 			
 		}
 		
@@ -621,6 +648,25 @@ public class Session {
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
 			values.add(straightSegments.get(i).steerWheel_STD);
+		return values.average();
+	}
+	// Lane position
+	double getSessionLanePos_Ave_Extraxted (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).lanePos_Ave);
+		return values.average();
+	}
+	double getSessionLanePos_Max_Extraxted (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).lanePos_Max);
+		return values.average();
+	}
+	double getSessionLanePos_STD_Extraxted (){
+		Values values = new Values();
+		for (int i = 0; i < straightSegments.size(); i++)
+			values.add(straightSegments.get(i).lanePos_STD);
 		return values.average();
 	}
 	// Steering

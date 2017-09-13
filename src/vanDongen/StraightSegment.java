@@ -79,7 +79,7 @@ public class StraightSegment {
 	double accelPed_Ave, accelPed_Max, accelPed_STD;
 	double brakePed_Ave, brakePed_Max, brakePed_STD;
 	double steerWheel_Ave, steerWheel_Max, steerWheel_STD;
-	
+	double lanePos_Ave, lanePos_Max, lanePos_STD;
 	
 	//double percentage_Frames_Zero_SteerWheel = 0;
 	double percentage_Frames_3D_SteerWheel = 0;  // angle greater than 0.03

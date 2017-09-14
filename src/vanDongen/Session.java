@@ -322,9 +322,9 @@ public class Session {
 			for (int j1 = 0; j1 < s.size(); j1++) {
 				if (Math.abs(s.get(j1)) < 0.00001)
 					number_Frames_Zero_SteerAngel ++;
-				if (Math.abs(s.get(j1)) > 0.002)
+				if (Math.abs(s.get(j1)) > 0.034)
 					number_Frames_2D_SteerAngel ++;
-				if (Math.abs(s.get(j1)) > 0.003)
+				if (Math.abs(s.get(j1)) > 0.052)
 					number_Frames_3D_SteerAngel ++;
 			}
 			straightSegments.get(i).percentage_Frames_Zero_SteerWheel = (double)number_Frames_Zero_SteerAngel / s.size() ;

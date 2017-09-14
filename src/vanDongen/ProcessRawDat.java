@@ -21,7 +21,8 @@ public class ProcessRawDat {
 	public static void main(String[] args) {
 				
 		participantsData = new Vector<Data>();
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 
 		for (File file : directory.listFiles()){
 			if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) { // what is wrong with 3620?
@@ -52,7 +53,8 @@ public class ProcessRawDat {
 			}
 		}
 		
-		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		//File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
 		for (int i = 0; i < participantsData.size(); i++){
 			Data data = participantsData.get(i);
 			String id = data.ID;
@@ -73,7 +75,8 @@ public class ProcessRawDat {
 		
 		
 		
-		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
+		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
+		File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_RawData.csv");
 		PrintWriter outputCSV = null;
 		try {
 			outputCSV = new PrintWriter(output);

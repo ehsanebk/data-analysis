@@ -327,9 +327,9 @@ public class Session {
 				if (Math.abs(s.get(j1)) > 0.052)
 					number_Frames_3D_SteerAngel ++;
 			}
-			straightSegments.get(i).percentage_Frames_Zero_SteerWheel = (double)number_Frames_Zero_SteerAngel / s.size() ;
-			straightSegments.get(i).percentage_Frames_2D_SteerWheel = (double)number_Frames_2D_SteerAngel / s.size() ;
-			straightSegments.get(i).percentage_Frames_3D_SteerWheel = (double)number_Frames_3D_SteerAngel / s.size() ;
+			straightSegments.get(i).percentage_Frames_Zero_SteerWheel = (double)number_Frames_Zero_SteerAngel / s.size() *100;
+			straightSegments.get(i).percentage_Frames_2D_SteerWheel = (double)number_Frames_2D_SteerAngel / s.size() *100;
+			straightSegments.get(i).percentage_Frames_3D_SteerWheel = (double)number_Frames_3D_SteerAngel / s.size() *100;
 
 			// finding Fast Corrective Counter Steering in the values  : FCCS		
 			for (int j = 0; j < s.size()-100; j++) {

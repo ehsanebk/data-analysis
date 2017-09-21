@@ -16,5 +16,16 @@ public class Data {
 
 		sessions = new Vector<Session>();
 	}
+	
+	Session getSessionByNumber(int sNumber){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session;
+		}
+		
+		return null;
+		
+	}
 
 }

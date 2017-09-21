@@ -54,43 +54,24 @@ public class ProcessExtractedData {
 				}
 			}
 		}
-
-//		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
-//		for (int i = 0; i < participantsData.size(); i++){
-//			Data data = participantsData.get(i);
-//			String id = data.ID;
-//			System.out.println(data.ID);
-//			for (int j = 0; j < data.sessions.size(); j++) {
-//				Session s  = data.sessions.get(j);
-//				String s_number = s.sessionNumber;
-//				System.out.println(s_number);
-//				for (File file : rawDataDirectory.listFiles()) {
-//					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
-//						System.out.println(file.getName());
-//						s.addRawData(file);
-//					}
-//				}		
-//			}
-//		}
-
 		
 		//File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
-
-
+		
 		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
-		File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
-		PrintWriter outputCSV = null;
-		try {
-			outputCSV = new PrintWriter(output);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		WriteToFile(outputCSV);
+		File output = 
+				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		//WriteToFile(output);
+		
+		//File outputIndividualTimePoints = 
+		//		new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Indivual.csv");
+		File outputIndividualTimePoints = 
+				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+		WriteToFileIndividual(outputIndividualTimePoints);
 	}
+
+	
 
 	static void process(Path dir) {
 		try {
@@ -101,7 +82,7 @@ public class ProcessExtractedData {
 				} else if (inPathFile.getName().toLowerCase().endsWith(".rec.txt") 
 						&& inPathFile.getName().toString().toLowerCase().startsWith("drv")) {
 					String ID = inPathFile.getName().substring(4,8);
-					for (int i = 0; i < participantsData.size(); i++){ 
+					for (int i = 0; i < participantsData.size(); i++){
 						if(participantsData.get(i).ID.equals(ID))
 						{
 							Data data = participantsData.get(i);
@@ -124,7 +105,16 @@ public class ProcessExtractedData {
 	}
 	
 	
-	static void WriteToFile(PrintWriter outputCSV) {
+	static void WriteToFile(File output) {
+		PrintWriter outputCSV = null;
+		try {
+			outputCSV = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 		Values [] steer_STD_BestCaseTimePoints =  new Values[10];
 		Values [] steer_STD_WorstCaseTimePoints =  new Values[10];
 		Values [] steer_Ave_BestCaseTimePoints =  new Values[10];
@@ -429,5 +419,85 @@ public class ProcessExtractedData {
 
 
 		outputCSV.close();
+	}
+	
+	/**
+	 * @param outputIndividualTimePointsCSV
+	 * For now, this function just writes the individual values for lane position 
+	 */
+	private static void WriteToFileIndividual(File outputIndividualTimePoints) {
+
+		PrintWriter output = null;
+		try {
+			output = new PrintWriter(outputIndividualTimePoints);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		for (int i = 0; i < participantsData.size(); i++) {
+			Data data = participantsData.get(i);
+			System.out.println(" Processing to write to file (indidual data): " + data.ID +" " + data.sessions.size());
+
+			// For extracted 
+			output.println(data.ID + ",Extracted");
+			output.println(",1,2,3,4");
+			for (int k = 4; k <24 ; k++) {
+				if (data.getSessionByNumber(k) != null){
+//					output.print(k);
+//					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
+//						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
+//					}
+					output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
+				}
+				if (k%4 ==3 ){
+					output.print("\n");output.flush();
+				}
+			}
+			output.println(",Break");output.flush();
+			for (int k = 24; k <44 ; k++) {
+				if (data.getSessionByNumber(k) != null){
+//					output.print(k);
+//					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
+//						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
+//					}
+					output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
+				}
+				if (k%4 ==3 ){
+					output.print("\n");output.flush();
+				}
+			}
+			output.print("\n\n");output.flush();
+
+//			// For reported 
+//			output.println(data.ID + ",Reported");
+//			output.println(",1,2,3,4");
+//			for (int k = 4; k <24 ; k++) {
+//				if (data.getSessionByNumber(k) != null){
+////					output.print(k);
+////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
+////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
+////					}
+//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
+//				}
+//				if (k%4 ==3 ){
+//					output.print("\n");output.flush();
+//				}
+//			}
+//			output.println(",Break");output.flush();
+//			for (int k = 24; k <44 ; k++) {
+//				if (data.getSessionByNumber(k) != null){
+////					output.print(k);
+////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
+////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
+////					}
+//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
+//				}
+//				if (k%4 ==3 ){
+//					output.print("\n");output.flush();
+//				}
+//			}
+//			output.print("\n\n");output.flush();	
+		}
 	}
 }

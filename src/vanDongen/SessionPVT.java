@@ -10,7 +10,7 @@ public class SessionPVT {
 	
 	pre_post pre_post; // whether the test is pre driving or post.
 	String sessionNumber; // Session # is the number of the driving session. 
-	String trialNumberInFile; // Trail # is the number of the pvt session by the 
+	int trialNumberInFile; // Trail # is the number of the pvt session by the 
 						// order that is been reported in the file.
 	String trialDate;
 	String trialTime;
@@ -21,6 +21,11 @@ public class SessionPVT {
 	public SessionPVT() {
 
 		RT = new Values();
+	}
+	
+	
+	public double getSessionAve(){
+		return RT.average();
 	}
 	
 }

@@ -130,9 +130,12 @@ public class Utilities {
 		}
 	}
 	
-	// values:    an array of numbers that will be modified in place
-	// smoothing: the strength of the smoothing filter; 1=no change, larger values smoothes more
-	// since the invalid values are -100 there are if statements which check how the values are before and after
+	/**
+	 * @param values  An array of numbers that will be modified in place
+	 * @param smoothing  the strength of the smoothing filter; 1=no change, larger values smoothes more
+	 *  since the invalid values are -100 there are if statements which check how the values are before and after
+	 * @return Smooth Array
+	 */
 	public static Values smoothArray( Values values, int smoothing ){
 	  
 		Values output = new Values();
@@ -155,8 +158,15 @@ public class Utilities {
 		return output;
 	}
 
-	// Return RC low-pass filter output samples, given input samples,
-	// time interval dt, and time constant RC
+	
+	/**
+	 * @param values
+	 * @param CUTOFF
+	 * @param SAMPLE_RATE
+	 * @return Return RC low-pass filter output samples
+	 * given input samples,
+	 * time interval dt, and time constant RC
+	 */
 	public static Values lowpass( Values values,double CUTOFF, double SAMPLE_RATE){
 		  
 		Values output = new Values();
@@ -182,8 +192,12 @@ public class Utilities {
 		}
 		return output;
 	}
-	// Return RC low-pass filter output samples, given input samples,
-	// value of alpha is between 0 and 1. the curve will be smoother if alpha is closer to 0 
+	
+	/**
+	 * @param values
+	 * @param alpha value of alpha is between 0 and 1. the curve will be smoother if alpha is closer to 0 
+	 * @return Return RC low-pass filter output samples, given input samples
+	 */
 	public static Values lowpass( Values values,double alpha){
 
 		Values output = new Values();

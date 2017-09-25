@@ -10,7 +10,7 @@ public class DataPVT {
 	String ID;
 	Conditions condition;
 	
-	static Vector<SessionPVT> sessions;
+	Vector<SessionPVT> sessions;
 	
 	DataPVT() {
 
@@ -26,29 +26,32 @@ public class DataPVT {
 		return null;		
 	}
 	
-	static void process(File file){
+	void process(File file){
 		System.out.println("Processing PVT file : " + file.getName());
 		Tokenizer t = new Tokenizer(file);
-		
+		int counter=0;
 		while(t.hasMoreTokens()){
 			String line = t.readNextLine();
 			if (line.contains("PVT DATA")){
+				counter++;
 				SessionPVT newSession = new SessionPVT();
-				t.skipLines(7);
-				newSession.trialDate = t.readNextLine().substring(17, 24);
-				newSession.trialTime = t.readNextLine().substring(17, 24);
+				newSession.trialNumberInFile = counter;
 				t.skipLines(6);
-				String rt = t.readNextLine().substring(1,4);
-				rt.replaceAll("\\s+", "");
+				newSession.trialDate = t.readNextLine().substring(17, 24);
+				newSession.trialTime = t.readNextLine().substring(16, 20);
+				t.skipLines(6);
+				String rt = t.readNextLine().substring(2,5);
+				rt = rt.replaceAll("\\s+", "");
 				while (!rt.equals("0")){
 					newSession.RT.add(Integer.valueOf(rt).intValue()); // changing to int
-					rt = t.readNextLine().substring(1,4);
+					rt = t.readNextLine().substring(2,5);
+					rt = rt.replaceAll("\\s+", "");
 				}
 				sessions.add(newSession);
 			}
 				
 		}
 	}
-	
+
 
 }

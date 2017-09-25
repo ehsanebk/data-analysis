@@ -2,7 +2,6 @@ package vanDongen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,9 +10,10 @@ import java.util.Vector;
 import analysis.Utilities;
 import analysis.Values;
 
-public class ProcessExtractedData {
-	private static Vector<Data> participantsData;
-
+public class ProcessPVT {
+	
+	private static Vector<DataPVT> participantsDataPVT;
+	
 	private static String[] bestCasesNum = {"3001","3025","3040","3086",
 			"3206","3232","3256","3275","3386","3408",
 			"3440","3574","3579","3620"};
@@ -21,47 +21,45 @@ public class ProcessExtractedData {
 			"3122","3171","3207","3215","3220",
 			"3309","3311","3359","3421","3512","3570","3674"};
 
-	public static void main(String[] args) {
-
-		participantsData = new Vector<Data>();
-		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
-		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
-		for (File file : directory.listFiles()){
-			if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) { // what is wrong with 3620?
-
-				String ID = file.getName().substring(0,4);
-				boolean newData = true;
-
-				// trying to find whether the ID is new
-				Data data=  new Data();	
-				for (int i = 0; i < participantsData.size(); i++) {
-					if (participantsData.get(i).ID.equals(ID)){
-						data = participantsData.get(i);
-						newData= false;
-						break;
-					}
-				}
-
-				data.sessions.add(new Session(file));
-
-				if (newData){
-					if (Utilities.arrayContains(worstCasesNum, ID))
-						data.condition = Conditions.WorstCase;
+	public ProcessPVT() {
+		participantsDataPVT = new Vector<DataPVT>();
+	}
+	
+	static void process(Path dir) {
+		try {
+			for (Path inPath : Files.newDirectoryStream(dir)) {
+				File inPathFile= inPath.toFile();
+				if (Files.isDirectory(inPath)) {
+					process(inPath);
+				} else if (inPathFile.getName().toLowerCase().endsWith(".pvt")) {
+					DataPVT dataPVT = new DataPVT();
+					dataPVT.ID = inPathFile.getName();
+					if (Utilities.arrayContains(worstCasesNum, dataPVT.ID))
+						dataPVT.condition = Conditions.WorstCase;
 					else
-						data.condition = Conditions.BestCase;
-					data.ID = ID;
-					participantsData.add(data);
+						dataPVT.condition = Conditions.BestCase;
+					participantsDataPVT.add(dataPVT);
 				}
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+	
+	
+	
+	
+	
+	public static void main(String[] args) {
 		
-		//File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
-		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
-		process(extractedDataDirectory.toPath());
+		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
 		
-		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		ProcessPVT.process(directory.toPath());
+		
+		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_PVT.csv");
 		File output = 
-				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_PVT.csv");
 		WriteToFile(output);
 		
 		//File outputIndividualTimePoints = 
@@ -73,38 +71,7 @@ public class ProcessExtractedData {
 
 	
 
-	static void process(Path dir) {
-		try {
-			for (Path inPath : Files.newDirectoryStream(dir)) {
-				File inPathFile= inPath.toFile();
-				if (Files.isDirectory(inPath)) {
-					process(inPath);
-				} else if (inPathFile.getName().toLowerCase().endsWith(".rec.txt") 
-						&& inPathFile.getName().toString().toLowerCase().startsWith("drv")) {
-					String ID = inPathFile.getName().substring(4,8);
-					for (int i = 0; i < participantsData.size(); i++){
-						if(participantsData.get(i).ID.equals(ID))
-						{
-							Data data = participantsData.get(i);
-							for (int j = 0; j < data.sessions.size(); j++) {
-								Session s  = data.sessions.get(j);
-								String s_number = s.sessionNumber;	
-								if (inPathFile.getName().contains("B"+ s_number)){
-										s.addProssesedData(inPathFile);
-										break;
-									}
-								}		
-							break;
-						}
-					}
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
+
 	static void WriteToFile(File output) {
 		PrintWriter outputCSV = null;
 		try {
@@ -421,83 +388,5 @@ public class ProcessExtractedData {
 		outputCSV.close();
 	}
 	
-	/**
-	 * @param outputIndividualTimePointsCSV
-	 * For now, this function just writes the individual values for lane position 
-	 */
-	private static void WriteToFileIndividual(File outputIndividualTimePoints) {
 
-		PrintWriter output = null;
-		try {
-			output = new PrintWriter(outputIndividualTimePoints);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		for (int i = 0; i < participantsData.size(); i++) {
-			Data data = participantsData.get(i);
-			System.out.println(" Processing to write to file (indidual data): " + data.ID +" " + data.sessions.size());
-
-			// For extracted 
-			output.println(data.ID + ",Extracted");
-			output.println(",1,2,3,4");
-			for (int k = 4; k <24 ; k++) {
-				if (data.getSessionByNumber(k) != null){
-//					output.print(k);
-//					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-//						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
-//					}
-					output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-				}
-				if (k%4 ==3 ){
-					output.print("\n");output.flush();
-				}
-			}
-			output.println(",Break");output.flush();
-			for (int k = 24; k <44 ; k++) {
-				if (data.getSessionByNumber(k) != null){
-//					output.print(k);
-//					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-//						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
-//					}
-					output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-				}
-				if (k%4 ==3 ){
-					output.print("\n");output.flush();
-				}
-			}
-			output.print("\n\n");output.flush();
-
-//			// For reported 
-//			output.println(data.ID + ",Reported");
-//			output.println(",1,2,3,4");
-//			for (int k = 4; k <24 ; k++) {
-//				if (data.getSessionByNumber(k) != null){
-////					output.print(k);
-////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
-////					}
-//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
-//				}
-//				if (k%4 ==3 ){
-//					output.print("\n");output.flush();
-//				}
-//			}
-//			output.println(",Break");output.flush();
-//			for (int k = 24; k <44 ; k++) {
-//				if (data.getSessionByNumber(k) != null){
-////					output.print(k);
-////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
-////					}
-//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
-//				}
-//				if (k%4 ==3 ){
-//					output.print("\n");output.flush();
-//				}
-//			}
-//			output.print("\n\n");output.flush();	
-		}
-	}
 }

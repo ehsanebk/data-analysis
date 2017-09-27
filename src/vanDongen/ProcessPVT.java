@@ -14,12 +14,7 @@ public class ProcessPVT {
 	
 	private static Vector<DataPVT> participantsDataPVT;
 	
-	private static String[] bestCasesNum = {"3001","3025","3040","3086",
-			"3206","3232","3256","3275","3386","3408",
-			"3440","3574","3579","3620"};
-	private static String[] worstCasesNum = {"3047",
-			"3122","3171","3207","3215","3220",
-			"3309","3311","3359","3421","3512","3570","3674"};
+	
 
 	public ProcessPVT() {
 		participantsDataPVT = new Vector<DataPVT>();
@@ -35,11 +30,6 @@ public class ProcessPVT {
 					process(inPath);
 				} else if (inPathFile.getName().toLowerCase().endsWith(".pvt")) {
 					DataPVT dataPVT = new DataPVT();
-					dataPVT.ID = inPathFile.getName();
-					if (Utilities.arrayContains(worstCasesNum, dataPVT.ID))
-						dataPVT.condition = Conditions.WorstCase;
-					else
-						dataPVT.condition = Conditions.BestCase;
 					dataPVT.process(inPathFile);
 					participantsDataPVT.add(dataPVT);
 				}

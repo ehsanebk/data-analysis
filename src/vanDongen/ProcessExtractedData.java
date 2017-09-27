@@ -24,8 +24,8 @@ public class ProcessExtractedData {
 	public static void main(String[] args) {
 
 		participantsData = new Vector<Data>();
-		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
-		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		for (File file : directory.listFiles()){
 			//if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) { // what is wrong with 3620?
 			if (file.getName().endsWith(".rpt")) {
@@ -55,19 +55,19 @@ public class ProcessExtractedData {
 			}
 		}
 		
-		//File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
-		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		//File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
 		
-		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
-		File output = 
-				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+//		File output = 
+//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
 		//WriteToFile(output);
 		
-		//File outputIndividualTimePoints = 
-		//		new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
 		File outputIndividualTimePoints = 
-				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+//		File outputIndividualTimePoints = 
+//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
 		WriteToFileIndividual(outputIndividualTimePoints);
 	}
 
@@ -449,7 +449,7 @@ public class ProcessExtractedData {
 //						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
 //					}
 					//output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-					output.print("," + data.getSessionByNumber(k).getSessionAverage2DSteer_Extracted());
+					output.print("," + data.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
 				}
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
@@ -463,7 +463,7 @@ public class ProcessExtractedData {
 //						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
 //					}
 					//output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-					output.print("," + data.getSessionByNumber(k).getSessionAverage2DSteer_Extracted());
+					output.print("," + data.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
 				}
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();

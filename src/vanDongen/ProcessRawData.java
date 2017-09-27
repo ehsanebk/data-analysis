@@ -7,7 +7,7 @@ import java.util.Vector;
 import analysis.Utilities;
 import analysis.Values;
 
-public class ProcessRawDat {
+public class ProcessRawData {
 
 	private static Vector<Data> participantsData;
 	

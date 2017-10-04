@@ -2,7 +2,7 @@ package vanDongen;
 
 import analysis.Values;
 
-enum pre_post {Per, Post};
+enum pre_post {Pre, Post};
 
 public class SessionPVT {
 
@@ -12,6 +12,8 @@ public class SessionPVT {
 	String sessionNumber; // Session # is the number of the driving session. 
 	int trialNumberInFile; // Trail # is the number of the pvt session by the 
 						// order that is been reported in the file.
+	int timePoint;  // the time points are in the format of 
+					// 1 2 3 4 break 6 7 8 9
 	String trialDate;
 	String trialTime;
 	String task;

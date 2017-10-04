@@ -27,7 +27,8 @@ public class Session {
 
 	String ID;
 	String sessionNumber;
-	int timePoint;
+	int timePoint;   // the time points are in the format of 
+					// 1 2 3 4 break 6 7 8 9
 	Vector<StraightSegment> straightSegments;
 	
 	

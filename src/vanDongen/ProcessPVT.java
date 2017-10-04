@@ -13,9 +13,15 @@ import analysis.Values;
 public class ProcessPVT {
 	
 	private static Vector<DataPVT> participantsDataPVT;
-	
-	
 
+	private static String[] validPVT = {"3040","3047","3086","3122", "3171",
+			"3206","3207","3215","3220","3040", "3232",
+			"3256","3275","3309","3311","3359","3386","3408","3421",
+			"3440","3512","3570","3574",
+			"3579","3620","3674"
+			};
+	
+	
 	public ProcessPVT() {
 		participantsDataPVT = new Vector<DataPVT>();
 	}
@@ -28,10 +34,12 @@ public class ProcessPVT {
 				File inPathFile= inPath.toFile();
 				if (Files.isDirectory(inPath)) {
 					process(inPath);
-				} else if (inPathFile.getName().toLowerCase().endsWith(".pvt")) {
+				} else if (inPathFile.getName().toLowerCase().endsWith(".pvt")
+						 && Utilities.arrayContains(validPVT,inPathFile.getName().substring(0, 4) )) {
+					System.out.println(inPathFile.getName());
 					DataPVT dataPVT = new DataPVT();
 					dataPVT.process(inPathFile);
-					participantsDataPVT.add(dataPVT);
+//					participantsDataPVT.add(dataPVT);
 				}
 			}
 		} catch (Exception e) {
@@ -117,8 +125,8 @@ public class ProcessPVT {
 	public static void main(String[] args) {
 	    ProcessPVT data = new ProcessPVT();
 		
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
-		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
 
 		data.process(directory.toPath());
 		

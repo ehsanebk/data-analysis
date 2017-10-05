@@ -30,4 +30,12 @@ public class SessionPVT {
 		return RT.average();
 	}
 	
+	public double getNumberOfLapses(){
+		int l = 0;
+		for (int i = 0; i < RT.size(); i++) 
+			if (RT.get(i) >= 500)
+				l++;
+		return l;
+	}
+	
 }

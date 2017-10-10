@@ -42,17 +42,17 @@ public class SamplesLP {
 		return samples.elementAt(i);
 	}
 
-	public void analysis(SamplesPVT samplesPVT) {
+	public void analysis(PVT_all pVT_all) {
 
 		// adding driving data
-		for (int i = 0; i < samplesPVT.size() - 1; i++) {
+		for (int i = 0; i < pVT_all.size() - 1; i++) {
 
-			String protocol = samplesPVT.get(i).getProtocol();
-			String ID = samplesPVT.get(i).getId();
-			String trial = samplesPVT.get(i).getTrial();
-			String trialDate = samplesPVT.get(i).getTrialdate();
-			String trialTimeString = samplesPVT.get(i).getTrialtimeString();
-			int trialTime = samplesPVT.get(i).getTrialtime();
+			String protocol = pVT_all.get(i).getProtocol();
+			String ID = pVT_all.get(i).getId();
+			String trial = pVT_all.get(i).getTrial();
+			String trialDate = pVT_all.get(i).getTrialdate();
+			String trialTimeString = pVT_all.get(i).getTrialtimeString();
+			int trialTime = pVT_all.get(i).getTrialtime();
 
 
 			Segment newsegment = new Segment(); 
@@ -64,7 +64,7 @@ public class SamplesLP {
 			newSample.trialtime = trialTimeString;
 
 			// check to see if it's the last trial of the day or not
-			if (ID.equals(samplesPVT.get(i + 1).getId())) { 
+			if (ID.equals(pVT_all.get(i + 1).getId())) { 
 
 				// the directories that the raw driving csv datais being kept.
 				// This data is not filtered and it does have the invalid
@@ -112,7 +112,7 @@ public class SamplesLP {
 							// frames between valid frames are more than 1
 							// seconds
 							if (timeDrivingFrame > addTime(trialTime, 5)
-									&& timeDrivingFrame <= addTime(samplesPVT.get(i + 1).getTrialtime(), 5)) {
+									&& timeDrivingFrame <= addTime(pVT_all.get(i + 1).getTrialtime(), 5)) {
 								
 								boolean validFrame = (LeftRhoThetaOK == 1 && RightRhoThetaOK == 1 && LeftSigSpikeOK == 1
 										&& RightSigSpikeOK == 1 && LaneWidthOK == 1 && isDriving == 1);
@@ -231,7 +231,7 @@ public class SamplesLP {
 									invalidFrameCounter++;
 							}
 							// break if the tame is after
-							if (timeDrivingFrame > samplesPVT.get(i + 1).getTrialtime())
+							if (timeDrivingFrame > pVT_all.get(i + 1).getTrialtime())
 								break;
 						}
 

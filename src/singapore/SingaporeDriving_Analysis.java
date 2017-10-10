@@ -26,6 +26,10 @@ public class SingaporeDriving_Analysis {
 	}
 	
 
+	/**
+	 * This function check the driving data and pvt result
+	 * 
+	 */
 	public static void 	Driving_vs_PVT_processed(){
 		SamplesDriving samplesDriving = new SamplesDriving(); 
 		Samples_Processed  PVTprocessed= new Samples_Processed();
@@ -33,7 +37,7 @@ public class SingaporeDriving_Analysis {
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "MFPD_PVT_all.txt");
-		SamplesPVT PVTsamples = new SamplesPVT(PVTfile);
+		PVT_all PVTsamples = new PVT_all(PVTfile);
 
 		File PVTfileOutPutProcessed = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
@@ -60,7 +64,7 @@ public class SingaporeDriving_Analysis {
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "MFPD_PVT_all.txt");
-		SamplesPVT PVTsamples = new SamplesPVT(PVTfile);
+		PVT_all PVTsamples = new PVT_all(PVTfile);
 	
 		
 		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"

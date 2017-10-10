@@ -45,7 +45,7 @@ public class SingaporeDriving_LP_Anlysis {
 		//			System.out.println(PVTprocessed.get(j).toString());	
 		//		}
 
-		SamplesPVT PVTsamples = new SamplesPVT(PVTfile);
+		PVT_all PVTsamples = new PVT_all(PVTfile);
 		
 		samplesLP.analysis(PVTsamples);
 		
@@ -57,7 +57,7 @@ public class SingaporeDriving_LP_Anlysis {
 		samplesLP = new SamplesLP();
 		
 		//reading all the PVT data and add them to PVTsamples data structure
-		SamplesPVT samplesPVT = new SamplesPVT(PVTfile);
+		PVT_all pVT_all = new PVT_all(PVTfile);
 
 		//reading the data available from other old files
 		SamplesProcessed.readProcessedFile(PVTfileProcessedOld);
@@ -122,7 +122,7 @@ public class SingaporeDriving_LP_Anlysis {
 		PrintWriter foutDistanceSeries =null;
 		
 		//Analyzing the data based on the raw csv data and PVTsamples and make the samplesPL structure
-		samplesLP.analysis(samplesPVT);
+		samplesLP.analysis(pVT_all);
 
 
 		for (int i = 0; i < samplesLP.size(); i++) {

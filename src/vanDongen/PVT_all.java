@@ -9,11 +9,11 @@ import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
 
-public class DataPVT {
+public class PVT_all {
 	String ID;
 	Conditions condition;
 	
-	Vector<SessionPVT> sessions;
+	Vector<PVT_session> sessions;
 	
 	private static String[] bestCasesNum = {"3001","3025","3040","3086",
 			"3206","3232","3256","3275","3386","3408",
@@ -22,14 +22,14 @@ public class DataPVT {
 			"3122","3171","3207","3215","3220",
 			"3309","3311","3359","3421","3512","3570","3674"};
 	
-	DataPVT() {
+	PVT_all() {
 
-		sessions = new Vector<SessionPVT>();
+		sessions = new Vector<PVT_session>();
 	}
 	
-	SessionPVT getSessionByNumber(int sNumber){
-		for (Iterator<SessionPVT> iterator = sessions.iterator(); iterator.hasNext();) {
-			SessionPVT session = (SessionPVT) iterator.next();
+	PVT_session getSessionByNumber(int sNumber){
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
 				return session;
 		}
@@ -59,7 +59,7 @@ public class DataPVT {
 			String line = t.readNextLine();
 			if (line.contains("PVT DATA")){
 				counter++;
-				SessionPVT newSession = new SessionPVT();
+				PVT_session newSession = new PVT_session();
 				newSession.trialNumberInFile = counter;
 				t.skipLines(6);
 				newSession.trialDate = t.readNextLine().substring(17, 24);

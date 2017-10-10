@@ -181,7 +181,7 @@ public class Samples_Processed {
 		}
 	}
 	
-	public void addPVTsample(SamplePVT sample){
+	public void addPVTsample(PVT_session sample){
 		//processing the pvt result
 		int lapses = 0;
 		int falseStarts = 0;
@@ -190,9 +190,9 @@ public class Samples_Processed {
 		for (int j = 0; j < sample.RT.size(); j++) {
 			if (sample.RT.get(j) > 500 )
 				lapses++;
-			else if (sample.RT.get(j) < 150)
+			else if (sample.RT.get(j) <= 150)
 				falseStarts++;
-			else if (sample.RT.get(j) >= 150 && sample.RT.get(j) <= 500){
+			else if (sample.RT.get(j) > 150 && sample.RT.get(j) <= 500){
 				alertResponses.add(sample.RT.get(j));
 			}
 		}		

@@ -4,7 +4,7 @@ import analysis.Values;
 
 enum pre_post {Pre, Post};
 
-public class SessionPVT {
+public class PVT_session {
 
 	String ID;
 	
@@ -20,7 +20,7 @@ public class SessionPVT {
 	String hand;
 	Values RT;
 	
-	public SessionPVT() {
+	public PVT_session() {
 
 		RT = new Values();
 	}

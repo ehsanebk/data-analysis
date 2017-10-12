@@ -90,7 +90,7 @@ public class PVT_all {
 	public void toFile(File PVTfileOutPut){
 		try {
 			PrintWriter fout = new PrintWriter(PVTfileOutPut);
-			fout.println("pre	post	protocol	id		trial	trialdate	trialtime	pvtsn	RTaverage");
+			fout.println("pre	post	protocol	id		trial	trialdate	trialtime	pvtsn	AlertResponsesAve");
 			for (int i = 0; i < samples.size(); i++) 
 				fout.println(samples.elementAt(i).toString());
 			fout.close();
@@ -110,12 +110,13 @@ public class PVT_all {
 		
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
-				+ "MFPD_PVT_all.txt");
+				+ "PVT Raw Data/MFPD_PVT_all.txt");
 		PVT_all singaporePVT = new PVT_all(PVTfile);
+		
 		
 		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
-				+ "MFPD_PVT_average.txt");
+				+ "PVT Raw Data/MFPD_PVT_average.txt");
 		singaporePVT.toFile(PVTfileOutPut); 
 	}
 

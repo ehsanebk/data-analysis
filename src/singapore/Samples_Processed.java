@@ -181,7 +181,7 @@ public class Samples_Processed {
 		}
 	}
 	
-	public void addPVTsample(PVT_session sample){
+	public void addPVTsample(PVT_sessions sample){
 		//processing the pvt result
 		int lapses = 0;
 		int falseStarts = 0;

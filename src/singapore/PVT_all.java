@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Vector;
 
 import analysis.Tokenizer;
@@ -128,22 +129,40 @@ public class PVT_all {
 		}
 	}
 	
-	public PVT_sessions get(int i){
-		return samples.elementAt(i);
+	public PVT_sessions get(String ID) throws Exception{
+		
+		for (PVT_sessions pvt : samples) {
+			if (pvt.id.equals(ID))
+				return pvt; 
+		}
+		throw new Exception("ID " + ID + " Not found in the data!");
 	}
+	
 	public int size(){
 		return samples.size();
 	}
 	
-	public static void main(String[] args) throws ParseException {
-		
-		File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
+	public static void main(String[] args) throws Exception {
+		Date d = new Date();
+		Date de = null;
+		d= null;
+		try {
+		SimpleDateFormat dateParser = new SimpleDateFormat ("yyyyMMddhh:mm:ss:SSS");
+	    //d = dateParser.parse("-");
+	    d = dateParser.parse("2011051514:55:15:627");
+		} catch (Exception e) {
+			
+		}
+		SimpleDateFormat out = new SimpleDateFormat ("dd-MMM-yy HH:mm:ss:SSS");
+		System.out.println(out.format(d));
+		System.out.println(de);
+		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "PVT Raw Data/MFPD_PVT_all.txt");
 		PVT_all singaporePVT = new PVT_all(PVTfile);
 		
 		
-		File PVTfileOutPut = new File("/Users/Ehsan/OneDrive - drexel.edu/"
+		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "PVT Raw Data/MFPD_PVT_average_new.txt");
 		singaporePVT.toFile(PVTfileOutPut); 

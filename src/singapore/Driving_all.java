@@ -25,7 +25,7 @@ public class Driving_all {
 
 		for (String protocol : protocols){
 
-			File timing = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
+			File timing = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
 					+ "Protocol " + protocol + " session timings.csv");
 
@@ -80,7 +80,7 @@ public class Driving_all {
 		for (Driving_sessions subject : subjects){
 			
 			// Directories were the filtered ( valid part of the driving data) is kept 
-			File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
+			File directory = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
 					+ "Driving Data Raw/Protocol "+ subject.protocol+" filtered");
 
@@ -121,7 +121,7 @@ public class Driving_all {
 							time.before(subject.trials[i].stopTime)){
 						lanePos.add(LateralPosition);
 						subject.trials[i].LP_STD =  lanePos.stddev();
-						subject.trials[i].lanePos.add(LateralPosition);
+						//subject.trials[i].lanePos.add(LateralPosition);
 						subject.trials[i].frameCount++;
 					}
 					else if (time.after(subject.trials[i].stopTime))
@@ -136,7 +136,11 @@ public class Driving_all {
 		for (int i = 0; i < test.subjects.size(); i++) {
 			Driving_sessions s = test.subjects.get(i);
 			System.out.println(s.id);
-			
+			for (int j = 0; j < s.trials.length; j++) {
+				System.out.println(s.trials[j].startTime + "=="
+						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD);	
+			}
+			System.out.println("--------------------------------------------------");
 		}
 	}
 }

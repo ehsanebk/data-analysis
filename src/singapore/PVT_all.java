@@ -155,7 +155,8 @@ public class PVT_all {
 		}
 		SimpleDateFormat out = new SimpleDateFormat ("dd-MMM-yy HH:mm:ss:SSS");
 		System.out.println(out.format(d));
-		System.out.println(de);
+		System.out.println(d);
+		
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "PVT Raw Data/MFPD_PVT_all.txt");

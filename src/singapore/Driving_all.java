@@ -25,7 +25,7 @@ public class Driving_all {
 
 		for (String protocol : protocols){
 
-			File timing = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
+			File timing = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
 					+ "Protocol " + protocol + " session timings.csv");
 
@@ -77,10 +77,17 @@ public class Driving_all {
 
 		// getting the driving data form the files in filtered directory 
 		// based on the data gathered from the timings
-		for (Driving_sessions subject : subjects){
+		
+		//for (Driving_sessions subject : subjects){
+			
+			Driving_sessions subject=null;
+			for (Driving_sessions s : subjects){
+				if (s.id.equals("508") && s.protocol.equals("A"))
+					subject =s;
+			}
 			
 			// Directories were the filtered ( valid part of the driving data) is kept 
-			File directory = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
+			File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
 					+ "Driving Data Raw/Protocol "+ subject.protocol+" filtered");
 
@@ -98,7 +105,7 @@ public class Driving_all {
 			
 			Tokenizer t = new Tokenizer(file);
 			
-			t.skipLine(); // skiping the first line
+			t.skipLine(); // Skipping the first line
 			while (t.hasMoreTokens()){
 				String[] lineCSV = t.readNextLineCSV();
 				//reading the tokens
@@ -110,27 +117,37 @@ public class Driving_all {
 					e.printStackTrace();
 				}
 				
+				//System.out.println(time);
 				String LaneWidth = lineCSV[8];
 				String LaneCenter = lineCSV[9];
 				double LateralPosition = Double.valueOf(lineCSV[10]).doubleValue();
 			
-				for (int i = 0; i < subject.trials.length; i=i+2) {
+				for (int i = 0; i < subject.trials.length; i++) {
 					Values lanePos =  new Values();
-					if (subject.trials[i] != null && 
+					if (subject.trials[i].startTime != null && 
 							time.after(subject.trials[i].startTime) && 
 							time.before(subject.trials[i].stopTime)){
-						lanePos.add(LateralPosition);
-						subject.trials[i].LP_STD =  lanePos.stddev();
+						//lanePos.add(LateralPosition);
 						//subject.trials[i].lanePos.add(LateralPosition);
 						subject.trials[i].frameCount++;
 					}
 					else if (time.after(subject.trials[i].stopTime))
 						break; //breaking the while loop
 				}
+				//subject.trials[i].LP_STD =  lanePos.stddev();
 			}
-		}
+		//}
 	}
 
+	public Driving_sessions getByID(String id){
+		for (Driving_sessions subject : subjects){
+			if (subject.id.equals(id))
+				return subject;
+		}
+		return null;
+	}
+	
+	
 	public static void main(String[] args) {
 		Driving_all test =  new Driving_all();
 		for (int i = 0; i < test.subjects.size(); i++) {
@@ -138,7 +155,7 @@ public class Driving_all {
 			System.out.println(s.id);
 			for (int j = 0; j < s.trials.length; j++) {
 				System.out.println(s.trials[j].startTime + "=="
-						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD);	
+						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD + " count: " + s.trials[j].frameCount);	
 			}
 			System.out.println("--------------------------------------------------");
 		}

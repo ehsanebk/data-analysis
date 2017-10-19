@@ -9,7 +9,7 @@ import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
 
-public class PVT_all {
+public class PVT_sessions {
 	String ID;
 	Conditions condition;
 	
@@ -22,23 +22,24 @@ public class PVT_all {
 			"3122","3171","3207","3215","3220",
 			"3309","3311","3359","3421","3512","3570","3674"};
 	
-	PVT_all() {
+	PVT_sessions() {
 
 		sessions = new Vector<PVT_session>();
 	}
 	
-	PVT_session getSessionByNumber(int sNumber){
+	PVT_session getSessionByNumber(int sNumber, pre_post p) throws Exception{
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
-			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
 				return session;
 		}
-		return null;		
+		throw new Exception("session " + sNumber + " for ID " + ID + " Not found in the data!");	
 	}
 	
 	public double getNumberOfLapses_AveOnTimePoints(int tp) {
 		Values lapses = new Values();
-		for (int i = 0; i < sessions.size(); i++) 
+		// skipping the first response time ??
+		for (int i = 1; i < sessions.size(); i++) 
 			if (sessions.get(i).timePoint == tp)
 				lapses.add(sessions.get(i).getNumberOfLapses());
 		return lapses.average();
@@ -73,6 +74,47 @@ public class PVT_all {
 					rt = rt.replaceAll("\\s+", "");
 				}
 				
+				// sn = session number start from 4 to 44
+				if (ID.equals("3207")){
+					int [][] sn1 =
+						   {{10,11},{12,13},{14,15},{16,17},
+							{18,19},{20,21},{22,23},{24,25}, 
+							{27,28},{29,30},{31,32},{33,34}, 
+							{35,36},{37,38},{39,40},{41,42}, 
+							{44,45},{46,47},{48,49},{50,51}, 
+							{56,57},{58,59},{60,61},{62,63},
+							{64,65},{66,67},{68,69},{70,71},
+							{72,73},{74,75},{76,77},{78,79},
+							{80,81},{82,83},{84,85},{86,87},
+							{89,90},{91,92},{93,94},{95,96}};
+				}
+				else if (ID.equals("3232")){
+					int [][] sn1 =
+						   {{10,11},{12,13},{14,15},{16,17},
+							{18,19},{20,21},{22,23},{24,25}, 
+							{26,27},{28,29},{30,31},{32,33}, 
+							{34,35},{	  },{37,38},{39,40}, 
+							{42,43},{44,45},{46,47},{48,49}, 
+							{54,55},{56,57},{58,59},{60,61},
+							{62,63},{64,65},{66,67},{68,69},
+							{70,71},{72,73},{74,75},{76,77},
+							{78,79},{80,81},{82,  },{83,84},
+							{86,87},{88,89},{90,91},{92,93}};
+				}
+				else{
+					int [][] sn1 =
+						   {{10,11},{12,13},{14,15},{16,17},
+							{18,19},{20,21},{22,23},{24,25}, 
+							{26,27},{28,29},{30,31},{32,33}, 
+							{34,35},{36,37},{38,39},{40,41}, 
+							{43,44},{45,46},{47,48},{49,50}, 
+							{55,56},{57,58},{59,60},{61,62},
+							{63,64},{65,66},{67,68},{69,70},
+							{71,72},{73,74},{75,76},{77,78},
+							{79,80},{81,82},{83,84},{85,86},
+							{88,89},{90,91},{92,93},{94,95}};
+				}
+
 				// tp  = Time Point
 				int[] tp1_pre=new int[5];int[] tp1_post=new int[5];
 				int[] tp2_pre=new int[5];int[] tp2_post=new int[5];
@@ -107,7 +149,7 @@ public class PVT_all {
 				else if (ID.equals("3232")){
 					tp1_pre = new int[]	{10,18,26,34,42};
 					tp1_post= new int[]	{11,19,27,35,43};
-					tp2_pre=  new int[]	{12,20,28,36,44};
+					tp2_pre=  new int[]	{12,20,28   ,44};
 					tp2_post= new int[]	{13,21,29   ,45};
 					tp3_pre=  new int[]	{14,22,30,37,46};
 					tp3_post= new int[]	{15,23,31,38,47};

@@ -13,6 +13,7 @@ import analysis.Values;
 
 public class ProcessExtractedData {
 	private static Vector<Data> participantsData;
+	private static ProcessPVT PVTdata;
 
 	private static String[] bestCasesNum = {"3001","3025","3040","3086",
 			"3206","3232","3256","3275","3386","3408",
@@ -23,12 +24,19 @@ public class ProcessExtractedData {
 
 	public static void main(String[] args) {
 
+		//procssing the PVT data
+		PVTdata = new ProcessPVT();
+		File directoryPVT = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		PVTdata.process(directoryPVT.toPath());
+		
 		participantsData = new Vector<Data>();
 		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		for (File file : directory.listFiles()){
-			//if (file.getName().endsWith(".rpt") && !file.getName().substring(0,4).equals("3620")) { // what is wrong with 3620?
-			if (file.getName().endsWith(".rpt")) {
+			
+			if (file.getName().endsWith(".rpt") && file.getName().substring(0,4).equals("3040")) { 
+			//if (file.getName().endsWith(".rpt")) {
 				String ID = file.getName().substring(0,4);
 				boolean newData = true;
 
@@ -68,7 +76,12 @@ public class ProcessExtractedData {
 				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
 //		File outputIndividualTimePoints = 
 //				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
-		WriteToFileIndividual(outputIndividualTimePoints);
+		try {
+			WriteToFileIndividual(outputIndividualTimePoints);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	
@@ -424,8 +437,9 @@ public class ProcessExtractedData {
 	/**
 	 * @param outputIndividualTimePointsCSV
 	 * For now, this function just writes the individual values for lane position or steer 2d
+	 * @throws Exception 
 	 */
-	private static void WriteToFileIndividual(File outputIndividualTimePoints) {
+	private static void WriteToFileIndividual(File outputIndividualTimePoints) throws Exception {
 
 		PrintWriter output = null;
 		try {
@@ -434,37 +448,67 @@ public class ProcessExtractedData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+		output.println(
+				",1,,,,,,,,,,2,,,,,,,,,,3,,,,,,,,,,4,,,,,,,,,,"+
+				",5,,,,,,,,,,6,,,,,,,,,,7,,,,,,,,,,8,,,,,,,,,,");
+		output.println(
+				 ",Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,"
+				+ "Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
+				+ ","
+				+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
+				+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,");
+		output.println(
+				 ",#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ ","
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,");
+		
 		for (int i = 0; i < participantsData.size(); i++) {
-			Data data = participantsData.get(i);
-			System.out.println(" Processing to write to file (indidual data): " + data.ID +" " + data.sessions.size());
+			Data subject = participantsData.get(i);
+			System.out.println(" Processing to write to file (indidual data): " + subject.ID +" " + subject.sessions.size());
 
-			// For extracted 
-			output.println(data.ID + ",Extracted");
-			output.println(",1,2,3,4");
+			output.println(subject.ID + ",Extracted");
 			for (int k = 4; k <24 ; k++) {
-				if (data.getSessionByNumber(k) != null){
-//					output.print(k);
-//					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-//						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
-//					}
-					//output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-					output.print("," + data.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
-				}
+				//pre PVT
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).sessionNumber);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).trialTime);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).getNumberOfLapses());
+				//driving
+				output.print("," + subject.getSessionByNumber(k).sessionNumber);
+				output.print("," + subject.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
+				output.print("," + subject.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
+				output.print("," + subject.getSessionByNumber(k).getSessionAverageMPH_STD());
+				//post PVT
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).sessionNumber);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).trialTime);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).getNumberOfLapses());
+
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
 				}
 			}
 			output.println(",Break");output.flush();
 			for (int k = 24; k <44 ; k++) {
-				if (data.getSessionByNumber(k) != null){
-//					output.print(k);
-//					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-//						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).lanePos_STD);
-//					}
-					//output.print("," + data.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-					output.print("," + data.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
-				}
+				//pre PVT
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).sessionNumber);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).trialTime);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).getNumberOfLapses());
+				//driving
+				output.print("," + subject.getSessionByNumber(k).sessionNumber);
+				output.print("," + subject.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
+				output.print("," + subject.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
+				output.print("," + subject.getSessionByNumber(k).getSessionAverageMPH_STD());
+				//post PVT
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).sessionNumber);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).trialTime);
+				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).getNumberOfLapses());
+
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
 				}

@@ -189,7 +189,7 @@ public class Session {
 		}	
 	}
 	
-	void addRawData(File file){
+	public void addRawData(File file){
 		Tokenizer t = new Tokenizer(file);
 		t.skipLines(10);
 		int frame;
@@ -542,7 +542,6 @@ public class Session {
 			values.add(straightSegments.get(i).MPH_STD);
 		return values.average();
 	}
-	
 	double getSessionAveragesteer_Ave (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
@@ -579,7 +578,6 @@ public class Session {
 			values.add(straightSegments.get(i).number_FastCorrectiveCounterSteering_rounded);
 		return values.average();
 	}
-	
 	double getSessionAveragepredicitonError_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)

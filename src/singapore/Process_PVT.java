@@ -17,11 +17,11 @@ import singapore.PVT_sessions.session;
  * @author ehsanebk
  *
  */
-public class PVT_all {
+public class Process_PVT {
 	
 	Vector<PVT_sessions> samples;
 	
-	PVT_all(File PVTfile) throws ParseException{
+	Process_PVT(File PVTfile) throws ParseException{
 		Tokenizer t = new Tokenizer(PVTfile);
 		SimpleDateFormat dateParser = new SimpleDateFormat ("yy/MM/dd hhmm"); // for parsing date formats
 
@@ -160,7 +160,7 @@ public class PVT_all {
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "PVT Raw Data/MFPD_PVT_all.txt");
-		PVT_all singaporePVT = new PVT_all(PVTfile);
+		Process_PVT singaporePVT = new Process_PVT(PVTfile);
 		
 		
 		File PVTfileOutPut = new File("/Users/ehsanebk/OneDrive - drexel.edu/"

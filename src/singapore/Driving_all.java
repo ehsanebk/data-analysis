@@ -78,13 +78,13 @@ public class Driving_all {
 		// getting the driving data form the files in filtered directory 
 		// based on the data gathered from the timings
 		
-		//for (Driving_sessions subject : subjects){
+		for (Driving_sessions subject : subjects){
 			
-			Driving_sessions subject=null;
-			for (Driving_sessions s : subjects){
-				if (s.id.equals("508") && s.protocol.equals("A"))
-					subject =s;
-			}
+//			Driving_sessions subject=null;
+//			for (Driving_sessions s : subjects){
+//				if (s.id.equals("508") && s.protocol.equals("A"))
+//					subject =s;
+//			}
 			
 			// Directories were the filtered ( valid part of the driving data) is kept 
 			File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
@@ -116,27 +116,28 @@ public class Driving_all {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				
-				//System.out.println(time);
+//				if (time.after(subject.trials[1].startTime) && 
+//						time.before(subject.trials[1].stopTime))
+//					System.out.println("in"); 
+//				
+//				System.out.println(time + "  " + subject.trials[1].startTime +"––––" + subject.trials[1].stopTime);
 				String LaneWidth = lineCSV[8];
 				String LaneCenter = lineCSV[9];
 				double LateralPosition = Double.valueOf(lineCSV[10]).doubleValue();
 			
 				for (int i = 0; i < subject.trials.length; i++) {
-					Values lanePos =  new Values();
 					if (subject.trials[i].startTime != null && 
 							time.after(subject.trials[i].startTime) && 
 							time.before(subject.trials[i].stopTime)){
+						
 						//lanePos.add(LateralPosition);
 						//subject.trials[i].lanePos.add(LateralPosition);
 						subject.trials[i].frameCount++;
 					}
-					else if (time.after(subject.trials[i].stopTime))
-						break; //breaking the while loop
 				}
 				//subject.trials[i].LP_STD =  lanePos.stddev();
 			}
-		//}
+		}
 	}
 
 	public Driving_sessions getByID(String id){

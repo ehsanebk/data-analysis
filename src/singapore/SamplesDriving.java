@@ -54,7 +54,7 @@ public class SamplesDriving {
 
 	
 	//adding files which are filtered for the valid ones
-	public void add(PVT_all PVTsamples){
+	public void add(Process_PVT PVTsamples){
 		
 		// adding driving data
 		for (int i = 0; i < PVTsamples.size()-1; i++) {

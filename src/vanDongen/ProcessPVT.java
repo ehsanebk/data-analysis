@@ -12,7 +12,7 @@ import analysis.Values;
 
 public class ProcessPVT {
 	
-	private static Vector<PVT_all> participantsDataPVT;
+	private static Vector<PVT_sessions> participantsDataPVT;
 
 	private static String[] validPVT = {"3040","3047","3086","3122", "3171",
 			"3206","3207","3215","3220","3040", "3232",
@@ -23,7 +23,7 @@ public class ProcessPVT {
 	
 	
 	public ProcessPVT() {
-		participantsDataPVT = new Vector<PVT_all>();
+		participantsDataPVT = new Vector<PVT_sessions>();
 	}
 	
 	void process(Path dir) {
@@ -34,14 +34,23 @@ public class ProcessPVT {
 					process(inPath);
 				} else if (inPathFile.getName().toLowerCase().endsWith(".pvt")
 						 && Utilities.arrayContains(validPVT,inPathFile.getName().substring(0, 4) )) {
-					PVT_all pVT_all = new PVT_all();
-					pVT_all.process(inPathFile);
-					participantsDataPVT.add(pVT_all);
+					PVT_sessions pvt_sessions = new PVT_sessions();
+					pvt_sessions.process(inPathFile);
+					participantsDataPVT.add(pvt_sessions);
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	
+	PVT_sessions getByID (String ID) throws Exception{
+		for (PVT_sessions pvt_sessions : participantsDataPVT) {
+			if (pvt_sessions.ID.equals(ID))
+				return pvt_sessions;
+		}
+		throw new Exception("PVT for ID " + ID + " Not found in the data!");
 	}
 	
 	static void WriteToFile(File output) {
@@ -63,15 +72,15 @@ public class ProcessPVT {
 		}
 
 		for (int i = 0; i < participantsDataPVT.size(); i++) {
-			PVT_all pVT_all = participantsDataPVT.get(i);
+			PVT_sessions pVT_sessions = participantsDataPVT.get(i);
 			int [] dp = {1,2,3,4,6,7,8,9}; 
 			for (int k: dp) {
-				switch (pVT_all.condition){
+				switch (pVT_sessions.condition){
 				case BestCase:
-					PVT_AVE_BestCaseTimePoints[k].add(pVT_all.getNumberOfLapses_AveOnTimePoints(k));
+					PVT_AVE_BestCaseTimePoints[k].add(pVT_sessions.getNumberOfLapses_AveOnTimePoints(k));
 					break;
 				case WorstCase:
-					PVT_AVE_WorstCaseTimePoints[k].add(pVT_all.getNumberOfLapses_AveOnTimePoints(k));
+					PVT_AVE_WorstCaseTimePoints[k].add(pVT_sessions.getNumberOfLapses_AveOnTimePoints(k));
 					break;
 				}
 			}

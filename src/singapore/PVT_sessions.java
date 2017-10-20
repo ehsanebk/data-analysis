@@ -47,7 +47,7 @@ public class PVT_sessions {
 		SimpleDateFormat timeParser = 
 				new SimpleDateFormat ("hhmm");
 		SimpleDateFormat dateParser = 
-				new SimpleDateFormat ("yy/MM/dd");
+				new SimpleDateFormat ("MM/dd/yy");
 
 		public session() {
 			time = new Values();

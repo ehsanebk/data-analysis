@@ -1,10 +1,10 @@
 package vanDongen;
 
 import java.io.File;
-import java.util.Arrays;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.Vector;
-
 import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
@@ -27,14 +27,44 @@ public class PVT_sessions {
 		sessions = new Vector<PVT_session>();
 	}
 	
-	PVT_session getSessionByNumber(int sNumber, pre_post p) throws Exception{
+	PVT_session getSessionByNumber(int sNumber, pre_post p){
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
 				return session;
 		}
-		throw new Exception("session " + sNumber + " for ID " + ID + " Not found in the data!");	
+		return null;	
 	}
+	
+	Object getSessionsNumber(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.sessionNumber;
+		}
+		return null;	
+	}
+	String getSessionsTime(int sNumber, pre_post p) {
+		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy hh:mm"); // for parsing date formats
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return timeFormat.format(session.time);
+		}
+		return null;	
+	}
+	Object getSessionsLapses(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getNumberOfLapses();
+		}
+		return null;	
+	}
+	
+	
+	
+	
 	
 	public double getNumberOfLapses_AveOnTimePoints(int tp) {
 		Values lapses = new Values();
@@ -47,6 +77,7 @@ public class PVT_sessions {
 	
 	void process(File file){
 		
+		SimpleDateFormat dateParser = new SimpleDateFormat ("MM/dd/yyhhmm"); // for parsing date formats
 		ID = file.getName().substring(0,4);
 		System.out.println("Processing PVT file : " + ID);
 		if (Utilities.arrayContains(worstCasesNum, ID))
@@ -63,8 +94,15 @@ public class PVT_sessions {
 				PVT_session newSession = new PVT_session();
 				newSession.trialNumberInFile = counter;
 				t.skipLines(6);
-				newSession.trialDate = t.readNextLine().substring(17, 24);
-				newSession.trialTime = t.readNextLine().substring(16, 20);
+				String trialDate = t.readNextLine().substring(17, 24);
+				String trialTime = t.readNextLine().substring(16, 20);
+				
+				try {
+					newSession.time = dateParser.parse(trialDate+trialTime);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
 				t.skipLines(6);
 				String rt = t.readNextLine().substring(2,5);
 				rt = rt.replaceAll("\\s+", "");
@@ -74,9 +112,10 @@ public class PVT_sessions {
 					rt = rt.replaceAll("\\s+", "");
 				}
 				
-				// sn = session number start from 4 to 44
+				// Finding the session number ,,,, sn = session number start from 4 to 44
+				int[][] sn;
 				if (ID.equals("3207")){
-					int [][] sn1 =
+					sn = new int [][] 
 						   {{10,11},{12,13},{14,15},{16,17},
 							{18,19},{20,21},{22,23},{24,25}, 
 							{27,28},{29,30},{31,32},{33,34}, 
@@ -89,7 +128,7 @@ public class PVT_sessions {
 							{89,90},{91,92},{93,94},{95,96}};
 				}
 				else if (ID.equals("3232")){
-					int [][] sn1 =
+					sn = new int [][] 
 						   {{10,11},{12,13},{14,15},{16,17},
 							{18,19},{20,21},{22,23},{24,25}, 
 							{26,27},{28,29},{30,31},{32,33}, 
@@ -102,7 +141,7 @@ public class PVT_sessions {
 							{86,87},{88,89},{90,91},{92,93}};
 				}
 				else{
-					int [][] sn1 =
+					sn = new int [][] 
 						   {{10,11},{12,13},{14,15},{16,17},
 							{18,19},{20,21},{22,23},{24,25}, 
 							{26,27},{28,29},{30,31},{32,33}, 
@@ -115,7 +154,12 @@ public class PVT_sessions {
 							{88,89},{90,91},{92,93},{94,95}};
 				}
 
-				// tp  = Time Point
+				for (int i = 0; i < sn.length; i++) {
+					if (contains(sn[i],counter))
+						newSession.sessionNumber = i+4;
+				}
+				
+				// Finding the time points ,,, tp  = Time Point
 				int[] tp1_pre=new int[5];int[] tp1_post=new int[5];
 				int[] tp2_pre=new int[5];int[] tp2_post=new int[5];
 				int[] tp3_pre=new int[5];int[] tp3_post=new int[5];

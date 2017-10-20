@@ -23,7 +23,7 @@ public class Process_PVT {
 	
 	Process_PVT(File PVTfile) throws ParseException{
 		Tokenizer t = new Tokenizer(PVTfile);
-		SimpleDateFormat dateParser = new SimpleDateFormat ("yy/MM/dd hhmm"); // for parsing date formats
+		SimpleDateFormat dateParser = new SimpleDateFormat ("MM/dd/yy hhmm"); // for parsing date formats
 
 		t.skipLine(); //skip the titles column
 		

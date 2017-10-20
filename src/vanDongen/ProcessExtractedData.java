@@ -2,12 +2,11 @@ package vanDongen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
-
 import analysis.Utilities;
 import analysis.Values;
 
@@ -26,17 +25,17 @@ public class ProcessExtractedData {
 
 		//procssing the PVT data
 		PVTdata = new ProcessPVT();
-		File directoryPVT = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
-		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		//File directoryPVT = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		File directoryPVT = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
 		PVTdata.process(directoryPVT.toPath());
-		
+
 		participantsData = new Vector<Data>();
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
-		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		for (File file : directory.listFiles()){
-			
-			if (file.getName().endsWith(".rpt") && file.getName().substring(0,4).equals("3040")) { 
-			//if (file.getName().endsWith(".rpt")) {
+
+			//if (file.getName().endsWith(".rpt") && file.getName().substring(0,4).equals("3232")) { // for testing 
+			if (file.getName().endsWith(".rpt")) {
 				String ID = file.getName().substring(0,4);
 				boolean newData = true;
 
@@ -62,20 +61,20 @@ public class ProcessExtractedData {
 				}
 			}
 		}
-		
-		File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
-		//File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+
+		//File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
-		
+
 		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
-//		File output = 
-//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		//		File output = 
+		//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
 		//WriteToFile(output);
-		
+
+		//		File outputIndividualTimePoints = 
+		//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
 		File outputIndividualTimePoints = 
-				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
-//		File outputIndividualTimePoints = 
-//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
 		try {
 			WriteToFileIndividual(outputIndividualTimePoints);
 		} catch (Exception e) {
@@ -84,7 +83,7 @@ public class ProcessExtractedData {
 		}
 	}
 
-	
+
 
 	static void process(Path dir) {
 		try {
@@ -103,10 +102,10 @@ public class ProcessExtractedData {
 								Session s  = data.sessions.get(j);
 								String s_number = s.sessionNumber;	
 								if (inPathFile.getName().contains("B"+ s_number)){
-										s.addProssesedData(inPathFile);
-										break;
-									}
-								}		
+									s.addProssesedData(inPathFile);
+									break;
+								}
+							}		
 							break;
 						}
 					}
@@ -116,8 +115,8 @@ public class ProcessExtractedData {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	static void WriteToFile(File output) {
 		PrintWriter outputCSV = null;
 		try {
@@ -126,8 +125,8 @@ public class ProcessExtractedData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
+
+
 		Values [] steer_STD_BestCaseTimePoints =  new Values[10];
 		Values [] steer_STD_WorstCaseTimePoints =  new Values[10];
 		Values [] steer_Ave_BestCaseTimePoints =  new Values[10];
@@ -164,12 +163,12 @@ public class ProcessExtractedData {
 			steer_STD_WorstCaseTimePoints[i] = new Values();
 			steer_Ave_BestCaseTimePoints[i] = new Values();
 			steer_Ave_WorstCaseTimePoints[i] = new Values();
-			
+
 			lanePos_STD_BestCaseTimePoints[i] = new Values();
 			lanePos_STD_WorstCaseTimePoints[i] = new Values();
 			lanePos_Ave_BestCaseTimePoints[i] = new Values();
 			lanePos_Ave_WorstCaseTimePoints[i] = new Values();
-			
+
 			zeroSteer_Percentage_BestCaseTimePoints[i] =  new Values();
 			zeroSteer_Percentage_WorstCaseTimePoints[i] =  new Values();
 			steer2D_Percentage_BestCaseTimePoints[i] = new Values();
@@ -198,7 +197,7 @@ public class ProcessExtractedData {
 					lanePos_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_STD_Extraxted());
 					steer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_Ave_Extraxted());
 					lanePos_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extraxted());
-					
+
 					zeroSteer_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer_Extracted());
 					steer2D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage2DSteer_Extracted());
 					steer3D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage3DSteer_Extracted());
@@ -212,7 +211,7 @@ public class ProcessExtractedData {
 					lanePos_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_STD_Extraxted());
 					steer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_Ave_Extraxted());
 					lanePos_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extraxted());
-					
+
 					zeroSteer_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer_Extracted());
 					steer2D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage2DSteer_Extracted());
 					steer3D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage3DSteer_Extracted());
@@ -433,10 +432,10 @@ public class ProcessExtractedData {
 
 		outputCSV.close();
 	}
-	
+
 	/**
 	 * @param outputIndividualTimePointsCSV
-	 * For now, this function just writes the individual values for lane position or steer 2d
+	 * For now, this function just writes the individual values 
 	 * @throws Exception 
 	 */
 	private static void WriteToFileIndividual(File outputIndividualTimePoints) throws Exception {
@@ -448,46 +447,48 @@ public class ProcessExtractedData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		output.println(
 				",1,,,,,,,,,,2,,,,,,,,,,3,,,,,,,,,,4,,,,,,,,,,"+
 				",5,,,,,,,,,,6,,,,,,,,,,7,,,,,,,,,,8,,,,,,,,,,");
 		output.println(
-				 ",Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,"
-				+ "Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
-				+ ","
-				+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
-				+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,");
+				",Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,"
+						+ "Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
+						+ ","
+						+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
+						+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,");
 		output.println(
-				 ",#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ ","
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-				+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,");
-		
+				",#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ ","
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,");
+
+		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy hh:mm"); // for parsing date formats
 		for (int i = 0; i < participantsData.size(); i++) {
 			Data subject = participantsData.get(i);
 			System.out.println(" Processing to write to file (indidual data): " + subject.ID +" " + subject.sessions.size());
 
 			output.println(subject.ID + ",Extracted");
 			for (int k = 4; k <24 ; k++) {
+
 				//pre PVT
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).sessionNumber);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).trialTime);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).getNumberOfLapses());
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Pre));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Pre));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Pre));
 				//driving
-				output.print("," + subject.getSessionByNumber(k).sessionNumber);
-				output.print("," + subject.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-				output.print("," + subject.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
-				output.print("," + subject.getSessionByNumber(k).getSessionAverageMPH_STD());
+				output.print("," + subject.getSessionNumber(k));
+				output.print("," + subject.getSessionLanePos_STD_Extraxted(k));
+				output.print("," + subject.getSessionAverage3DSteer_Extracted(k));
+				output.print("," + subject.getSessionAverageMPH_STD(k));
 				//post PVT
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).sessionNumber);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).trialTime);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).getNumberOfLapses());
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Post));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Post));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Post));
 
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
@@ -495,19 +496,20 @@ public class ProcessExtractedData {
 			}
 			output.println(",Break");output.flush();
 			for (int k = 24; k <44 ; k++) {
+
 				//pre PVT
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).sessionNumber);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).trialTime);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Pre).getNumberOfLapses());
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Pre));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Pre));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Pre));
 				//driving
-				output.print("," + subject.getSessionByNumber(k).sessionNumber);
-				output.print("," + subject.getSessionByNumber(k).getSessionLanePos_STD_Extraxted());
-				output.print("," + subject.getSessionByNumber(k).getSessionAverage3DSteer_Extracted());
-				output.print("," + subject.getSessionByNumber(k).getSessionAverageMPH_STD());
+				output.print("," + subject.getSessionNumber(k));
+				output.print("," + subject.getSessionLanePos_STD_Extraxted(k));
+				output.print("," + subject.getSessionAverage3DSteer_Extracted(k));
+				output.print("," + subject.getSessionAverageMPH_STD(k));
 				//post PVT
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).sessionNumber);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).trialTime);
-				output.print("," + PVTdata.getByID(subject.ID).getSessionByNumber(k,pre_post.Post).getNumberOfLapses());
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Post));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Post));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Post));
 
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
@@ -515,35 +517,35 @@ public class ProcessExtractedData {
 			}
 			output.print("\n\n");output.flush();
 
-//			// For reported 
-//			output.println(data.ID + ",Reported");
-//			output.println(",1,2,3,4");
-//			for (int k = 4; k <24 ; k++) {
-//				if (data.getSessionByNumber(k) != null){
-////					output.print(k);
-////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
-////					}
-//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
-//				}
-//				if (k%4 ==3 ){
-//					output.print("\n");output.flush();
-//				}
-//			}
-//			output.println(",Break");output.flush();
-//			for (int k = 24; k <44 ; k++) {
-//				if (data.getSessionByNumber(k) != null){
-////					output.print(k);
-////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
-////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
-////					}
-//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
-//				}
-//				if (k%4 ==3 ){
-//					output.print("\n");output.flush();
-//				}
-//			}
-//			output.print("\n\n");output.flush();	
+			//			// For reported 
+			//			output.println(data.ID + ",Reported");
+			//			output.println(",1,2,3,4");
+			//			for (int k = 4; k <24 ; k++) {
+			//				if (data.getSessionByNumber(k) != null){
+			////					output.print(k);
+			////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
+			////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
+			////					}
+			//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
+			//				}
+			//				if (k%4 ==3 ){
+			//					output.print("\n");output.flush();
+			//				}
+			//			}
+			//			output.println(",Break");output.flush();
+			//			for (int k = 24; k <44 ; k++) {
+			//				if (data.getSessionByNumber(k) != null){
+			////					output.print(k);
+			////					for (int j = 0; j < data.getSessionByNumber(k).straightSegments.size(); j++) {
+			////						output.print("," + data.getSessionByNumber(k).straightSegments.elementAt(j).LANEDEV_STD);
+			////					}
+			//					output.print("," + data.getSessionByNumber(k).getSessionAverageLANEDEV_STD());
+			//				}
+			//				if (k%4 ==3 ){
+			//					output.print("\n");output.flush();
+			//				}
+			//			}
+			//			output.print("\n\n");output.flush();	
 		}
 	}
 }

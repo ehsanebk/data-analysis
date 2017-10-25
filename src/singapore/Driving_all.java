@@ -104,7 +104,7 @@ public class Driving_all {
 			SimpleDateFormat dateParser2 = new SimpleDateFormat ("yyyyMMddHH:mm:ss:SSS"); // 2011051514:55:15:627
 			
 			Tokenizer t = new Tokenizer(file);
-			Values lanePos[] = new Values()[6];
+			//Values lanePos[] = new Values()[6];
 			
 			t.skipLine(); // Skipping the first line
 			while (t.hasMoreTokens()){

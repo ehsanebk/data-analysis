@@ -1,5 +1,6 @@
 package singapore;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import analysis.Values;
 
@@ -12,6 +13,12 @@ public class Driving_sessions {
 	// ** if a time does not exist it will be NULL at the end
 	
 	DrivingTrial[] trials =  new DrivingTrial[6];
+	
+	SimpleDateFormat timeParser = 
+			new SimpleDateFormat ("hhmm");
+	SimpleDateFormat dateParser = 
+			new SimpleDateFormat ("MM/dd/yy");
+	
 	
 	public Driving_sessions() {
 		
@@ -41,6 +48,15 @@ public class Driving_sessions {
 		
 		public DrivingTrial() {
 			lanePos = new Values();
+		}
+		public String getTrialDate() {
+			return dateParser.format(startTime);
+		}
+		public String getStartTime() {
+			return timeParser.format(startTime);
+		}
+		public String getStopTime() {
+			return timeParser.format(stopTime);
 		}
 	}
 

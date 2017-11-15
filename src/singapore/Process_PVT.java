@@ -82,7 +82,7 @@ public class Process_PVT {
 					currentSession.RT.add(RT);
 				}
 				// when there is a new sample ( new ID)
-				else if (!protocol.equals(currentSample.protocol) || !id.equals(currentSample.id)){  
+				else if (!protocol.equals(currentSample.protocol) || !id.equals(currentSample.id)){
 					currentSample.sessions.add(currentSession);
 					samples.add(currentSample);
 					
@@ -143,19 +143,7 @@ public class Process_PVT {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		Date d = new Date();
-		Date de = null;
-		d= null;
-		try {
-		SimpleDateFormat dateParser = new SimpleDateFormat ("yyyyMMddhh:mm:ss:SSS");
-	    //d = dateParser.parse("-");
-	    d = dateParser.parse("2011051514:55:15:627");
-		} catch (Exception e) {
-			
-		}
-		SimpleDateFormat out = new SimpleDateFormat ("dd-MMM-yy HH:mm:ss:SSS");
-		System.out.println(out.format(d));
-		System.out.println(d);
+		
 		
 		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"

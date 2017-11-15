@@ -1,6 +1,8 @@
 package singapore;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,6 +15,33 @@ import singapore.Driving_sessions.DrivingTrial;
 public class Driving_all {
 
 	Vector<Driving_sessions> subjects;
+	
+	public static String[] completedA ={"520","521","522","525","526","529","531",
+			"533","536","538","540","541","542","544","545","546","552","555","556","564"};
+	public static String[] completedB ={"508","520","525","526","528","529","530",
+			"531","532","540","541","542","545","556","561","564"};
+
+	public static void main(String[] args) {
+		Driving_all test =  new Driving_all();
+//		for (int i = 0; i < test.subjects.size(); i++) {
+//			Driving_sessions s = test.subjects.get(i);
+//			System.out.println(s.id);
+//			for (int j = 0; j < s.trials.length; j++) {
+//				System.out.println(s.trials[j].startTime + "=="
+//						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD + " count: " + s.trials[j].frameCount);	
+//			}
+//			System.out.println("--------------------------------------------------");
+//		}
+		
+		File file = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "LP_PVT_all.csv");
+		try {
+			test.writeToFile(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	public Driving_all() {
 
@@ -79,13 +108,10 @@ public class Driving_all {
 		// based on the data gathered from the timings
 		
 		for (Driving_sessions subject : subjects){
-			
-//			Driving_sessions subject=null;
-//			for (Driving_sessions s : subjects){
-//				if (s.id.equals("508") && s.protocol.equals("A"))
-//					subject =s;
-//			}
-			
+			if (!subject.id.equals("508")) {
+				break;
+			}
+			System.out.println("Processing Driving for Subject : " + subject.id);
 			// Directories were the filtered ( valid part of the driving data) is kept 
 			File directory = new File ("/Users/ehsanebk/OneDrive - drexel.edu/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
@@ -103,9 +129,13 @@ public class Driving_all {
 			
 			SimpleDateFormat dateParser2 = new SimpleDateFormat ("yyyyMMddHH:mm:ss:SSS"); // 2011051514:55:15:627
 			
-			Tokenizer t = new Tokenizer(file);
-			//Values lanePos[] = new Values()[6];
+			// For saving memory and not to store all the numbers of LP
+			Values[] lanePos = new Values[6];
+			for (int i = 0; i < lanePos.length; i++) {
+				lanePos[i]= new Values();
+			}
 			
+			Tokenizer t = new Tokenizer(file);
 			t.skipLine(); // Skipping the first line
 			while (t.hasMoreTokens()){
 				String[] lineCSV = t.readNextLineCSV();
@@ -131,12 +161,15 @@ public class Driving_all {
 							time.after(subject.trials[i].startTime) && 
 							time.before(subject.trials[i].stopTime)){
 						
-						//lanePos.add(LateralPosition);
+						lanePos[i].add(LateralPosition);
 						//subject.trials[i].lanePos.add(LateralPosition);
 						subject.trials[i].frameCount++;
 					}
 				}
-				//subject.trials[i].LP_STD =  lanePos.stddev();
+				// getting the LP standard deviations
+				for (int i = 0; i < lanePos.length; i++) {
+					subject.trials[i].LP_STD =  lanePos[i].stddev();
+				}
 			}
 		}
 	}
@@ -149,17 +182,67 @@ public class Driving_all {
 		return null;
 	}
 	
-	
-	public static void main(String[] args) {
-		Driving_all test =  new Driving_all();
-		for (int i = 0; i < test.subjects.size(); i++) {
-			Driving_sessions s = test.subjects.get(i);
-			System.out.println(s.id);
-			for (int j = 0; j < s.trials.length; j++) {
-				System.out.println(s.trials[j].startTime + "=="
-						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD + " count: " + s.trials[j].frameCount);	
-			}
-			System.out.println("--------------------------------------------------");
+	public void writeToFile (File file) throws Exception{
+		File PVTfileOutPutProcessed = file;
+		PrintWriter foutPVT = null;
+		try {
+			foutPVT = new PrintWriter(PVTfileOutPutProcessed);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
 		}
+		foutPVT.println("protocol,id,"
+				+ ",PVT 0,,PVT 1,,PVT 2,,PVT 3,,PVT 4,,PVT 5,,PVT 6,,PVT 7,,"
+				//+ ",,alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
+				+ ",,Driving 0,,,Driving 1,,,Driving 2,,,Driving 3,,,Driving 4,,,"
+				);
+		foutPVT.flush();
+		
+		foutPVT.println(",,"
+				+ ",Time,Lapse #,Time,Lapse #,Time,Lapse #,Time,Lapse #,Time,Lapse #"
+				+ ",Time,Lapse #,Time,Lapse #,Time,Lapse #,"
+				//+ ",,alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
+				+ ",,Start-Stop,LPSD,Frame Count,Start-Stop,LPSD,Frame Count,"
+				+ "Start-Stop,LPSD,Frame Count,Start-Stop,LPSD,Frame Count,"
+				+ "Start-Stop,LPSD,Frame Count,"
+				);
+		foutPVT.flush();
+		
+		// Getting the PVT data ready
+		File PVTfile = new File("/Users/ehsanebk/OneDrive - drexel.edu/"
+				+ "Driving data - standard deviation lateral position (Singapore)/"
+				+ "PVT Raw Data/MFPD_PVT_all.txt");
+		Process_PVT singaporePVT = new Process_PVT(PVTfile);
+		
+		
+		for (int i = 0; i < subjects.size(); i++) {
+			
+			Driving_sessions driving = subjects.get(i);
+			if (!driving.id.equals("508")) {
+				break;
+			}
+			PVT_sessions pvt = singaporePVT.get(driving.id);
+			foutPVT.print(driving.protocol+","+driving.id+"," +pvt.sessions.get(i).getTrialdate() +",");
+			for (int j = 0; j < pvt.sessions.size(); j++) {
+				if (pvt.sessions.get(i) != null)
+					foutPVT.print(pvt.sessions.get(i).getTrialtime() +","
+							+pvt.sessions.get(i).getLapses() + ",") ;
+				else
+					foutPVT.print("," + ",") ;
+			}
+			foutPVT.print(","+ ",");
+			foutPVT.flush();
+			for (int j = 0; j < driving.trials.length; j++) {
+				if (driving.trials[j] != null)
+					foutPVT.print(","+ driving.trials[j].getStartTime() + "-" +driving.trials[j].getStopTime() 
+							+"," + driving.trials[j].LP_STD
+							+"," + driving.trials[j].frameCount ) ;
+				else 
+					foutPVT.print(","+  "," + "," ) ;
+			}
+			foutPVT.print("\n");
+			foutPVT.flush();
+		}
+		foutPVT.flush();
+		foutPVT.close();	
 	}
 }

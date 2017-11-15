@@ -21,6 +21,7 @@ public class PVT_sessions {
 	public PVT_sessions() {
 		sessions = new Vector<session>();
 	}
+	
 	session getTrail(int i){
 		for (session s: sessions) {
 			if (Integer.valueOf(s.trial).intValue() == i )
@@ -113,7 +114,7 @@ public class PVT_sessions {
 		public String getTrialdate() {
 			return dateParser.format(trialTime);
 		}
-		public String getTrialtimeString() {
+		public String getTrialtime() {
 			return timeParser.format(trialTime);
 		}
 		

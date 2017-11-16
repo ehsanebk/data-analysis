@@ -129,10 +129,10 @@ public class Process_PVT {
 		}
 	}
 	
-	public PVT_sessions get(String ID) throws Exception{
+	public PVT_sessions get(String ID, String protocol) throws Exception{
 		
 		for (PVT_sessions pvt : samples) {
-			if (pvt.id.equals(ID))
+			if (pvt.id.equals(ID) && pvt.protocol.equals(protocol))
 				return pvt; 
 		}
 		throw new Exception("ID " + ID + " Not found in the data!");

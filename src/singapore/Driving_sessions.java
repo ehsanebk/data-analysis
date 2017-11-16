@@ -8,14 +8,14 @@ public class Driving_sessions {
 	String protocol;
 	String id;
 	
-	// Timings:  15 min  1st_hour 2nd_hour 3rd_hour 4th_hour 5th_hour
-	//			 0-1 	 2-3 	  4-5 	   6-7 	    8-9 	 10-11
+	// Timings:  15 min  1st_hour 2nd_hour 3rd_hour 4th_hour
+	//			 0-1 	 2-3 	  4-5 	   6-7 	    8-9 	 
 	// ** if a time does not exist it will be NULL at the end
 	
-	DrivingTrial[] trials =  new DrivingTrial[6];
+	DrivingTrial[] trials =  new DrivingTrial[5];
 	
 	SimpleDateFormat timeParser = 
-			new SimpleDateFormat ("hhmm");
+			new SimpleDateFormat ("HH:mm");
 	SimpleDateFormat dateParser = 
 			new SimpleDateFormat ("MM/dd/yy");
 	
@@ -50,13 +50,27 @@ public class Driving_sessions {
 			lanePos = new Values();
 		}
 		public String getTrialDate() {
-			return dateParser.format(startTime);
+			try {
+				return dateParser.format(startTime);
+			} catch (Exception e) {
+				return "";
+			}
 		}
 		public String getStartTime() {
-			return timeParser.format(startTime);
+			try {
+				return timeParser.format(startTime);
+			} catch (Exception e) {
+				return "";
+			}
+			
 		}
 		public String getStopTime() {
-			return timeParser.format(stopTime);
+			try {
+				return timeParser.format(stopTime);
+			} catch (Exception e) {
+				return "";
+			}
+			
 		}
 	}
 

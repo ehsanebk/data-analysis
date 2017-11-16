@@ -37,7 +37,7 @@ public class Process_PVT {
 		currentSession.post = t.nextToken();
 		currentSample.protocol =t.nextToken().replace("\"", "");
 		currentSample.id = t.nextToken();
-		currentSession.trial = t.nextToken();
+		currentSession.trial = t.nextInt();
 		
 		String trialdate = t.nextToken().replace("\"", "");
 		String trialtime = t.nextToken().replace("\"", "");
@@ -53,7 +53,7 @@ public class Process_PVT {
 			String post = t.nextToken();
 			String protocol =t.nextToken().replace("\"", "");
 			String id = t.nextToken();
-			String trial = t.nextToken();
+			int trial = t.nextInt();
 			trialdate = t.nextToken().replace("\"", "");
 			trialtime = t.nextToken().replace("\"", "");
 			Date trialTime =  dateParser.parse(trialdate+ " " + trialtime);
@@ -62,14 +62,14 @@ public class Process_PVT {
 			double RT = t.nextDouble();
 			
 			if (protocol.equals(currentSample.protocol) && id.equals(currentSample.id)
-					&& trial.equals(currentSession.trial) && trialTime.equals(currentSession.trialTime)
+					&& trial==currentSession.trial && trialTime.equals(currentSession.trialTime)
 					&& pvtsn==currentSession.pvtsn){
 				currentSession.time.add(time);
 				currentSession.RT.add(RT);
 			}
 			else{
 				if (protocol.equals(currentSample.protocol) && id.equals(currentSample.id)
-						&& !trial.equals(currentSession.trial) 
+						&& trial!=currentSession.trial 
 						&& !trialTime.equals(currentSession.trialTime)){
 					currentSample.sessions.add(currentSession);
 					currentSession = currentSample.new session();

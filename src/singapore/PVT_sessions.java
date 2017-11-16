@@ -22,7 +22,7 @@ public class PVT_sessions {
 		sessions = new Vector<session>();
 	}
 	
-	session getTrail(int i){
+	public session getTrail(int i){
 		for (session s: sessions) {
 			if (Integer.valueOf(s.trial).intValue() == i )
 				return s;
@@ -40,7 +40,7 @@ public class PVT_sessions {
 	class session{
 		String pre;	
 		String post;
-		String trial;
+		int trial;
 		Date trialTime;
 		int pvtsn;
 		Values time;
@@ -121,7 +121,7 @@ public class PVT_sessions {
 		public Values getRT() {
 			return RT;
 		}
-		public String getTrial() {
+		public int getTrial() {
 			return trial;
 		}
 		

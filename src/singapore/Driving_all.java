@@ -15,7 +15,7 @@ import singapore.Driving_sessions.DrivingTrial;
 public class Driving_all {
 
 	Vector<Driving_sessions> subjects;
-	
+
 	public static String[] completedA ={"520","521","522","525","526","529","531",
 			"533","536","538","540","541","542","544","545","546","552","555","556","564"};
 	public static String[] completedB ={"508","520","525","526","528","529","530",
@@ -23,16 +23,16 @@ public class Driving_all {
 
 	public static void main(String[] args) {
 		Driving_all test =  new Driving_all();
-//		for (int i = 0; i < test.subjects.size(); i++) {
-//			Driving_sessions s = test.subjects.get(i);
-//			System.out.println(s.id);
-//			for (int j = 0; j < s.trials.length; j++) {
-//				System.out.println(s.trials[j].startTime + "=="
-//						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD + " count: " + s.trials[j].frameCount);	
-//			}
-//			System.out.println("--------------------------------------------------");
-//		}
-		
+		//		for (int i = 0; i < test.subjects.size(); i++) {
+		//			Driving_sessions s = test.subjects.get(i);
+		//			System.out.println(s.id);
+		//			for (int j = 0; j < s.trials.length; j++) {
+		//				System.out.println(s.trials[j].startTime + "=="
+		//						+ s.trials[j].stopTime + "||" + s.trials[j].LP_STD + " count: " + s.trials[j].frameCount);	
+		//			}
+		//			System.out.println("--------------------------------------------------");
+		//		}
+
 		File file = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "/Result/LP_PVT_all.csv");
@@ -46,7 +46,7 @@ public class Driving_all {
 	public Driving_all() {
 
 		subjects = new Vector<Driving_sessions>();
-		
+
 		// Reading the timing of the driving sessions from the files provided
 		// 1- Protocol A session timings
 		// 2- Protocol B session timings
@@ -69,7 +69,7 @@ public class Driving_all {
 				String ID = lineCSV[0];
 				if (ID.equals("")) // break in case it's an empty line
 					break;
-				
+
 				String Date_of_Trial = lineCSV[1];
 				String Trial_Type_A_B = lineCSV[2];
 
@@ -98,7 +98,7 @@ public class Driving_all {
 					}
 					subject.trials[j/2] = trial;
 				}
-				
+
 				subjects.add(subject);
 				//System.out.println(subject.toStringTiming());
 			}
@@ -106,11 +106,11 @@ public class Driving_all {
 
 		// getting the driving data form the files in filtered directory 
 		// based on the data gathered from the timings
-		
+
 		for (Driving_sessions subject : subjects){
-			if (!subject.id.equals("508")) {
-				break;
-			}
+//			if (!subject.id.equals("523")) {
+//				continue;
+//			}
 			System.out.println("Processing Driving for Subject : " + subject.id);
 			// Directories were the filtered ( valid part of the driving data) is kept 
 			File directory = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
@@ -126,15 +126,15 @@ public class Driving_all {
 					break;
 				}
 			}
-			
+
 			SimpleDateFormat dateParser2 = new SimpleDateFormat ("yyyyMMddHH:mm:ss:SSS"); // 2011051514:55:15:627
-			
+
 			// For saving memory and not to store all the numbers of LP
 			Values[] lanePos = new Values[5];
 			for (int i = 0; i < lanePos.length; i++) {
 				lanePos[i]= new Values();
 			}
-			
+
 			Tokenizer t = new Tokenizer(file);
 			t.skipLine(); // Skipping the first line
 			while (t.hasMoreTokens()){
@@ -147,20 +147,20 @@ public class Driving_all {
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-//				if (time.after(subject.trials[1].startTime) && 
-//						time.before(subject.trials[1].stopTime))
-//					System.out.println("in"); 
-//				
-//				System.out.println(time + "  " + subject.trials[1].startTime +"––––" + subject.trials[1].stopTime);
+				//				if (time.after(subject.trials[1].startTime) && 
+				//						time.before(subject.trials[1].stopTime))
+				//					System.out.println("in"); 
+				//				
+				//				System.out.println(time + "  " + subject.trials[1].startTime +"––––" + subject.trials[1].stopTime);
 				String LaneWidth = lineCSV[8];
 				String LaneCenter = lineCSV[9];
 				double LateralPosition = Double.valueOf(lineCSV[10]).doubleValue();
-			
+
 				for (int i = 0; i < subject.trials.length; i++) {
 					if (subject.trials[i].startTime != null && 
 							time.after(subject.trials[i].startTime) && 
 							time.before(subject.trials[i].stopTime)){
-						
+
 						lanePos[i].add(LateralPosition);
 						//subject.trials[i].lanePos.add(LateralPosition);
 						subject.trials[i].frameCount++;
@@ -182,7 +182,7 @@ public class Driving_all {
 		}
 		return null;
 	}
-	
+
 	public void writeToFile (File file) throws Exception{
 		File PVTfileOutPutProcessed = file;
 		PrintWriter foutPVT = null;
@@ -192,38 +192,39 @@ public class Driving_all {
 			e1.printStackTrace();
 		}
 		foutPVT.println("protocol,id,"
-				+ ",PVT 1,,PVT 2,,PVT 3,,PVT 4,,PVT 5,,"
+				+ ",PVT 1,,PVT 2,,PVT 3,,PVT 4,,PVT 5,,PVT 6,,PVT 7,,"
 				//+ ",,alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
 				+ ",Driving 1,,,Driving 2,,,Driving 3,,,Driving 4,,,"
 				);
 		foutPVT.flush();
-		
+
 		foutPVT.println(",,"
-				+ ",Time,Lapse #,Time,Lapse #,Time,Lapse #,Time,Lapse #,Time,Lapse #,"
+				+ ",Time,Lapse #,Time,Lapse #,Time,Lapse #,Time,Lapse #,"
+				+ "Time,Lapse #,Time,Lapse #,Time,Lapse #,"
 				//+ ",,alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
 				+ ",Start-Stop,LPSD,Frame Count,Start-Stop,LPSD,Frame Count,"
 				+ "Start-Stop,LPSD,Frame Count,Start-Stop,LPSD,Frame Count"
 				);
 		foutPVT.flush();
-		
+
 		// Getting the PVT data ready
 		File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "PVT Raw Data/MFPD_PVT_all.txt");
 		Process_PVT singaporePVT = new Process_PVT(PVTfile);
-		
-		
+
+
 		for (int i = 0; i < subjects.size(); i++) {
-			
+
 			Driving_sessions driving = subjects.get(i);
-			if (!driving.id.equals("508")) {
-				break;
-			}
 			PVT_sessions pvt = singaporePVT.get(driving.id, driving.protocol);
-			foutPVT.print(driving.protocol+","+driving.id+"," +pvt.sessions.get(i).getTrialdate() +",");
-			for (int j = 1; j <= 5  ; j++) {
-					foutPVT.print(pvt.sessions.get(j).getTrialtime() +","
-							+pvt.sessions.get(j).getLapses() + ",") ;
+			foutPVT.print(driving.protocol+","+driving.id+"," +pvt.sessions.get(0).getTrialdate() +",");
+			for (int j = 1; j <= 7  ; j++) {
+				if (pvt.getTrail(j) != null)
+					foutPVT.print(pvt.getTrail(j).getTrialtime() +","
+							+pvt.getTrail(j).getLapses() + ",") ;
+				else
+					foutPVT.print(","+ ",") ;
 			}
 			foutPVT.flush();
 			for (int j = 1; j < driving.trials.length; j++) {

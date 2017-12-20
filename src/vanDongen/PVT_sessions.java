@@ -45,7 +45,7 @@ public class PVT_sessions {
 		return null;	
 	}
 	String getSessionsTime(int sNumber, pre_post p) {
-		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy hh:mm"); // for parsing date formats
+		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy HH:mm"); // for parsing date formats
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))

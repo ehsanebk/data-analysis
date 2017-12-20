@@ -66,21 +66,34 @@ public class ProcessExtractedData {
 		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
 
-		File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
+		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
 		//		File output = 
 		//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
 		//WriteToFile(output);
 
+//		//		File outputIndividualTimePoints = 
+//		//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+//		File outputIndividualTimePoints = 
+//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+//		try {
+//			WriteToFileIndividual(outputIndividualTimePoints);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		//		File outputIndividualTimePoints = 
 		//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
-		File outputIndividualTimePoints = 
-				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
+		File outputCumulativeTimePoints = 
+				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Cumulative.csv");
 		try {
-			WriteToFileIndividual(outputIndividualTimePoints);
+			WriteToFileCumulativeAffect(outputCumulativeTimePoints);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		
 	}
 
 
@@ -468,7 +481,7 @@ public class ProcessExtractedData {
 						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
 						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,");
 
-		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy hh:mm"); // for parsing date formats
+		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy HH:mm"); // for parsing date formats
 		for (int i = 0; i < participantsData.size(); i++) {
 			Data subject = participantsData.get(i);
 			System.out.println(" Processing to write to file (indidual data): " + subject.ID +" " + subject.sessions.size());
@@ -548,4 +561,111 @@ public class ProcessExtractedData {
 			//			output.print("\n\n");output.flush();	
 		}
 	}
+	
+	
+	/**
+	 * @param outputIndividualCumulative
+	 * THis function write to file the cumulative affect first regarding the pvt data
+	 * and second based on the straight segments in time points 
+	 * @throws Exception
+	 */
+	private static void WriteToFileCumulativeAffect(File outputIndividualCumulative) throws Exception {
+
+		PrintWriter outputCSV = null;
+		try {
+			outputCSV = new PrintWriter(outputIndividualCumulative);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		outputCSV.println("Best Case");
+		for (int timePoint = 1; timePoint <= 8; timePoint++) {
+			outputCSV.println("Time Point "+ timePoint);
+
+			for (int i = 0; i < participantsData.size(); i++) {
+				Data data = participantsData.get(i);
+				System.out.println(" Processing to write to file : " + data.ID);
+				if (data.condition.equals(Conditions.BestCase)){
+					outputCSV.println(data.ID+","+data.condition );
+					outputCSV.println(",Session #,Time pre,Pre PVT,Post PVT,");
+					outputCSV.flush();
+					for (int j = 0; j < data.sessions.size(); j++) {
+						if (data.sessions.get(j).timePoint == timePoint){
+							outputCSV.print("," +data.sessions.get(j).sessionNumber);
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(j,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
+							outputCSV.print(",");
+							outputCSV.flush();
+							outputCSV.print(",,LP_STD");
+							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
+								outputCSV.print(","+data.sessions.get(j).straightSegments.get(k).lanePos_STD);
+								outputCSV.flush();
+							}
+							outputCSV.print(",,Steer>3");
+							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).percentage_Frames_3D_SteerWheel);
+								outputCSV.flush();
+							}
+							outputCSV.print(",,MPH_STD");
+							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).SPEED_STD);
+								outputCSV.flush();
+							}
+							outputCSV.print("\n");
+							outputCSV.flush();
+						}
+					}	
+				}	
+			}
+		}
+
+		outputCSV.println("***");
+		outputCSV.println("Worst Case");
+		for (int timePoint = 1; timePoint <= 8; timePoint++) {
+			outputCSV.println("Time Point "+ timePoint);
+
+			for (int i = 0; i < participantsData.size(); i++) {
+				Data data = participantsData.get(i);
+				System.out.println(" Processing to write to file : " + data.ID);
+				if (data.condition.equals(Conditions.WorstCase)){
+					outputCSV.println(data.ID+","+data.condition );
+					outputCSV.println(",Session #,Time pre,Pre PVT,Post PVT,");
+					outputCSV.flush();
+					for (int j = 0; j < data.sessions.size(); j++) {
+						if (data.sessions.get(j).timePoint == timePoint){
+							outputCSV.print("," +data.sessions.get(j).sessionNumber);
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(j,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
+							outputCSV.print(",");
+							outputCSV.flush();
+							outputCSV.print(",,LP_STD");
+							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
+								outputCSV.print(","+data.sessions.get(j).straightSegments.get(k).lanePos_STD);
+								outputCSV.flush();
+							}
+							outputCSV.print(",,Steer>3");
+							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).percentage_Frames_3D_SteerWheel);
+								outputCSV.flush();
+							}
+							outputCSV.print(",,MPH_STD");
+							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).SPEED_STD);
+								outputCSV.flush();
+							}
+							outputCSV.print("\n");
+							outputCSV.flush();
+						}
+					}	
+				}	
+			}
+		}
+		outputCSV.close();
+	}
+
 }
+

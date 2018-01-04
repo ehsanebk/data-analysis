@@ -593,10 +593,11 @@ public class ProcessExtractedData {
 					outputCSV.flush();
 					for (int j = 0; j < data.sessions.size(); j++) {
 						if (data.sessions.get(j).timePoint == timePoint){
+							int s = data.sessions.get(j).getSessionNumber();
 							outputCSV.print("," +data.sessions.get(j).sessionNumber);
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(j,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(s,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Post));
 							outputCSV.print(",");
 							outputCSV.flush();
 							outputCSV.print(",,LP_STD");
@@ -636,10 +637,11 @@ public class ProcessExtractedData {
 					outputCSV.flush();
 					for (int j = 0; j < data.sessions.size(); j++) {
 						if (data.sessions.get(j).timePoint == timePoint){
+							int s = data.sessions.get(j).getSessionNumber();
 							outputCSV.print("," +data.sessions.get(j).sessionNumber);
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(j,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(s,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Post));
 							outputCSV.print(",");
 							outputCSV.flush();
 							outputCSV.print(",,LP_STD");

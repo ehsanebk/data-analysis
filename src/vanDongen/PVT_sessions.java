@@ -272,42 +272,42 @@ public class PVT_sessions {
 				// 34 hour Break 
 				if (contains(tp6_pre,counter)){
 					newSession.pre_post = pre_post.Pre;
-					newSession.timePoint = 6;
+					newSession.timePoint = 5;
 					sessions.add(newSession);
 				}
 				else if(contains(tp6_post,counter)){
 					newSession.pre_post = pre_post.Post;
-					newSession.timePoint = 6;
+					newSession.timePoint = 5;
 					sessions.add(newSession);
 				}
 				else if(contains(tp7_pre,counter)){
 					newSession.pre_post = pre_post.Pre;
-					newSession.timePoint = 7;
+					newSession.timePoint = 6;
 					sessions.add(newSession);
 				}
 				else if(contains(tp7_post,counter)){
 					newSession.pre_post = pre_post.Post;
-					newSession.timePoint = 7;
+					newSession.timePoint = 6;
 					sessions.add(newSession);
 				}
 				else if(contains(tp8_pre,counter)){
 					newSession.pre_post = pre_post.Pre;
-					newSession.timePoint = 8;
+					newSession.timePoint = 7;
 					sessions.add(newSession);
 				}
 				else if(contains(tp8_post,counter)){
 					newSession.pre_post = pre_post.Post;
-					newSession.timePoint = 8;
+					newSession.timePoint = 7;
 					sessions.add(newSession);
 				}
 				else if(contains(tp9_pre,counter)){
 					newSession.pre_post = pre_post.Pre;
-					newSession.timePoint = 9;
+					newSession.timePoint = 8;
 					sessions.add(newSession);
 				}
 				else if(contains(tp9_post,counter)){
 					newSession.pre_post = pre_post.Post;
-					newSession.timePoint = 9;
+					newSession.timePoint = 8;
 					sessions.add(newSession);
 				}
 				

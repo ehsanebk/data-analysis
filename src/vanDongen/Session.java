@@ -27,8 +27,8 @@ public class Session {
 
 	String ID;
 	String sessionNumber;
-	int timePoint;   // the time points are in the format of 
-					// 1 2 3 4 break 6 7 8 9
+	int timePoint=0;   // the time points are in the format of 
+					// 1 2 3 4 break 5 6 7 8
 	Vector<StraightSegment> straightSegments;
 	
 	
@@ -54,16 +54,16 @@ public class Session {
 
 		if ( sessionNumberInt == 24 || sessionNumberInt == 28 || sessionNumberInt == 32 
 				|| sessionNumberInt == 36 || sessionNumberInt == 40 )
-			timePoint = 6;
+			timePoint = 5;
 		if ( sessionNumberInt == 25 || sessionNumberInt == 29 || sessionNumberInt == 33 
 				|| sessionNumberInt == 37 || sessionNumberInt == 41 )
-			timePoint = 7;
+			timePoint = 6;
 		if ( sessionNumberInt == 26 || sessionNumberInt == 30 || sessionNumberInt == 34 
 				|| sessionNumberInt == 38 || sessionNumberInt == 42 )
-			timePoint = 8;
+			timePoint = 7;
 		if ( sessionNumberInt == 27 || sessionNumberInt == 31 || sessionNumberInt == 35 
 				|| sessionNumberInt == 39 || sessionNumberInt == 43 )
-			timePoint = 9;
+			timePoint = 8;
 		
 		
 		StraightSegment segment;
@@ -364,6 +364,10 @@ public class Session {
 			
 		}
 		
+	}
+	
+	int getSessionNumber(){
+		return Utilities.toInt(sessionNumber);
 	}
 	
 	double getSessionAverageSPEED_MIN (){

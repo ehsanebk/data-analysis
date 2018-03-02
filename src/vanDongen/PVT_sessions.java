@@ -62,10 +62,6 @@ public class PVT_sessions {
 		return null;	
 	}
 	
-	
-	
-	
-	
 	public double getNumberOfLapses_AveOnTimePoints(int tp) {
 		Values lapses = new Values();
 		// skipping the first response time ??
@@ -92,6 +88,7 @@ public class PVT_sessions {
 			if (line.contains("PVT DATA")){
 				counter++;
 				PVT_session newSession = new PVT_session();
+				newSession.ID = ID;
 				newSession.trialNumberInFile = counter;
 				t.skipLines(6);
 				String trialDate = t.readNextLine().substring(17, 24);

@@ -23,10 +23,8 @@ public class PVT_session {
 	Values RT;
 	
 	public PVT_session() {
-
 		RT = new Values();
 	}
-	
 	
 	public double getSessionAve(){
 		return RT.average();
@@ -39,5 +37,4 @@ public class PVT_session {
 				l++;
 		return l;
 	}
-	
 }

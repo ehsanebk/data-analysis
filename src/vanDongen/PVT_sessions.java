@@ -8,6 +8,7 @@ import java.util.Vector;
 import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
+import vanDongen.PVT_session.Block;
 
 public class PVT_sessions {
 	String ID;
@@ -100,13 +101,27 @@ public class PVT_sessions {
 					e.printStackTrace();
 				}
 				
+				//Block newBlock = newSession.new Block();
+				//newBlock.startTime = 0;
+				
 				t.skipLines(6);
-				String rt = t.readNextLine().substring(2,5);
+				line = t.readNextLine();
+				String rt = line.substring(1,5);
 				rt = rt.replaceAll("\\s+", "");
+				String timeFromStart = line.substring(14,20);
+				timeFromStart = timeFromStart.replaceAll("\\s+", "");
 				while (!rt.equals("0")){
 					newSession.RT.add(Integer.valueOf(rt).intValue()); // changing to int
-					rt = t.readNextLine().substring(2,5);
+					newSession.timeOfReactionsFromStart.add(Double.valueOf(timeFromStart).doubleValue());
+					//newBlock.RT.add(Integer.valueOf(rt).intValue()); // changing to int
+	
+					line = t.readNextLine();
+					rt = line.substring(1,5);
 					rt = rt.replaceAll("\\s+", "");
+					if (rt.equals("0"))
+						break;
+					timeFromStart = line.substring(14,20);
+					timeFromStart = timeFromStart.replaceAll("\\s+", "");
 				}
 				
 				// Finding the session number ,,,, sn = session number start from 4 to 44

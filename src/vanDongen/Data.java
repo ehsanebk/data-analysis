@@ -1,7 +1,6 @@
 package vanDongen;
 
 import java.util.*;
-
 import analysis.Values;
 
 enum Conditions {BestCase, WorstCase};

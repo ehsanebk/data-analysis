@@ -8,9 +8,23 @@ import java.util.Vector;
 import analysis.Tokenizer;
 import analysis.Utilities;
 import analysis.Values;
-import vanDongen.PVT_session.Block;
 
 public class PVT_sessions {
+	
+	/**
+	 *  session numbers : sNumber
+	 * 
+	 *     time points: 1	2	3	4		5	6	7	8
+	 *     ––––––––––––––––––––––––––––––––––––––––––––––––––
+	 *     				4	5	6	7		24	25	26	27
+	 *     				8	9	10	11		28	29	30	31
+	 *     				12	13	14	15		32	33	34	35
+	 *     				16	17	18	19		36	37	38	39
+	 *     				20	21	22	23		40	41	42	43
+	 *     
+	 *     Each session has pre and post values
+	 */
+	
 	String ID;
 	Conditions condition;
 	
@@ -58,19 +72,73 @@ public class PVT_sessions {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
-				return session.getNumberOfLapses();
+				return session.getSessionNumberOfLapses();
 		}
 		return null;	
 	}
 	
-	public double getNumberOfLapses_AveOnTimePoints(int tp) {
+	Object getSessionsProportionOfLapses(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getSessionNumberOfLapses()/session.RT.size();
+		}
+		return null;	
+	}
+	
+	
+	Object getSessionsBlockLapses(int sNumber, int blockNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getBlockLapses(blockNumber);
+		}
+		return null;	
+	}
+	
+	Object getSessionsBlockProportionOfLapses(int sNumber, int blockNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getBlockLapses(blockNumber)/session.getRTblock(blockNumber).size();
+		}
+		return null;	
+	}
+	
+	public double getNumberOfLapses_AveOnTimePoints(int tp,  pre_post p) {
 		Values lapses = new Values();
-		// skipping the first response time ??
-		for (int i = 1; i < sessions.size(); i++) 
-			if (sessions.get(i).timePoint == tp)
-				lapses.add(sessions.get(i).getNumberOfLapses());
+		for (int i = 0; i < sessions.size(); i++) 
+			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0 )
+				lapses.add(sessions.get(i).getSessionNumberOfLapses());
 		return lapses.average();
 	}
+	
+	public double getNumberOfLapsesAtEachBlock_AveOnTimePoints(int tp,int blockNumber,  pre_post p) {
+		Values lapses = new Values();
+		// skipping the first response time ??
+		for (int i = 0; i < sessions.size(); i++) 
+			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0)
+				lapses.add(sessions.get(i).getBlockLapses(blockNumber));
+		return lapses.average();
+	}
+	
+	public double getProportionOfLapses_AveOnTimePoints(int tp,  pre_post p) {
+		Values lapses = new Values();
+		for (int i = 0; i < sessions.size(); i++) 
+			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0 )
+				lapses.add((double)sessions.get(i).getSessionNumberOfLapses()/sessions.get(i).RT.size());
+		return lapses.average();
+	}
+	
+	public double getProportionOfLapsesAtEachBlock_AveOnTimePoints(int tp,int blockNumber,  pre_post p) {
+		Values lapses = new Values();
+		// skipping the first response time ??
+		for (int i = 0; i < sessions.size(); i++) 
+			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0)
+				lapses.add((double)sessions.get(i).getBlockLapses(blockNumber)/sessions.get(i).getRTblock(blockNumber).size());
+		return lapses.average();
+	}
+	
 	
 	void process(File file){
 		
@@ -110,11 +178,7 @@ public class PVT_sessions {
 				rt = rt.replaceAll("\\s+", "");
 				String timeFromStart = line.substring(14,20);
 				timeFromStart = timeFromStart.replaceAll("\\s+", "");
-				while (!rt.equals("0")){
-					newSession.RT.add(Integer.valueOf(rt).intValue()); // changing to int
-					newSession.timeOfReactionsFromStart.add(Double.valueOf(timeFromStart).doubleValue());
-					//newBlock.RT.add(Integer.valueOf(rt).intValue()); // changing to int
-	
+				while (true){ // dropping the first RT!!!
 					line = t.readNextLine();
 					rt = line.substring(1,5);
 					rt = rt.replaceAll("\\s+", "");
@@ -122,6 +186,10 @@ public class PVT_sessions {
 						break;
 					timeFromStart = line.substring(14,20);
 					timeFromStart = timeFromStart.replaceAll("\\s+", "");
+					
+					newSession.RT.add(Integer.valueOf(rt).intValue()); // changing to int
+					newSession.timeOfReactionsFromStart.add(Double.valueOf(timeFromStart).doubleValue());
+					//newBlock.RT.add(Integer.valueOf(rt).intValue()); // changing to int
 				}
 				
 				// Finding the session number ,,,, sn = session number start from 4 to 44

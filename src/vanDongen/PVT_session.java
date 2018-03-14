@@ -96,9 +96,6 @@ public class PVT_session {
 		int numberOfResponses = 0;
 		int sleepAttacks = 0;
 		
-//		public int[] alertResponseProportion(){
-//			
-//		}
 		
 		public int getNumberOfFalseAlerts(){
 			int c = 0;

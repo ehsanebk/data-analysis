@@ -203,12 +203,13 @@ public class ProcessPVT {
 		}
 
 		outputCSV.println("PRE BLOCK DATA");
-		outputCSV.println(",,,1,,2,,3,,4,,,,5,,6,,7,,8,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
 		// PVT AVE
-		outputCSV.print("Best_PVT_BlockAVE_PRE");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Best_PVT_BlockAVE_PRE,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_BlockAVE_BestCaseTimePoints_PRE[i][j].size() > 0){
 					double s=PVT_BlockAVE_BestCaseTimePoints_PRE[i][j].average(); 
@@ -219,10 +220,11 @@ public class ProcessPVT {
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
-		outputCSV.print("Worst_PVT_BlockAVE_PRE");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Worst_PVT_BlockAVE_PRE,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_BlockAVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
 					double s=PVT_BlockAVE_WorstCaseTimePoints_PRE[i][j].average(); 
@@ -235,12 +237,13 @@ public class ProcessPVT {
 		outputCSV.flush();
 		
 		outputCSV.println("POST BLOCK DATA");
-		outputCSV.println(",,,1,,2,,3,,4,,,,5,,6,,7,,8,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
 		// PVT AVE
-		outputCSV.print("Best_PVT_BlockAVE_POST");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Best_PVT_BlockAVE_POST,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_BlockAVE_BestCaseTimePoints_POST[i][j].size() > 0){
 					double s=PVT_BlockAVE_BestCaseTimePoints_POST[i][j].average(); 
@@ -251,10 +254,11 @@ public class ProcessPVT {
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
-		outputCSV.print("Worst_PVT_BlockAVE_POST");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Worst_PVT_BlockAVE_POST,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_BlockAVE_WorstCaseTimePoints_POST[i][j].size() > 0){
 					double s=PVT_BlockAVE_WorstCaseTimePoints_POST[i][j].average(); 
@@ -443,12 +447,13 @@ public class ProcessPVT {
 		}
 
 		outputCSV.println("PRE BLOCK DATA");
-		outputCSV.println(",,,1,,2,,3,,4,,,,5,,6,,7,,8,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
 		// PVT AVE
-		outputCSV.print("Best_PVT_BlockAVE_PRE");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Best_PVT_BlockAVE_PRE,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_PROPORTION_BlockAVE_BestCaseTimePoints_PRE[i][j].size() > 0){
 					double s=PVT_PROPORTION_BlockAVE_BestCaseTimePoints_PRE[i][j].average(); 
@@ -459,10 +464,11 @@ public class ProcessPVT {
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
-		outputCSV.print("Worst_PVT_BlockAVE_PRE");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Worst_PVT_BlockAVE_PRE,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_PROPORTION_BlockAVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
 					double s=PVT_PROPORTION_BlockAVE_WorstCaseTimePoints_PRE[i][j].average(); 
@@ -475,12 +481,13 @@ public class ProcessPVT {
 		outputCSV.flush();
 		
 		outputCSV.println("POST BLOCK DATA");
-		outputCSV.println(",,,1,,2,,3,,4,,,,5,,6,,7,,8,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,");
 		// PVT AVE
-		outputCSV.print("Best_PVT_BlockAVE_POST");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Best_PVT_BlockAVE_POST,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_PROPORTION_BlockAVE_BestCaseTimePoints_POST[i][j].size() > 0){
 					double s=PVT_PROPORTION_BlockAVE_BestCaseTimePoints_POST[i][j].average(); 
@@ -491,10 +498,11 @@ public class ProcessPVT {
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
-		outputCSV.print("Worst_PVT_BlockAVE_POST");
-		for (int i = 0; i < 10; i++) {
+		outputCSV.print("Worst_PVT_BlockAVE_POST,");
+		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",,");
+				outputCSV.print(",");
+			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( PVT_PROPORTION_BlockAVE_WorstCaseTimePoints_POST[i][j].size() > 0){
 					double s=PVT_PROPORTION_BlockAVE_WorstCaseTimePoints_POST[i][j].average(); 

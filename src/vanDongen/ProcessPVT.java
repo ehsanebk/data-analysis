@@ -558,8 +558,8 @@ public class ProcessPVT {
 	public static void main(String[] args) {
 		ProcessPVT data = new ProcessPVT();
 
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
-		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
 		data.process(directory.toPath());
 
 		File output = new File("./Result(VanDongen)/Results_TimePoints_PVT_L_Number.csv");

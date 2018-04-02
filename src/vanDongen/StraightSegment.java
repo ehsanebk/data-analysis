@@ -81,10 +81,10 @@ public class StraightSegment {
 	double steerWheel_Ave, steerWheel_Max, steerWheel_STD;
 	double lanePos_Ave, lanePos_Max, lanePos_STD;
 	
-	double percentage_Frames_Zero_SteerWheel = 0; // angle less than 0.0001
-	double percentage_Frames_3D_SteerWheel = 0;  // angle greater than 0.03
-	double percentage_Frames_2D_SteerWheel = 0;  // angle greater than 0.02
-	int number_FastCorrectiveCounterSteerWheel = 0; // patterns of slow drifting and fast corrective counter steering in 50 frames   
+	double percentage_Frames_Zero_SteerWheel = 0; // angle less than 0.0001 degree
+	double percentage_Frames_3D_SteerWheel = 0;  // angle greater than 3 degree
+	double percentage_Frames_2D_SteerWheel = 0;  // angle greater than 2 degree
+ 	int number_FastCorrectiveCounterSteerWheel = 0; // patterns of slow drifting and fast corrective counter steering in 50 frames   
 	
 	double predictionError_STD;
 	double steeringEntropy;

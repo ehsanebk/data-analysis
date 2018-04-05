@@ -702,42 +702,69 @@ public class ProcessExtractedData {
 			if (data.condition.equals(Conditions.BestCase)){
 				outputCSV.println(data.ID+","+data.condition );
 				outputCSV.flush();
+				
+				outputCSV.print("Session #");
+				for (int j = 4; j < 44; j++) {					
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionNumber());
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("Pre PVT");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Pre));
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Post PVT");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Post));
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("LP_STD");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + data.sessions.get(j).getSessionLanePos_STD_Extraxted());
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionLanePos_STD_Extraxted());
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Steer>3");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + data.sessions.get(j).getSessionAverage3DSteer_Extracted());
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionAverage3DSteer_Extracted());
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("MPH_STD");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + data.sessions.get(j).getSessionAverageMPH_STD());
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionAverageMPH_STD());
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -754,42 +781,69 @@ public class ProcessExtractedData {
 			if (data.condition.equals(Conditions.WorstCase)){
 				outputCSV.println(data.ID+","+data.condition );
 				outputCSV.flush();
+				
+				outputCSV.print("Session #");
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionNumber());
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("Pre PVT");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Pre));
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Post PVT");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Post));
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("LP_STD");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + data.sessions.get(j).getSessionLanePos_STD_Extraxted());
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionLanePos_STD_Extraxted());
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Steer>3");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + data.sessions.get(j).getSessionAverage3DSteer_Extracted());
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionAverage3DSteer_Extracted());
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("MPH_STD");
-				for (int j = 0; j < data.sessions.size(); j++) {
-					int s = data.sessions.get(j).getSessionNumber();
-					outputCSV.print("," + data.sessions.get(j).getSessionAverageMPH_STD());
+				for (int j = 4; j < 44; j++) {
+					if (data.getSessionByNumber(j)==null){
+						outputCSV.print(",");
+						outputCSV.flush();
+						continue;
+					}
+					Session s = data.getSessionByNumber(j);
+					outputCSV.print("," + s.getSessionAverageMPH_STD());
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");

@@ -61,51 +61,55 @@ public class ProcessExtractedData {
 				}
 			}
 		}
-
+		
 		File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		//File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
 
-		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
-		//		File output = 
-		//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted.csv");
-		//WriteToFile(output);
+		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		//File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		for (int i = 0; i < participantsData.size(); i++){
+			Data data = participantsData.get(i);
+			String id = data.ID;
+			for (int j = 0; j < data.sessions.size(); j++) {
+				Session s  = data.sessions.get(j);
+				String s_number = s.sessionNumber;
+				for (File file : rawDataDirectory.listFiles()) {
+					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
+						s.addRawData(file);
+					}
+				}		
+			}
+		}
+		
+		try {		
+			File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted.csv");
+			//		File output = 
+			//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted.csv");
+			WriteToFile(output);
 
-//		//		File outputIndividualTimePoints = 
-//		//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
-//		File outputIndividualTimePoints = 
-//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
-//		try {
-//			WriteToFileIndividual(outputIndividualTimePoints);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		//		File outputIndividualTimePoints = 
-		//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Individual.csv");
-//		File outputCumulativeTimePoints = 
-//				new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_Extracted_Cumulative.csv");
-//		try {
-//			WriteToFileCumulativeAffect(outputCumulativeTimePoints);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-		
-		File outputInividualExtracted = 
-				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_Human_Individual_Extracted.csv");
-		try {
+			//		File outputIndividualTimePoints = 
+			//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Individual.csv");
+			File outputIndividualTimePoints = 
+					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Individual.csv");
+			WriteToFileIndividual(outputIndividualTimePoints);
+
+
+			//		File outputIndividualTimePoints = 
+			//				new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Individual.csv");
+			File outputCumulativeTimePoints = 
+					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Cumulative.csv");
+			WriteToFileCumulativeAffect(outputCumulativeTimePoints);
+
+			File outputInividualExtracted = 
+					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
 			WriteToFileInividualCorrelation(outputInividualExtracted);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 	}
-
-
 
 	static void process(Path dir) {
 		try {
@@ -215,32 +219,32 @@ public class ProcessExtractedData {
 			for (int j = 0; j < data.sessions.size(); j++) {
 				switch (data.condition){
 				case BestCase:
-					steer_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_STD_Extraxted());
-					lanePos_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_STD_Extraxted());
-					steer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_Ave_Extraxted());
-					lanePos_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extraxted());
+					steer_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteering_STD_Extracted());
+					lanePos_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_STD_Extracted());
+					steer_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteering_Ave_Extracted());
+					lanePos_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extracted());
 
-					zeroSteer_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer_Extracted());
-					steer2D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage2DSteer_Extracted());
-					steer3D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage3DSteer_Extracted());
-					FCCS_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageFastCorrectiveCounterSteering_Extracted());
+					zeroSteer_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionZeroSteer_Extracted());
+					steer2D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSession2DSteer_Extracted());
+					steer3D_Percentage_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSession3DSteer_Extracted());
+					FCCS_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionFastCorrectiveCounterSteering_Extracted());
 
-					predicitonError_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragepredicitonError_STD_Extracted());
-					steeringEntropy_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteeringEntorpy_Extracted());
+					predicitonError_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionPredicitonError_STD_Extracted());
+					steeringEntropy_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteeringEntorpy_Extracted());
 					break;
 				case WorstCase:
-					steer_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_STD_Extraxted());
-					lanePos_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_STD_Extraxted());
-					steer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteerWheel_Ave_Extraxted());
-					lanePos_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extraxted());
+					steer_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteering_STD_Extracted());
+					lanePos_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_STD_Extracted());
+					steer_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteering_Ave_Extracted());
+					lanePos_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionLanePos_Ave_Extracted());
 
-					zeroSteer_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageZeroSteer_Extracted());
-					steer2D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage2DSteer_Extracted());
-					steer3D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverage3DSteer_Extracted());
-					FCCS_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAverageFastCorrectiveCounterSteering_Extracted());
+					zeroSteer_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionZeroSteer_Extracted());
+					steer2D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSession2DSteer_Extracted());
+					steer3D_Percentage_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSession3DSteer_Extracted());
+					FCCS_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionFastCorrectiveCounterSteering_Extracted());
 
-					predicitonError_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragepredicitonError_STD_Extracted());
-					steeringEntropy_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionAveragesteeringEntorpy_Extracted());
+					predicitonError_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionPredicitonError_STD_Extracted());
+					steeringEntropy_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionSteeringEntorpy_Extracted());
 					break;
 				}
 			}
@@ -252,16 +256,18 @@ public class ProcessExtractedData {
 		// steer STD
 		outputCSV.print("Best_steer_STD");
 		for (int i = 0; i < steer_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=steer_STD_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_steer_STD");
 		for (int i = 0; i < steer_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=steer_STD_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -272,16 +278,18 @@ public class ProcessExtractedData {
 		// steer Ave
 		outputCSV.print("Best_steer_Ave");
 		for (int i = 0; i < steer_Ave_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=steer_Ave_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_steer_Ave");
 		for (int i = 0; i < steer_Ave_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=steer_Ave_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -292,16 +300,18 @@ public class ProcessExtractedData {
 		// lanePos STD
 		outputCSV.print("Best_lanePos_STD");
 		for (int i = 0; i < lanePos_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=lanePos_STD_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_lanePos_STD");
 		for (int i = 0; i < lanePos_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=lanePos_STD_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -312,16 +322,18 @@ public class ProcessExtractedData {
 		// lanePos Ave
 		outputCSV.print("Best_lanePos_Ave");
 		for (int i = 0; i < lanePos_Ave_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=lanePos_Ave_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_lanePos_Ave");
 		for (int i = 0; i < lanePos_Ave_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=lanePos_Ave_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -332,16 +344,18 @@ public class ProcessExtractedData {
 		// Zero Steer Ave : Percentage of Frames
 		outputCSV.print("Best_ZeroSteer_Percentage");
 		for (int i = 0; i < zeroSteer_Percentage_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s= zeroSteer_Percentage_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_ZeroSteer_Percentage");
 		for (int i = 0; i < zeroSteer_Percentage_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s= zeroSteer_Percentage_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -352,16 +366,18 @@ public class ProcessExtractedData {
 		// more than 0.2 degree Steer Ave : Percentage of Frames
 		outputCSV.print("Best_Steer2D_Percentage");
 		for (int i = 0; i < steer2D_Percentage_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s= steer2D_Percentage_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_Steer2D_Percentage");
 		for (int i = 0; i < steer2D_Percentage_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s= steer2D_Percentage_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -372,16 +388,18 @@ public class ProcessExtractedData {
 		// more than 0.3 degree Steer Ave : Percentage of Frames
 		outputCSV.print("Best_Steer3D_Percentage");
 		for (int i = 0; i < steer3D_Percentage_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s= steer3D_Percentage_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_Steer3D_Percentage");
 		for (int i = 0; i < steer3D_Percentage_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s= steer3D_Percentage_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -392,16 +410,18 @@ public class ProcessExtractedData {
 		// number of Fast Corrective Counter Steering : FCCS
 		outputCSV.print("Best_FCCS");
 		for (int i = 0; i < FCCS_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=FCCS_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_FCCS");
 		for (int i = 0; i < FCCS_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=FCCS_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -412,16 +432,18 @@ public class ProcessExtractedData {
 		// predicitonError STD
 		outputCSV.print("Best_predictionError_STD");
 		for (int i = 0; i < predicitonError_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=predicitonError_STD_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_predicitonError_STD");
 		for (int i = 0; i < predicitonError_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=predicitonError_STD_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
@@ -432,16 +454,18 @@ public class ProcessExtractedData {
 		// Steering Entropy Average
 		outputCSV.print("Best_steeringEntropy");
 		for (int i = 0; i < steeringEntropy_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=steeringEntropy_BestCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 		}
 		outputCSV.print("\n");
 		outputCSV.flush();
 		outputCSV.print("Worst_steeringEntropy");
 		for (int i = 0; i < steeringEntropy_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
 			double s=steeringEntropy_WorstCaseTimePoints[i].average(); 
-
 			outputCSV.print(","+s);
 
 		}
@@ -449,9 +473,7 @@ public class ProcessExtractedData {
 		outputCSV.flush();
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
-
-
-
+		
 		outputCSV.close();
 	}
 
@@ -480,15 +502,15 @@ public class ProcessExtractedData {
 						+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,"
 						+ "Pre PVT,,,Driving,,,,Post PVT,,,Pre PVT,,,Driving,,,,Post PVT,,,");
 		output.println(
-				",#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
+				",#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
 						+ ","
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,"
-						+ "#,Time,Lapses,#,LPSD,Steering>3,MPH_STD,#,Time,Lapses,");
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,");
 
 		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy HH:mm"); // for parsing date formats
 		for (int i = 0; i < participantsData.size(); i++) {
@@ -504,9 +526,9 @@ public class ProcessExtractedData {
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Pre));
 				//driving
 				output.print("," + subject.getSessionNumber(k));
-				output.print("," + subject.getSessionLanePos_STD_Extraxted(k));
-				output.print("," + subject.getSessionAverage3DSteer_Extracted(k));
-				output.print("," + subject.getSessionAverageMPH_STD(k));
+				output.print("," + subject.getSessionLanePos_STD_Extracted(k));
+				output.print("," + subject.getSessionSteering_STD_Extracted(k));
+				output.print("," + subject.getSessionMPH_STD_RawData(k));
 				//post PVT
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Post));
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Post));
@@ -525,9 +547,9 @@ public class ProcessExtractedData {
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Pre));
 				//driving
 				output.print("," + subject.getSessionNumber(k));
-				output.print("," + subject.getSessionLanePos_STD_Extraxted(k));
-				output.print("," + subject.getSessionAverage3DSteer_Extracted(k));
-				output.print("," + subject.getSessionAverageMPH_STD(k));
+				output.print("," + subject.getSessionLanePos_STD_Extracted(k));
+				output.print("," + subject.getSessionSteering_STD_Extracted(k));
+				output.print("," + subject.getSessionMPH_STD_RawData(k));
 				//post PVT
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Post));
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Post));
@@ -614,9 +636,9 @@ public class ProcessExtractedData {
 								outputCSV.print(","+data.sessions.get(j).straightSegments.get(k).lanePos_STD);
 								outputCSV.flush();
 							}
-							outputCSV.print(",,Steer>3");
+							outputCSV.print(",,Steering_STD");
 							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
-								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).percentage_Frames_3D_SteerWheel);
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).steering_STD);
 								outputCSV.flush();
 							}
 							outputCSV.print(",,MPH_STD");
@@ -658,9 +680,9 @@ public class ProcessExtractedData {
 								outputCSV.print(","+data.sessions.get(j).straightSegments.get(k).lanePos_STD);
 								outputCSV.flush();
 							}
-							outputCSV.print(",,Steer>3");
+							outputCSV.print(",,Steering_STD");
 							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
-								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).percentage_Frames_3D_SteerWheel);
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).steering_STD);
 								outputCSV.flush();
 							}
 							outputCSV.print(",,MPH_STD");
@@ -705,13 +727,7 @@ public class ProcessExtractedData {
 				
 				outputCSV.print("Session #");
 				for (int j = 4; j < 44; j++) {					
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionNumber());
+					outputCSV.print("," + data.getSessionNumber(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -732,39 +748,28 @@ public class ProcessExtractedData {
 				
 				outputCSV.print("LP_STD");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionLanePos_STD_Extraxted());
+					outputCSV.print("," + data.getSessionLanePos_STD_Extracted(j));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Steering_STD");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + data.getSessionSteering_STD_Extracted(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Steer>3");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionAverage3DSteer_Extracted());
+					outputCSV.print("," + data.getSession3DSteer_Extracted(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("MPH_STD");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionAverageMPH_STD());
+					outputCSV.print("," + data.getSessionMPH_STD_RawData(j)); // the extracted data does not have the MPH 
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -784,13 +789,7 @@ public class ProcessExtractedData {
 				
 				outputCSV.print("Session #");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionNumber());
+					outputCSV.print("," + data.getSessionNumber(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -811,39 +810,28 @@ public class ProcessExtractedData {
 				
 				outputCSV.print("LP_STD");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionLanePos_STD_Extraxted());
+					outputCSV.print("," + data.getSessionLanePos_STD_Extracted(j));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Steering_STD");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + data.getSessionSteering_STD_Extracted(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Steer>3");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionAverage3DSteer_Extracted());
+					outputCSV.print("," + data.getSession3DSteer_Extracted(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("MPH_STD");
 				for (int j = 4; j < 44; j++) {
-					if (data.getSessionByNumber(j)==null){
-						outputCSV.print(",");
-						outputCSV.flush();
-						continue;
-					}
-					Session s = data.getSessionByNumber(j);
-					outputCSV.print("," + s.getSessionAverageMPH_STD());
+					outputCSV.print("," + data.getSessionMPH_STD_RawData(j));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");

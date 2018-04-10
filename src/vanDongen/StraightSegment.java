@@ -72,13 +72,13 @@ public class StraightSegment {
 	Values simTime;
 	Values accelPed;
 	Values brakePed;
-	Values steerWheel;
+	Values steering;
 	Values lanePos;
 	Values followDist;
 	
 	double accelPed_Ave, accelPed_Max, accelPed_STD;
 	double brakePed_Ave, brakePed_Max, brakePed_STD;
-	double steerWheel_Ave, steerWheel_Max, steerWheel_STD;
+	double steering_Ave, steering_Max, steering_STD;
 	double lanePos_Ave, lanePos_Max, lanePos_STD;
 	
 	double percentage_Frames_Zero_SteerWheel = 0; // angle less than 0.0001 degree
@@ -103,7 +103,7 @@ public class StraightSegment {
 		simTime = new Values();
 		accelPed = new Values();
 		brakePed = new Values();
-		steerWheel = new Values();
+		steering = new Values();
 		lanePos = new Values();
 		followDist = new Values();
 	}

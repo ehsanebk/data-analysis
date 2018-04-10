@@ -51,182 +51,181 @@ public class Data {
 	}
 
 
-	//////////////////new values
-	Object getSessionAveragesteer_STD (int sNumber){
+	///// new values Raw Data
+	Object getSessionSteering_STD_RawData(int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.sessionNumber;
+				return session.getSessionSteering_STD_RawData();
 		}
 		return null;
 	}
-	Object getSessionAverageMPH_STD (int sNumber){
+	Object getSessionMPH_STD_RawData (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAverageMPH_STD();
+				return session.getSessionMPH_STD_RawData();
 		}
 		return null;
 	}
 	
-	Object getSessionAverageMPH_Ave (int sNumber){
+	Object getSessionMPH_Ave_RawData (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAverageMPH_Ave();
+				return session.getSessionMPH_Ave_RawData();
 		}
 		return null;
 	}
 
 
 	//////// For the extracted data ////////
-	Object getSessionAccelPed_Ave_Extraxted (int sNumber){
+	Object getSessionAccelPed_Ave_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAccelPed_Ave_Extraxted();
+				return session.getSessionAccelPed_Ave_Extracted();
 		}
 		return null;
 	}
 
-	Object getSessionAccelPed_Max_Extraxted (int sNumber){
+	Object getSessionAccelPed_Max_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAccelPed_Max_Extraxted();
+				return session.getSessionAccelPed_Max_Extracted();
 		}
 		return null;
 	}
-	Object getSessionAccelPed_STD_Extraxted (int sNumber){
+	Object getSessionAccelPed_STD_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAccelPed_STD_Extraxted();
+				return session.getSessionAccelPed_STD_Extracted();
 		}
 		return null;
 	}
 	// BrakePad
-	Object getSessionBrakePed_Ave_Extraxted (int sNumber){
+	Object getSessionBrakePed_Ave_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionBrakePed_Ave_Extraxted();
+				return session.getSessionBrakePed_Ave_Extracted();
 		}
 		return null;
 	}
-	Object getSessionBrakePed_Max_Extraxted (int sNumber){
+	Object getSessionBrakePed_Max_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionBrakePed_Max_Extraxted();
+				return session.getSessionBrakePed_Max_Extracted();
 		}
 		return null;
 	}
-	Object getSessionBrakePed_STD_Extraxted (int sNumber){
+	Object getSessionBrakePed_STD_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionBrakePed_STD_Extraxted();
-		}
-		return null;
-	}
-	// SteerWheel
-	Object getSessionSteerWheel_Ave_Extraxted (int sNumber){
-		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
-			Session session = (Session) iterator.next();
-			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionSteerWheel_Ave_Extraxted();
-		}
-		return null;
-	}
-	Object getSessionSteerWheel_Max_Extraxted (int sNumber){
-		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
-			Session session = (Session) iterator.next();
-			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionBrakePed_Max_Extraxted();
-		}
-		return null;
-	}
-	Object getSessionSteerWheel_STD_Extraxted (int sNumber){
-		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
-			Session session = (Session) iterator.next();
-			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionBrakePed_STD_Extraxted();
+				return session.getSessionBrakePed_STD_Extracted();
 		}
 		return null;
 	}
 	// Lane position
-	Object getSessionLanePos_Ave_Extraxted (int sNumber){
+	Object getSessionLanePos_Ave_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionLanePos_Ave_Extraxted();
+				return session.getSessionLanePos_Ave_Extracted();
 		}
 		return null;
 	}
-	Object getSessionLanePos_Max_Extraxted (int sNumber){
+	Object getSessionLanePos_Max_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionLanePos_Max_Extraxted();
+				return session.getSessionLanePos_Max_Extracted();
 		}
 		return null;
 	}
-	Object getSessionLanePos_STD_Extraxted (int sNumber){
+	Object getSessionLanePos_STD_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionLanePos_STD_Extraxted();
+				return session.getSessionLanePos_STD_Extracted();
 		}
 		return null;
 	}
 	// Steering
-	Object getSessionAverageZeroSteer_Extracted (int sNumber){
+	Object getSessionSteering_Ave_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAverageZeroSteer_Extracted();
+				return session.getSessionSteering_Ave_Extracted();
 		}
 		return null;
 	}
-	Object getSessionAverage2DSteer_Extracted (int sNumber){
+	Object getSessionSteering_Max_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAverage2DSteer_Extracted();
+				return session.getSessionSteering_Max_Extracted();
 		}
 		return null;
 	}
-	Object getSessionAverage3DSteer_Extracted (int sNumber){
+	Object getSessionSteering_STD_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAverage3DSteer_Extracted();
+				return session.getSessionSteering_STD_Extracted();
 		}
 		return null;
 	}
-	Object getSessionAverageFastCorrectiveCounterSteering_Extracted (int sNumber){
+	Object getSessionZeroSteer_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAverageFastCorrectiveCounterSteering_Extracted();
+				return session.getSessionZeroSteer_Extracted();
+		}
+		return null;
+	}
+	Object getSession2DSteer_Extracted (int sNumber){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSession2DSteer_Extracted();
+		}
+		return null;
+	}
+	Object getSession3DSteer_Extracted (int sNumber){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSession3DSteer_Extracted();
+		}
+		return null;
+	}
+	Object getSessionFastCorrectiveCounterSteering_Extracted (int sNumber){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionFastCorrectiveCounterSteering_Extracted();
 		}
 		return null;
 	}
 
-	Object getSessionAveragepredicitonError_STD_Extracted (int sNumber){
+	Object getSessionPredicitonError_STD_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAveragepredicitonError_STD_Extracted();
+				return session.getSessionPredicitonError_STD_Extracted();
 		}
 		return null;
 	}
-	Object getSessionAveragesteeringEntorpy_Extracted (int sNumber){
+	Object getSessionSteeringEntorpy_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionAveragesteeringEntorpy_Extracted();
+				return session.getSessionSteeringEntorpy_Extracted();
 		}
 		return null;
 	}

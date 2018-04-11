@@ -52,14 +52,6 @@ public class Data {
 
 
 	///// new values Raw Data
-	Object getSessionSteering_STD_RawData(int sNumber){
-		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
-			Session session = (Session) iterator.next();
-			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
-				return session.getSessionSteering_STD_RawData();
-		}
-		return null;
-	}
 	Object getSessionMPH_STD_RawData (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();

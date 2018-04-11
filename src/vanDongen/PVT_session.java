@@ -57,6 +57,22 @@ public class PVT_session {
 		return l;
 	}
 	
+	/**
+	 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
+	 */
+	public double getSessionLSNRapx(){
+		// LSNR_apx = B ((1/N) sum_1^N (1 / RT_i))    B = 3855ms
+		int N = 0;
+		int B = 3855;
+		double sum = 0;
+		for (int i = 0; i < RT.size(); i++) 
+			if ( RT.get(i) >= 150){
+				sum = sum + 1.0 / RT.get(i);
+				N++;
+			}
+		return B * ((1.0/N) * sum);
+	}
+	
 	public Values getRTblock(int blockNumber){ // starts from 0
 		Values v = new Values();
 		if (blockNumber == 0)

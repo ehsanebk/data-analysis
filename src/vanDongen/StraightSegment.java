@@ -42,28 +42,11 @@ public class StraightSegment {
 	double MPG_AVG;
 	double FUELUSED;
 	
+	// for Raw Data data 
 	Values MPH;
-	Values roundedSteer;
-	
 	double MPH_STD;
-	double roundedSteer_STD;
-	
 	double MPH_Ave;
-	double roundedSteer_Ave;
-	
 	double MPH_Max;
-	double roundedSteer_Max;
-	
-	double percentage_Frames_Zero_SteerAngel_rounded = 0;
-	double percentage_Frames_3D_SteerAngel_rounded = 0;  // angle greater than 0.03
-	double percentage_Frames_2D_SteerAngel_rounded = 0;  // angle greater than 0.02
-	int number_FastCorrectiveCounterSteering_rounded = 0; // patterns of slow drifting and fast corrective counter steering in 50 frames   
-	
-	double predictionError_STD_rounded;
-	double SteeringEntropy_rounded;
-	
-	int numberOfMaxMin_rounded;
-	int distnaceOfMaxMin_rounded;
 	
 	// for processed(Extracted) data 
 	Values frameCount;
@@ -95,8 +78,6 @@ public class StraightSegment {
 	
 	public StraightSegment() {
 		MPH = new Values();
-		roundedSteer = new Values();
-		
 		frameCount = new Values();
 		elapsedTime = new Values();
 		travelDist = new Values();

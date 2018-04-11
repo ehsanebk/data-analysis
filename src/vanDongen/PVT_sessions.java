@@ -86,6 +86,23 @@ public class PVT_sessions {
 		return null;	
 	}
 	
+	Object getSessionsAveAlertResponses(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getSessionAveAlertResponses();
+		}
+		return null;	
+	}
+	
+	Object getSessionsLSNRapx(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getSessionLSNRapx();
+		}
+		return null;	
+	}
 	
 	Object getSessionsBlockLapses(int sNumber, int blockNumber, pre_post p) {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
@@ -111,6 +128,14 @@ public class PVT_sessions {
 			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0 )
 				lapses.add(sessions.get(i).getSessionNumberOfLapses());
 		return lapses.average();
+	}
+	
+	public double getLSNRapx_AveOnTimePoints(int tp,  pre_post p) {
+		Values LSNRapx = new Values();
+		for (int i = 0; i < sessions.size(); i++) 
+			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0 )
+				LSNRapx.add(sessions.get(i).getSessionLSNRapx());
+		return LSNRapx.average();
 	}
 	
 	public double getNumberOfLapsesAtEachBlock_AveOnTimePoints(int tp,int blockNumber,  pre_post p) {

@@ -201,60 +201,18 @@ public class Session {
 				if (frame >= straightSegments.get(i).frameStart && frame <= straightSegments.get(i).frameStop){
 					steer = Utilities.toDouble(line[7]);
 					MPH = Utilities.toDouble(line[10]);
-					straightSegments.get(i).roundedSteer.add(steer);
 					straightSegments.get(i).MPH.add(MPH);
 				}				
 			}
 		}
 		
 		for (int i = 0; i < straightSegments.size(); i++){
-			
-			straightSegments.get(i).roundedSteer = Utilities.lowpass(straightSegments.get(i).roundedSteer, 0.5);
-			
-			Values s = straightSegments.get(i).roundedSteer;
-			
-		
-			straightSegments.get(i).roundedSteer_STD = straightSegments.get(i).roundedSteer.stddev();
+					
 			straightSegments.get(i).MPH_STD = straightSegments.get(i).MPH.stddev();
-			straightSegments.get(i).roundedSteer_Ave = straightSegments.get(i).roundedSteer.average();
 			straightSegments.get(i).MPH_Ave = straightSegments.get(i).MPH.average();
-			straightSegments.get(i).roundedSteer_Max = straightSegments.get(i).roundedSteer.max();
 			straightSegments.get(i).MPH_Max = straightSegments.get(i).MPH.max();
-			int number_Frames_Zero_SteerAngel =0;
-			int number_Frames_2D_SteerAngel =0;
-			int number_Frames_3D_SteerAngel =0;
-			for (int j1 = 0; j1 < s.size(); j1++) {
-				if (Math.abs(s.get(j1)) == 0)
-					number_Frames_Zero_SteerAngel ++;
-				if (Math.abs(s.get(j1)) > 0.02)
-					number_Frames_2D_SteerAngel ++;
-				if (Math.abs(s.get(j1)) > 0.03)
-					number_Frames_3D_SteerAngel ++;
-			}
-			straightSegments.get(i).percentage_Frames_Zero_SteerAngel_rounded = (double)number_Frames_Zero_SteerAngel / s.size() ;
-			straightSegments.get(i).percentage_Frames_2D_SteerAngel_rounded = (double)number_Frames_2D_SteerAngel / s.size() ;
-			straightSegments.get(i).percentage_Frames_3D_SteerAngel_rounded = (double)number_Frames_3D_SteerAngel / s.size() ;
 
-			// finding Fast Corrective Counter Steering in the values  : FCCS		
-			for (int j = 0; j < s.size()-100; j++) {
-				boolean drift = true;
-				for (int k = j; k < j+70; k++) {
-					if (s.get(k)!= s.get(j))
-						drift = false;
-				}
-				if(Math.abs(s.get(j) - s.get(j+100)) >= 0.02 && drift ){	
-					straightSegments.get(i).number_FastCorrectiveCounterSteering_rounded ++ ;
-					j += 100;
-				}
-			}
-
-			// finding Prediction error values
-			Values e = Utilities.predictionError(straightSegments.get(i).roundedSteer);
-			straightSegments.get(i).predictionError_STD_rounded = e.stddev();
-
-			straightSegments.get(i).SteeringEntropy_rounded = Utilities.steeringEntropy(s);
 			// clearing the vectors for saving memory
-			straightSegments.get(i).roundedSteer.clear();
 			straightSegments.get(i).MPH.clear();
 		}
 
@@ -534,52 +492,16 @@ public class Session {
 	}
 	
 	///// new values Raw Data
-	double getSessionSteering_STD_RawData(){
-		Values values = new Values();
-		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).roundedSteer_STD);
-		return values.average();
-	}
 	double getSessionMPH_STD_RawData(){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
 			values.add(straightSegments.get(i).MPH_STD);
 		return values.average();
 	}
-	double getSessionSteering_Ave_RawData(){
-		Values values = new Values();
-		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).roundedSteer_Ave);
-		return values.average();
-	}
 	double getSessionMPH_Ave_RawData(){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
 			values.add(straightSegments.get(i).MPH_Ave);
-		return values.average();
-	}
-	double getSessionZeroSteer_RawData(){
-		Values values = new Values();
-		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).percentage_Frames_Zero_SteerAngel_rounded);
-		return values.average();
-	}
-	double getSession2DSteer_RawData(){
-		Values values = new Values();
-		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).percentage_Frames_2D_SteerAngel_rounded);
-		return values.average();
-	}
-	double getSession3DSteer_RawData(){
-		Values values = new Values();
-		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).percentage_Frames_3D_SteerAngel_rounded);
-		return values.average();
-	}
-	double getSessionFastCorrectiveCounterSteering_RawData(){
-		Values values = new Values();
-		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).number_FastCorrectiveCounterSteering_rounded);
 		return values.average();
 	}
 	double getSessionPredicitonError_STD_RawData(){

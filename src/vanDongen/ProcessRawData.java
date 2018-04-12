@@ -72,9 +72,6 @@ public class ProcessRawData {
 			}
 		}
 		
-		
-		
-		
 		//File output = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints.csv");
 		File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_RawData.csv");
 		PrintWriter outputCSV = null;
@@ -84,7 +81,6 @@ public class ProcessRawData {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-				
 		WriteToFile(outputCSV);
 	}
 	

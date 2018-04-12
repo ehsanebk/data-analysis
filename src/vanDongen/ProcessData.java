@@ -66,21 +66,21 @@ public class ProcessData {
 		//File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
 
-		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
-		//File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
-		for (int i = 0; i < participantsData.size(); i++){
-			Data data = participantsData.get(i);
-			String id = data.ID;
-			for (int j = 0; j < data.sessions.size(); j++) {
-				Session s  = data.sessions.get(j);
-				String s_number = s.sessionNumber;
-				for (File file : rawDataDirectory.listFiles()) {
-					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
-						s.addRawData(file);
-					}
-				}		
-			}
-		}
+//		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+//		//File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+//		for (int i = 0; i < participantsData.size(); i++){
+//			Data data = participantsData.get(i);
+//			String id = data.ID;
+//			for (int j = 0; j < data.sessions.size(); j++) {
+//				Session s  = data.sessions.get(j);
+//				String s_number = s.sessionNumber;
+//				for (File file : rawDataDirectory.listFiles()) {
+//					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
+//						s.addRawData(file);
+//					}
+//				}		
+//			}
+//		}
 		
 		try {		
 			File output = 

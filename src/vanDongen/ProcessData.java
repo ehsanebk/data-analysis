@@ -25,13 +25,13 @@ public class ProcessData {
 
 		//procssing the PVT data
 		PVTdata = new ProcessPVT();
-		File directoryPVT = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
-		//File directoryPVT = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		//File directoryPVT = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
+		File directoryPVT = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/PVT Raw data");
 		PVTdata.process(directoryPVT.toPath());
 
 		participantsData = new Vector<Data>();
-		File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
-		//File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
+		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		for (File file : directory.listFiles()){
 
 			//if (file.getName().endsWith(".rpt") && file.getName().substring(0,4).equals("3232")) { // for testing 
@@ -62,41 +62,41 @@ public class ProcessData {
 			}
 		}
 		
-		File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
-		//File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		//File extractedDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
+		File extractedDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Drexel Extracted");
 		process(extractedDataDirectory.toPath());
 
-//		File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
-//		//File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
-//		for (int i = 0; i < participantsData.size(); i++){
-//			Data data = participantsData.get(i);
-//			String id = data.ID;
-//			for (int j = 0; j < data.sessions.size(); j++) {
-//				Session s  = data.sessions.get(j);
-//				String s_number = s.sessionNumber;
-//				for (File file : rawDataDirectory.listFiles()) {
-//					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
-//						s.addRawData(file);
-//					}
-//				}		
-//			}
-//		}
+		//File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
+		for (int i = 0; i < participantsData.size(); i++){
+			Data data = participantsData.get(i);
+			String id = data.ID;
+			for (int j = 0; j < data.sessions.size(); j++) {
+				Session s  = data.sessions.get(j);
+				String s_number = s.sessionNumber;
+				for (File file : rawDataDirectory.listFiles()) {
+					if (file.getName().startsWith("DRV") && file.getName().contains(id) && file.getName().contains("B"+ s_number)){
+						s.addRawData(file);
+					}
+				}		
+			}
+		}
 		
 		try {		
 			File output = 
-					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted.csv");
+					new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted.csv");
 			WriteToFileTimePoints(output);
 
 			File outputIndividualTimePoints = 
-					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Individual.csv");
+					new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Individual.csv");
 			WriteToFileIndividual(outputIndividualTimePoints);
 
 			File outputCumulativeTimePoints = 
-					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Cumulative.csv");
+					new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_TimePoints_Extracted_Cumulative.csv");
 			WriteToFileCumulativeAffect(outputCumulativeTimePoints);
 
 			File outputInividualExtracted = 
-					new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
+					new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
 			WriteToFileInividualCorrelation(outputInividualExtracted);
 			
 		} catch (Exception e) {
@@ -208,7 +208,7 @@ public class ProcessData {
 
 		for (int i = 0; i < participantsData.size(); i++) {
 			Data data = participantsData.get(i);
-			System.out.println(" Processing to write to file : " + data.ID);
+			System.out.println("Writing to file (Time Points): " + data.ID);
 
 			for (int j = 0; j < data.sessions.size(); j++) {
 				switch (data.condition){
@@ -532,8 +532,7 @@ public class ProcessData {
 		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy HH:mm"); // for parsing date formats
 		for (int i = 0; i < participantsData.size(); i++) {
 			Data subject = participantsData.get(i);
-			System.out.println(" Processing to write to file (indidual data): " + subject.ID +" " + subject.sessions.size());
-
+			System.out.println("Writing to file (Indidual Data): " + subject.ID +" " + subject.sessions.size());
 			output.println(subject.ID + ",Extracted");
 			for (int k = 4; k <24 ; k++) {
 
@@ -634,8 +633,8 @@ public class ProcessData {
 
 			for (int i = 0; i < participantsData.size(); i++) {
 				Data data = participantsData.get(i);
-				System.out.println(" Processing to write to file : " + data.ID);
 				if (data.condition.equals(Conditions.BestCase)){
+					System.out.println("Writing to file (Cumulative Affect): " + data.ID);
 					outputCSV.println(data.ID+","+data.condition );
 					outputCSV.println(",Session #,Time pre,Pre LSNR_apx,Post LSNR_apx,");
 					outputCSV.flush();
@@ -678,8 +677,8 @@ public class ProcessData {
 
 			for (int i = 0; i < participantsData.size(); i++) {
 				Data data = participantsData.get(i);
-				System.out.println(" Processing to write to file : " + data.ID);
 				if (data.condition.equals(Conditions.WorstCase)){
+					System.out.println("Writing to file (Cumulative Affect): " + data.ID);
 					outputCSV.println(data.ID+","+data.condition );
 					outputCSV.println(",Session #,Time pre,Pre LSNR_apx,Post LSNR_apx,");
 					outputCSV.flush();
@@ -737,8 +736,8 @@ public class ProcessData {
 		outputCSV.println("Best Case");
 		for (int i = 0; i < participantsData.size(); i++) {
 			Data data = participantsData.get(i);
-			System.out.println(" Writing to file : " + data.ID);
 			if (data.condition.equals(Conditions.BestCase)){
+				System.out.println("Writing to file (Individual Corrolation): " + data.ID);
 				outputCSV.println(data.ID+","+data.condition );
 				outputCSV.flush();
 				
@@ -821,8 +820,8 @@ public class ProcessData {
 		outputCSV.println("Worst Case");
 		for (int i = 0; i < participantsData.size(); i++) {
 			Data data = participantsData.get(i);
-			System.out.println(" Writing to file : " + data.ID);
 			if (data.condition.equals(Conditions.WorstCase)){
+				System.out.println("Writing to file (Individual Corrolation): " + data.ID);
 				outputCSV.println(data.ID+","+data.condition );
 				outputCSV.flush();
 				

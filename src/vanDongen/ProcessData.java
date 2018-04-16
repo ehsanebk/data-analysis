@@ -247,29 +247,6 @@ public class ProcessData {
 		////////////////        writing to file       ////////////////////////
 		outputCSV.println(",,1,2,3,4,,5,6,7,8");
 
-		// PVT LSNR_apx
-		outputCSV.print("Best_LSNRapx");
-		for (int i = 0; i < steer_STD_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=steer_STD_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_LSNRapx");
-		for (int i = 0; i < steer_STD_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=steer_STD_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();		
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-
 		// steer STD
 		outputCSV.print("Best_steer_STD");
 		for (int i = 0; i < steer_STD_BestCaseTimePoints.length; i++) {
@@ -513,21 +490,21 @@ public class ProcessData {
 				",1,,,,,,,,,,2,,,,,,,,,,3,,,,,,,,,,4,,,,,,,,,,"+
 				",5,,,,,,,,,,6,,,,,,,,,,7,,,,,,,,,,8,,,,,,,,,,");
 		output.println(
-				",Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,Pre LSNR_apx,,,"
-						+ "Driving,,,,Post LSNR_apx,,,Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,"
+				",Pre Lapses,,,Driving,,,,Post Lapses,,,Pre Lapses,,,Driving,,,,Post Lapses,,,Pre Lapses,,,"
+						+ "Driving,,,,Post Lapses,,,Pre Lapses,,,Driving,,,,Post Lapses,,,"
 						+ ","
-						+ "Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,"
-						+ "Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,Pre LSNR_apx,,,Driving,,,,Post LSNR_apx,,,");
+						+ "Pre Lapses,,,Driving,,,,Post Lapses,,,Pre Lapses,,,Driving,,,,Post Lapses,,,"
+						+ "Pre Lapses,,,Driving,,,,Post Lapses,,,Pre Lapses,,,Driving,,,,Post Lapses,,,");
 		output.println(
-				",#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
+				",#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
 						+ ","
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,"
-						+ "#,Time,LSNR_apx,#,LPSD,SteeringSTD,MPH_STD,#,Time,LSNR_apx,");
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,"
+						+ "#,Time,Lapses,#,LPSD,SteeringSTD,MPH_STD,#,Time,Lapses,");
 
 		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy HH:mm"); // for parsing date formats
 		for (int i = 0; i < participantsData.size(); i++) {
@@ -539,7 +516,7 @@ public class ProcessData {
 				//pre PVT
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Pre));
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Pre));
-				output.print("," + PVTdata.getByID(subject.ID).getSessionsLSNRapx(k,pre_post.Pre));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Pre));
 				//driving
 				output.print("," + subject.getSessionNumber(k));
 				output.print("," + subject.getSessionLanePos_STD_Extracted(k));
@@ -548,7 +525,7 @@ public class ProcessData {
 				//post PVT
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Post));
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Post));
-				output.print("," + PVTdata.getByID(subject.ID).getSessionsLSNRapx(k,pre_post.Post));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Post));
 
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
@@ -560,7 +537,7 @@ public class ProcessData {
 				//pre PVT
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Pre));
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Pre));
-				output.print("," + PVTdata.getByID(subject.ID).getSessionsLSNRapx(k,pre_post.Pre));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Pre));
 				//driving
 				output.print("," + subject.getSessionNumber(k));
 				output.print("," + subject.getSessionLanePos_STD_Extracted(k));
@@ -569,7 +546,7 @@ public class ProcessData {
 				//post PVT
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsNumber(k,pre_post.Post));
 				output.print("," + PVTdata.getByID(subject.ID).getSessionsTime(k,pre_post.Post));
-				output.print("," + PVTdata.getByID(subject.ID).getSessionsLSNRapx(k,pre_post.Post));
+				output.print("," + PVTdata.getByID(subject.ID).getSessionsLapses(k,pre_post.Post));
 
 				if (k%4 ==3 ){
 					output.print("\n");output.flush();
@@ -634,17 +611,17 @@ public class ProcessData {
 			for (int i = 0; i < participantsData.size(); i++) {
 				Data data = participantsData.get(i);
 				if (data.condition.equals(Conditions.BestCase)){
-					System.out.println("Writing to file (Cumulative Affect): " + data.ID);
+					System.out.println("Writing to file (Cumulative Affect): " + data.ID +" time point: " + timePoint);
 					outputCSV.println(data.ID+","+data.condition );
-					outputCSV.println(",Session #,Time pre,Pre LSNR_apx,Post LSNR_apx,");
+					outputCSV.println(",Session #,Time pre,Pre Lapses,Post Lapses,");
 					outputCSV.flush();
 					for (int j = 0; j < data.sessions.size(); j++) {
 						if (data.sessions.get(j).timePoint == timePoint){
 							int s = data.sessions.get(j).getSessionNumber();
 							outputCSV.print("," +data.sessions.get(j).sessionNumber);
 							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(s,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(s,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(s,pre_post.Post));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Post));
 							outputCSV.print(",");
 							outputCSV.flush();
 							outputCSV.print(",,LP_STD");
@@ -678,17 +655,17 @@ public class ProcessData {
 			for (int i = 0; i < participantsData.size(); i++) {
 				Data data = participantsData.get(i);
 				if (data.condition.equals(Conditions.WorstCase)){
-					System.out.println("Writing to file (Cumulative Affect): " + data.ID);
+					System.out.println("Writing to file (Cumulative Affect): " + data.ID +" time point: " + timePoint);
 					outputCSV.println(data.ID+","+data.condition );
-					outputCSV.println(",Session #,Time pre,Pre LSNR_apx,Post LSNR_apx,");
+					outputCSV.println(",Session #,Time pre,Pre Lapses,Post Lapses,");
 					outputCSV.flush();
 					for (int j = 0; j < data.sessions.size(); j++) {
 						if (data.sessions.get(j).timePoint == timePoint){
 							int s = data.sessions.get(j).getSessionNumber();
 							outputCSV.print("," +data.sessions.get(j).sessionNumber);
 							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsTime(s,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(s,pre_post.Pre));
-							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(s,pre_post.Post));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Pre));
+							outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(s,pre_post.Post));
 							outputCSV.print(",");
 							outputCSV.flush();
 							outputCSV.print(",,LP_STD");
@@ -738,7 +715,7 @@ public class ProcessData {
 			Data data = participantsData.get(i);
 			if (data.condition.equals(Conditions.BestCase)){
 				System.out.println("Writing to file (Individual Corrolation): " + data.ID);
-				outputCSV.println(data.ID+","+data.condition );
+				outputCSV.println(data.ID+":"+data.condition );
 				outputCSV.flush();
 				
 				outputCSV.print("Session #");
@@ -755,20 +732,6 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre Ave RT");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsAveAlertResponses(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
-				outputCSV.print("Pre LSNR_apx");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
 				outputCSV.print("Post Lapses");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
@@ -776,9 +739,23 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
+				outputCSV.print("Pre Ave RT");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsAveAlertResponses(j,pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("Post Ave RT");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsAveAlertResponses(j,pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre LSNR_apx");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(j,pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -822,7 +799,7 @@ public class ProcessData {
 			Data data = participantsData.get(i);
 			if (data.condition.equals(Conditions.WorstCase)){
 				System.out.println("Writing to file (Individual Corrolation): " + data.ID);
-				outputCSV.println(data.ID+","+data.condition );
+				outputCSV.println(data.ID+":"+data.condition );
 				outputCSV.flush();
 				
 				outputCSV.print("Session #");
@@ -839,23 +816,16 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre Ave RT");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsAveAlertResponses(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
-				outputCSV.print("Pre LSNR_apx");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
 				outputCSV.print("Post Lapses");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLapses(j,pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre Ave RT");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsAveAlertResponses(j,pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -867,12 +837,20 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
+				outputCSV.print("Pre LSNR_apx");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(j,pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("post LSNR_apx");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(data.ID).getSessionsLSNRapx(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
+				
 				
 				outputCSV.print("LP_STD");
 				for (int j = 4; j < 44; j++) {

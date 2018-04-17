@@ -2,6 +2,20 @@ package vanDongen;
 
 import analysis.Values;
 
+/**
+ * In this code there are three type of data files:
+ * 
+ * 1- "Reported Data" which the the report summary reported  by the application
+ * 
+ * 2- "Raw Data" that is the Raw data with below fields
+ *     Frame	X	Y	Z	P	R	H	steer	accel	brake	MPH	D_spd	elapsed	gear	cltch	rpm
+ *  
+ * 3- "Extracted Data" which is the data that was extracted from the binary files and has the below fields
+ *     frameCount	elapsedTime	travelDist	simTime	accelPed	brakePed	steerWheel	lanePos	followDist
+ * 
+ * @author Ehsan
+ *
+ */
 public class StraightSegment {
 	
 	String fileID;
@@ -14,39 +28,40 @@ public class StraightSegment {
 	double timeStart;
 	double timeStop;
 	
-	double SPEED_MIN;
-	double SPEED_MAX;
-	double SPEED_AVG;
-	double SPEED_STD;
-	double ACCEL_MIN;
-	double ACCEL_MAX;
-	double ACCEL_AVG;
-	double ACCEL_STD;
-	double STEER_MIN;
-	double STEER_MAX;
-	double STEER_AVG;
-	double STEER_STD;
-	double LANEDEV_MIN;
-	double LANEDEV_MAX;
-	double LANEDEV_AVG;
-	double LANEDEV_STD;
-	double BRAKEPDL_MIN;
-	double BRAKEPDL_MAX;
-	double ACCELPDL_MIN;
-	double ACCELPDL_MAX;
-	double BRAKEPDL_COUNT;
-	double TTBRAKE00;
-	double TTACCREL00;
-	double TTACCREL01;
-	double TTACCREL02;
-	double MPG_AVG;
-	double FUELUSED;
+	// for Reported data 
+	double SPEED_MIN_Reported;
+	double SPEED_MAX_Reported;
+	double SPEED_AVG_Reported;
+	double SPEED_STD_Reported;
+	double ACCEL_MIN_Reported;
+	double ACCEL_MAX_Reported;
+	double ACCEL_AVG_Reported;
+	double ACCEL_STD_Reported;
+	double STEER_MIN_Reported;
+	double STEER_MAX_Reported;
+	double STEER_AVG_Reported;
+	double STEER_STD_Reported;
+	double LANEDEV_MIN_Reported;
+	double LANEDEV_MAX_Reported;
+	double LANEDEV_AVG_Reported;
+	double LANEDEV_STD_Reported;
+	double BRAKEPDL_MIN_Reported;
+	double BRAKEPDL_MAX_Reported;
+	double ACCELPDL_MIN_Reported;
+	double ACCELPDL_MAX_Reported;
+	double BRAKEPDL_COUNT_Reported;
+	double TTBRAKE00_Reported;
+	double TTACCREL00_Reported;
+	double TTACCREL01_Reported;
+	double TTACCREL02_Reported;
+	double MPG_AVG_Reported;
+	double FUELUSED_Reported;
 	
 	// for Raw Data data 
 	Values MPH;
-	double MPH_STD;
-	double MPH_Ave;
-	double MPH_Max;
+	double MPH_STD_RawData;
+	double MPH_Ave_RawData;
+	double MPH_Max_RawData;
 	
 	// for processed(Extracted) data 
 	Values frameCount;

@@ -589,7 +589,7 @@ public class ProcessData {
 	
 	/**
 	 * @param outputIndividualCumulative
-	 * THis function write to file the cumulative affect first regarding the pvt data
+	 * This function write to file the cumulative affect first regarding the pvt data
 	 * and second based on the straight segments in time points 
 	 * @throws Exception
 	 */
@@ -636,7 +636,7 @@ public class ProcessData {
 							}
 							outputCSV.print(",,MPH_STD");
 							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
-								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).MPH_STD);
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).MPH_STD_RawData);
 								outputCSV.flush();
 							}
 							outputCSV.print("\n");
@@ -680,7 +680,7 @@ public class ProcessData {
 							}
 							outputCSV.print(",,MPH_STD");
 							for (int k = 0; k < data.sessions.get(j).straightSegments.size(); k++) {
-								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).MPH_STD);
+								outputCSV.print("," + data.sessions.get(j).straightSegments.get(k).MPH_STD_RawData);
 								outputCSV.flush();
 							}
 							outputCSV.print("\n");

@@ -93,79 +93,79 @@ public class Session {
 				MetricName = t.nextToken();
 				switch (MetricName) {
 				case "SPEED_MIN" :
-					segment.SPEED_MIN = t.nextDouble();
+					segment.SPEED_MIN_Reported = t.nextDouble();
 					break;
 				case "SPEED_MAX" :
-					segment.SPEED_MAX = t.nextDouble();
+					segment.SPEED_MAX_Reported = t.nextDouble();
 					break;
 				case "SPEED_AVG" :
-					segment.SPEED_AVG = t.nextDouble();
+					segment.SPEED_AVG_Reported = t.nextDouble();
 					break;
 				case "SPEED_STD" :
-					segment.SPEED_STD = t.nextDouble();
+					segment.SPEED_STD_Reported = t.nextDouble();
 					break;
 				case "ACCEL_MIN" :
-					segment.ACCEL_MIN = t.nextDouble();
+					segment.ACCEL_MIN_Reported = t.nextDouble();
 					break;
 				case "ACCEL_MAX" :
-					segment.ACCEL_MAX = t.nextDouble();
+					segment.ACCEL_MAX_Reported = t.nextDouble();
 					break;
 				case "ACCEL_AVG" :
-					segment.ACCEL_AVG = t.nextDouble();
+					segment.ACCEL_AVG_Reported = t.nextDouble();
 					break;
 				case "ACCEL_STD" :
-					segment.ACCEL_STD = t.nextDouble();
+					segment.ACCEL_STD_Reported = t.nextDouble();
 					break;
 				case "STEER_MIN" :
-					segment.STEER_MIN = t.nextDouble();
+					segment.STEER_MIN_Reported = t.nextDouble();
 					break;
 				case "STEER_MAX" :
-					segment.STEER_MAX = t.nextDouble();
+					segment.STEER_MAX_Reported = t.nextDouble();
 					break;
 				case "STEER_AVG" :
-					segment.STEER_AVG = t.nextDouble();
+					segment.STEER_AVG_Reported = t.nextDouble();
 					break;
 				case "STEER_STD" :
-					segment.STEER_STD = t.nextDouble();
+					segment.STEER_STD_Reported = t.nextDouble();
 					break;
 				case "LANEDEV_MIN" :
-					segment.LANEDEV_MIN = t.nextDouble();
+					segment.LANEDEV_MIN_Reported = t.nextDouble();
 					break;
 				case "LANEDEV_MAX" :
-					segment.LANEDEV_MAX = t.nextDouble();
+					segment.LANEDEV_MAX_Reported = t.nextDouble();
 					break;
 				case "LANEDEV_AVG" :
-					segment.LANEDEV_AVG = t.nextDouble();
+					segment.LANEDEV_AVG_Reported = t.nextDouble();
 					break;
 				case "LANEDEV_STD" :
-					segment.LANEDEV_STD = t.nextDouble();
+					segment.LANEDEV_STD_Reported = t.nextDouble();
 					break;
 				case "BRAKEPDL_MIN" :
-					segment.BRAKEPDL_MIN = t.nextDouble();
+					segment.BRAKEPDL_MIN_Reported = t.nextDouble();
 					break;
 				case "BRAKEPDL_MAX" :
-					segment.BRAKEPDL_MAX = t.nextDouble();
+					segment.BRAKEPDL_MAX_Reported = t.nextDouble();
 					break;
 				case "ACCELPDL_MIN" :
-					segment.ACCELPDL_MIN = t.nextDouble();
+					segment.ACCELPDL_MIN_Reported = t.nextDouble();
 					break;
 				case "ACCELPDL_MAX" :
-					segment.ACCELPDL_MAX = t.nextDouble();
+					segment.ACCELPDL_MAX_Reported = t.nextDouble();
 					break;
 				case "BRAKEPDL_COUNT" :
-					segment.BRAKEPDL_COUNT = t.nextDouble();
+					segment.BRAKEPDL_COUNT_Reported = t.nextDouble();
 					break;
 				case "TTBRAKE00" :
-					segment.TTBRAKE00 = t.nextDouble();
+					segment.TTBRAKE00_Reported = t.nextDouble();
 					break;
 				case "TTACCREL00" :
-					segment.TTACCREL00 = t.nextDouble();
+					segment.TTACCREL00_Reported = t.nextDouble();
 					break;
 				case "MPG_AVG" :
-					segment.MPG_AVG = t.nextDouble();
+					segment.MPG_AVG_Reported = t.nextDouble();
 					break;
 				case "FUELUSED" :
-					segment.FUELUSED = t.nextDouble();
+					segment.FUELUSED_Reported = t.nextDouble();
 					break;
 
 				default:
@@ -208,9 +208,9 @@ public class Session {
 		
 		for (int i = 0; i < straightSegments.size(); i++){
 					
-			straightSegments.get(i).MPH_STD = straightSegments.get(i).MPH.stddev();
-			straightSegments.get(i).MPH_Ave = straightSegments.get(i).MPH.average();
-			straightSegments.get(i).MPH_Max = straightSegments.get(i).MPH.max();
+			straightSegments.get(i).MPH_STD_RawData = straightSegments.get(i).MPH.stddev();
+			straightSegments.get(i).MPH_Ave_RawData = straightSegments.get(i).MPH.average();
+			straightSegments.get(i).MPH_Max_RawData = straightSegments.get(i).MPH.max();
 
 			// clearing the vectors for saving memory
 			straightSegments.get(i).MPH.clear();
@@ -331,163 +331,163 @@ public class Session {
 	double getSessionSPEED_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).SPEED_MIN);
+			values.add(straightSegments.get(i).SPEED_MIN_Reported);
 		return values.average();
 	}
 	double getSessionSPEED_MAX (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).SPEED_MAX);
+			values.add(straightSegments.get(i).SPEED_MAX_Reported);
 		return values.average();
 	}
 	double getSessionSPEED_AVG (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).SPEED_AVG);
+			values.add(straightSegments.get(i).SPEED_AVG_Reported);
 		return values.average();
 	}
 	double getSessionSPEED_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).SPEED_STD);
+			values.add(straightSegments.get(i).SPEED_STD_Reported);
 		return values.average();
 	}
 	double getSessionACCEL_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).ACCEL_MIN);
+			values.add(straightSegments.get(i).ACCEL_MIN_Reported);
 		return values.average();
 	}
 	double getSessionACCEL_MAX (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).ACCEL_MAX);
+			values.add(straightSegments.get(i).ACCEL_MAX_Reported);
 		return values.average();
 	}
 	double getSessionACCEL_AVG (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).ACCEL_AVG);
+			values.add(straightSegments.get(i).ACCEL_AVG_Reported);
 		return values.average();
 	}
 	double getSessionACCEL_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).ACCEL_STD);
+			values.add(straightSegments.get(i).ACCEL_STD_Reported);
 		return values.average();
 	}
 	double getSessionSTEER_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).STEER_MIN);
+			values.add(straightSegments.get(i).STEER_MIN_Reported);
 		return values.average();
 	}
 	double getSessionSTEER_MAX (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).STEER_MAX);
+			values.add(straightSegments.get(i).STEER_MAX_Reported);
 		return values.average();
 	}
 	double getSessionSTEER_AVG (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).STEER_AVG);
+			values.add(straightSegments.get(i).STEER_AVG_Reported);
 		return values.average();
 	}
 	double getSessionSTEER_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).STEER_STD);
+			values.add(straightSegments.get(i).STEER_STD_Reported);
 		return values.average();
 	}
 	double getSessionLANEDEV_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).LANEDEV_MIN);
+			values.add(straightSegments.get(i).LANEDEV_MIN_Reported);
 		return values.average();
 	}
 	double getSessionLANEDEV_MAX (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).LANEDEV_MAX);
+			values.add(straightSegments.get(i).LANEDEV_MAX_Reported);
 		return values.average();
 	}
 	double getSessionLANEDEV_AVG (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).LANEDEV_AVG);
+			values.add(straightSegments.get(i).LANEDEV_AVG_Reported);
 		return values.average();
 	}
 	double getSessionLANEDEV_STD (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).LANEDEV_STD);
+			values.add(straightSegments.get(i).LANEDEV_STD_Reported);
 		return values.average();
 	}
 	double getSessionBRAKEPDL_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).BRAKEPDL_MIN);
+			values.add(straightSegments.get(i).BRAKEPDL_MIN_Reported);
 		return values.average();
 	}
 	double getSessionBRAKEPDL_MAX (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).BRAKEPDL_MAX);
+			values.add(straightSegments.get(i).BRAKEPDL_MAX_Reported);
 		return values.average();
 	}
 	double getSessionACCELPDL_MIN (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).ACCELPDL_MIN);
+			values.add(straightSegments.get(i).ACCELPDL_MIN_Reported);
 		return values.average();
 	}
 	double getSessionACCELPDL_MAX (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).ACCELPDL_MAX);
+			values.add(straightSegments.get(i).ACCELPDL_MAX_Reported);
 		return values.average();
 	}
 	double getSessionBRAKEPDL_COUNT (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).SPEED_MIN);
+			values.add(straightSegments.get(i).SPEED_MIN_Reported);
 		return values.average();
 	}
 	double getSessionTTBRAKE00 (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).TTBRAKE00);
+			values.add(straightSegments.get(i).TTBRAKE00_Reported);
 		return values.average();
 	}
 	double getSessionTTACCREL00 (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).TTACCREL00);
+			values.add(straightSegments.get(i).TTACCREL00_Reported);
 		return values.average();
 	}
 	double getSessionTTACCREL01 (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).TTACCREL01);
+			values.add(straightSegments.get(i).TTACCREL01_Reported);
 		return values.average();
 	}
 	double getSessionTTACCREL02 (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).TTACCREL02);
+			values.add(straightSegments.get(i).TTACCREL02_Reported);
 		return values.average();
 	}
 	double getSessionMPG_AVG (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).MPG_AVG);
+			values.add(straightSegments.get(i).MPG_AVG_Reported);
 		return values.average();
 	}
 	double getSessionFUELUSED (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).FUELUSED);
+			values.add(straightSegments.get(i).FUELUSED_Reported);
 		return values.average();
 	}
 	
@@ -495,13 +495,13 @@ public class Session {
 	double getSessionMPH_STD_RawData(){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).MPH_STD);
+			values.add(straightSegments.get(i).MPH_STD_RawData);
 		return values.average();
 	}
 	double getSessionMPH_Ave_RawData(){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
-			values.add(straightSegments.get(i).MPH_Ave);
+			values.add(straightSegments.get(i).MPH_Ave_RawData);
 		return values.average();
 	}
 	double getSessionPredicitonError_STD_RawData(){

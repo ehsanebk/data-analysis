@@ -201,36 +201,6 @@ public class ProcessPVT {
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
 		
-		outputCSV.println("PRE LSNRapx");
-		outputCSV.println(",,,1,2,3,4,,5,6,7,8");
-		// PVT AVE
-		outputCSV.print("Best_LSNRapx_AVE_PRE,");
-		for (int i = 0; i < LSNRapx_AVE_BestCaseTimePoints_PRE.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			if ( LSNRapx_AVE_BestCaseTimePoints_PRE[i].size() > 0){
-				double s=LSNRapx_AVE_BestCaseTimePoints_PRE[i].average(); 
-				outputCSV.print(","+s);
-			} else 
-				outputCSV.print(",");
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_LSNRapx_AVE_PRE,");
-		for (int i = 0; i < LSNRapx_AVE_WorstCaseTimePoints_PRE.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			if (LSNRapx_AVE_WorstCaseTimePoints_PRE[i].size() > 0){
-				double s=LSNRapx_AVE_WorstCaseTimePoints_PRE[i].average(); 
-				outputCSV.print(","+s);
-			}else 
-				outputCSV.print(",");
-		}	
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-		
-		
-		
 		outputCSV.println("POST Lapses");
 		outputCSV.println(",,,1,2,3,4,,5,6,7,8");
 		// PVT AVE
@@ -252,6 +222,34 @@ public class ProcessPVT {
 				outputCSV.print(",");
 			if (Lapses_AVE_WorstCaseTimePoints_POST[i].size() > 0){
 				double s=Lapses_AVE_WorstCaseTimePoints_POST[i].average(); 
+				outputCSV.print(","+s);
+			}else 
+				outputCSV.print(",");
+		}	
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+		
+		outputCSV.println("PRE LSNRapx");
+		outputCSV.println(",,,1,2,3,4,,5,6,7,8");
+		// PVT AVE
+		outputCSV.print("Best_LSNRapx_AVE_PRE,");
+		for (int i = 0; i < LSNRapx_AVE_BestCaseTimePoints_PRE.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			if ( LSNRapx_AVE_BestCaseTimePoints_PRE[i].size() > 0){
+				double s=LSNRapx_AVE_BestCaseTimePoints_PRE[i].average(); 
+				outputCSV.print(","+s);
+			} else 
+				outputCSV.print(",");
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_LSNRapx_AVE_PRE,");
+		for (int i = 0; i < LSNRapx_AVE_WorstCaseTimePoints_PRE.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			if (LSNRapx_AVE_WorstCaseTimePoints_PRE[i].size() > 0){
+				double s=LSNRapx_AVE_WorstCaseTimePoints_PRE[i].average(); 
 				outputCSV.print(","+s);
 			}else 
 				outputCSV.print(",");
@@ -289,17 +287,27 @@ public class ProcessPVT {
 		
 		////////////////     writing the blocks to file       ////////////////////////
 		// Every session has two blocks in this experiment (PVT is 10 min, two 5-min Blocks)
-		Values [][] PVT_BlockAVE_BestCaseTimePoints_PRE =  new Values[10][2];
-		Values [][] PVT_BlockAVE_WorstCaseTimePoints_PRE =  new Values[10][2];
-		Values [][] PVT_BlockAVE_BestCaseTimePoints_POST =  new Values[10][2];
-		Values [][] PVT_BlockAVE_WorstCaseTimePoints_POST =  new Values[10][2];
+		Values [][] Block_Lapses_AVE_BestCaseTimePoints_PRE =  new Values[10][2];
+		Values [][] Block_Lapses_AVE_WorstCaseTimePoints_PRE =  new Values[10][2];
+		Values [][] Block_Lapses_AVE_BestCaseTimePoints_POST =  new Values[10][2];
+		Values [][] Block_Lapses_AVE_WorstCaseTimePoints_POST =  new Values[10][2];
+		
+		Values [][] Block_LSNRapx_AVE_BestCaseTimePoints_PRE =  new Values[10][2];
+		Values [][] Block_LSNRapx_AVE_WorstCaseTimePoints_PRE =  new Values[10][2];
+		Values [][] Block_LSNRapx_AVE_BestCaseTimePoints_POST =  new Values[10][2];
+		Values [][] Block_LSNRapx_AVE_WorstCaseTimePoints_POST =  new Values[10][2];
 		
 		for (int i = 0; i < 10; i++) 
 			for (int j = 0 ; j < 2; j++) {
-				PVT_BlockAVE_BestCaseTimePoints_PRE[i][j] = new Values();
-				PVT_BlockAVE_WorstCaseTimePoints_PRE[i][j] = new Values();
-				PVT_BlockAVE_BestCaseTimePoints_POST[i][j] = new Values();
-				PVT_BlockAVE_WorstCaseTimePoints_POST[i][j] = new Values();
+				Block_Lapses_AVE_BestCaseTimePoints_PRE[i][j] = new Values();
+				Block_Lapses_AVE_WorstCaseTimePoints_PRE[i][j] = new Values();
+				Block_Lapses_AVE_BestCaseTimePoints_POST[i][j] = new Values();
+				Block_Lapses_AVE_WorstCaseTimePoints_POST[i][j] = new Values();
+				
+				Block_LSNRapx_AVE_BestCaseTimePoints_PRE[i][j] = new Values();
+				Block_LSNRapx_AVE_WorstCaseTimePoints_PRE[i][j] = new Values();
+				Block_LSNRapx_AVE_BestCaseTimePoints_POST[i][j] = new Values();
+				Block_LSNRapx_AVE_WorstCaseTimePoints_POST[i][j] = new Values();
 			}
 
 		for (int i = 0; i < participantsDataPVT.size(); i++) {
@@ -309,33 +317,35 @@ public class ProcessPVT {
 				for (int j = 0; j < 2; j++) {
 					switch (pVT_sessions.condition){
 					case BestCase:
-						PVT_BlockAVE_BestCaseTimePoints_PRE[k][j].add(
-								pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Pre));
-						PVT_BlockAVE_BestCaseTimePoints_POST[k][j].add(
-								pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Post));
+						Block_Lapses_AVE_BestCaseTimePoints_PRE[k][j].add(pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Pre));
+						Block_Lapses_AVE_BestCaseTimePoints_POST[k][j].add(pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Post));
+						
+						Block_LSNRapx_AVE_BestCaseTimePoints_PRE[k][j].add(pVT_sessions.getLSNRapxAtEachBlock_AveOnTimePoints(k , j, pre_post.Pre));
+						Block_LSNRapx_AVE_BestCaseTimePoints_POST[k][j].add(pVT_sessions.getLSNRapxAtEachBlock_AveOnTimePoints(k , j, pre_post.Post));
 						break;
 					case WorstCase:
-						PVT_BlockAVE_WorstCaseTimePoints_PRE[k][j].add(
-								pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Pre));
-						PVT_BlockAVE_WorstCaseTimePoints_POST[k][j].add(
-								pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Post));
+						Block_Lapses_AVE_WorstCaseTimePoints_PRE[k][j].add(pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Pre));
+						Block_Lapses_AVE_WorstCaseTimePoints_POST[k][j].add(pVT_sessions.getNumberOfLapsesAtEachBlock_AveOnTimePoints(k , j, pre_post.Post));
+						
+						Block_LSNRapx_AVE_WorstCaseTimePoints_PRE[k][j].add(pVT_sessions.getLSNRapxAtEachBlock_AveOnTimePoints(k , j, pre_post.Pre));
+						Block_LSNRapx_AVE_WorstCaseTimePoints_POST[k][j].add(pVT_sessions.getLSNRapxAtEachBlock_AveOnTimePoints(k , j, pre_post.Post));
 						break;
 					}
 				}
 			}
 		}
 
-		outputCSV.println("PRE BLOCK DATA");
+		// Number of Lapses
+		outputCSV.println("PRE LAPSES BLOCK DATA");
 		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
-		// PVT AVE
-		outputCSV.print("Best_PVT_BlockAVE_PRE,");
+		outputCSV.print("Best_Lapses_BlockAVE_PRE,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
 				outputCSV.print(",");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
-				if ( PVT_BlockAVE_BestCaseTimePoints_PRE[i][j].size() > 0){
-					double s=PVT_BlockAVE_BestCaseTimePoints_PRE[i][j].average(); 
+				if ( Block_Lapses_AVE_BestCaseTimePoints_PRE[i][j].size() > 0){
+					double s=Block_Lapses_AVE_BestCaseTimePoints_PRE[i][j].average(); 
 					outputCSV.print(","+s);
 				} else 
 					outputCSV.print(",");
@@ -349,8 +359,8 @@ public class ProcessPVT {
 				outputCSV.print(",");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
-				if ( PVT_BlockAVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
-					double s=PVT_BlockAVE_WorstCaseTimePoints_PRE[i][j].average(); 
+				if ( Block_Lapses_AVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
+					double s=Block_Lapses_AVE_WorstCaseTimePoints_PRE[i][j].average(); 
 					outputCSV.print(","+s);
 				} else 
 					outputCSV.print(",");
@@ -361,15 +371,14 @@ public class ProcessPVT {
 		
 		outputCSV.println("POST BLOCK DATA");
 		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
-		// PVT AVE
 		outputCSV.print("Best_PVT_BlockAVE_POST,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
 				outputCSV.print(",");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
-				if ( PVT_BlockAVE_BestCaseTimePoints_POST[i][j].size() > 0){
-					double s=PVT_BlockAVE_BestCaseTimePoints_POST[i][j].average(); 
+				if ( Block_Lapses_AVE_BestCaseTimePoints_POST[i][j].size() > 0){
+					double s=Block_Lapses_AVE_BestCaseTimePoints_POST[i][j].average(); 
 					outputCSV.print(","+s);
 				} else 
 					outputCSV.print(",");
@@ -383,8 +392,8 @@ public class ProcessPVT {
 				outputCSV.print(",");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
-				if ( PVT_BlockAVE_WorstCaseTimePoints_POST[i][j].size() > 0){
-					double s=PVT_BlockAVE_WorstCaseTimePoints_POST[i][j].average(); 
+				if ( Block_Lapses_AVE_WorstCaseTimePoints_POST[i][j].size() > 0){
+					double s=Block_Lapses_AVE_WorstCaseTimePoints_POST[i][j].average(); 
 					outputCSV.print(","+s);
 				} else 
 					outputCSV.print(",");
@@ -393,9 +402,76 @@ public class ProcessPVT {
 		outputCSV.print("\n\n\n");
 		outputCSV.flush();
 		
+		// LSNR apx
+		outputCSV.println("PRE LSNR_apx BLOCK DATA");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
+		outputCSV.print("Best_LSNRapx_BlockAVE_PRE,");
+		for (int i = 1; i < 10; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			outputCSV.print(",");
+			for (int j = 0; j < 2; j++) {
+				if ( Block_LSNRapx_AVE_BestCaseTimePoints_PRE[i][j].size() > 0){
+					double s=Block_LSNRapx_AVE_BestCaseTimePoints_PRE[i][j].average(); 
+					outputCSV.print(","+s);
+				} else 
+					outputCSV.print(",");
+			}
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_LSNRapx_BlockAVE_PRE,");
+		for (int i = 1; i < 10; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			outputCSV.print(",");
+			for (int j = 0; j < 2; j++) {
+				if ( Block_LSNRapx_AVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
+					double s=Block_LSNRapx_AVE_WorstCaseTimePoints_PRE[i][j].average(); 
+					outputCSV.print(","+s);
+				} else 
+					outputCSV.print(",");
+			}
+		}
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
 		
-		///
-		outputCSV.print("Best PVT Blocks Raw");
+		outputCSV.println("POST LSNRapx BLOCK DATA");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
+		// PVT AVE
+		outputCSV.print("Best_LSNRapx_BlockAVE_POST,");
+		for (int i = 1; i < 10; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			outputCSV.print(",");
+			for (int j = 0; j < 2; j++) {
+				if ( Block_LSNRapx_AVE_BestCaseTimePoints_POST[i][j].size() > 0){
+					double s=Block_LSNRapx_AVE_BestCaseTimePoints_POST[i][j].average(); 
+					outputCSV.print(","+s);
+				} else 
+					outputCSV.print(",");
+			}
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_LSNRapx_BlockAVE_POST,");
+		for (int i = 1; i < 10; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			outputCSV.print(",");
+			for (int j = 0; j < 2; j++) {
+				if ( Block_LSNRapx_AVE_WorstCaseTimePoints_POST[i][j].size() > 0){
+					double s=Block_LSNRapx_AVE_WorstCaseTimePoints_POST[i][j].average(); 
+					outputCSV.print(","+s);
+				} else 
+					outputCSV.print(",");
+			}
+		}
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+		
+		/// Lapses Raw Data
+		outputCSV.print("Best Lapses Blocks Raw");
 		for (int i = 0; i < participantsDataPVT.size(); i++) {
 			PVT_sessions participant = participantsDataPVT.get(i);
 			if (participant.condition == Conditions.BestCase){
@@ -413,7 +489,7 @@ public class ProcessPVT {
 		}
 
 		outputCSV.print("\n\n\n");
-		outputCSV.print("Worst PVT Blocks Raw");
+		outputCSV.print("Worst Lapses Blocks Raw");
 		for (int i = 0; i < participantsDataPVT.size(); i++) {
 			PVT_sessions participant = participantsDataPVT.get(i);
 			if (participant.condition == Conditions.WorstCase){
@@ -428,9 +504,42 @@ public class ProcessPVT {
 				}
 			}
 		}
-	
-		
-		
+		outputCSV.print("\n\n\n");
+
+		/// LSNRapx Raw Data
+		outputCSV.print("Best LSNRapx Blocks Raw");
+		for (int i = 0; i < participantsDataPVT.size(); i++) {
+			PVT_sessions participant = participantsDataPVT.get(i);
+			if (participant.condition == Conditions.BestCase){
+				outputCSV.print("\n");
+				outputCSV.print(participant.ID + ",");
+				// Going through the sessions ( 4 to 43)
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print(",,*S:"+j +" #LSNRapx:" + participant.getSessionsLSNRapx(j, pre_post.Pre) + "*");
+					outputCSV.print(","+participant.getSessionsBlockLSNRapx(j, 0, pre_post.Pre) +"," +participant.getSessionsBlockLSNRapx(j, 1, pre_post.Pre));
+					outputCSV.print(",,*S:"+j +" #LSNRapx:"+ participant.getSessionsLSNRapx(j, pre_post.Post) + "*");
+					outputCSV.print(","+participant.getSessionsBlockLSNRapx(j, 0, pre_post.Post) +"," +participant.getSessionsBlockLSNRapx(j, 1, pre_post.Post));
+				}
+			}
+		}
+
+		outputCSV.print("\n\n\n");
+		outputCSV.print("Worst LNSRapx Blocks Raw");
+		for (int i = 0; i < participantsDataPVT.size(); i++) {
+			PVT_sessions participant = participantsDataPVT.get(i);
+			if (participant.condition == Conditions.WorstCase){
+				outputCSV.print("\n");
+				outputCSV.print(participant.ID + ",");
+				// Going through the sessions ( 4 to 43)
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print(",,*S:"+j +" #L:"+ participant.getSessionsLSNRapx(j, pre_post.Pre) + "*");
+					outputCSV.print(","+participant.getSessionsBlockLSNRapx(j, 0, pre_post.Pre) +"," +participant.getSessionsBlockLSNRapx(j, 1, pre_post.Pre));
+					outputCSV.print(",,*S:"+j +" #L:"+ participant.getSessionsLSNRapx(j, pre_post.Post) + "*");
+					outputCSV.print(","+participant.getSessionsBlockLSNRapx(j, 0, pre_post.Post) +"," +participant.getSessionsBlockLSNRapx(j, 1, pre_post.Post));
+				}
+			}
+		}
+
 		outputCSV.close();
 	}
 

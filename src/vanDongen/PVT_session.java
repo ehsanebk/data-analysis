@@ -44,6 +44,17 @@ public class PVT_session {
 		timeOfReactionsFromStart = new Values();
 		//blocks = new Vector<Block>();
 	}
+
+	// Sleep attacks at :
+	// 3207  S#10 Pre
+	// 3440  S#34 Post
+	public boolean sleepAttacks(){
+		for (int i = 0; i < RT.size(); i++) 
+			if ( RT.get(i) == 30000)
+				return true;
+		return false;
+
+	}
 	
 	public double getSessionAveAlertResponses(){
 		return RT.averageInRange(150, 500);
@@ -52,7 +63,7 @@ public class PVT_session {
 	public int getSessionNumberOfLapses(){
 		int l = 0;
 		for (int i = 0; i < RT.size(); i++) 
-			if ( RT.get(i) >= 500)
+			if ( RT.get(i) >= 500 && RT.get(i) < 30000)
 				l++;
 		return l;
 	}
@@ -66,7 +77,7 @@ public class PVT_session {
 		int B = 3855;
 		double sum = 0;
 		for (int i = 0; i < RT.size(); i++) 
-			if ( RT.get(i) >= 150){
+			if ( RT.get(i) >= 150 && RT.get(i) < 30000){
 				sum = sum + 1.0 / RT.get(i);
 				N++;
 			}
@@ -79,10 +90,9 @@ public class PVT_session {
 			v.add(RT.get(0));
 		for (int i = 1; i < timeOfReactionsFromStart.size(); i++) 
 			if (timeOfReactionsFromStart.get(i-1) > 300.0*(blockNumber)-1 && timeOfReactionsFromStart.get(i-1) <= 300.0*(blockNumber+1)-1){
-				v.add(RT.get(i));
+				if (RT.get(i) < 30000)
+					v.add(RT.get(i));
 			}
-//		if (v.size() == 0)
-//			System.out.println(ID + " " + sessionNumber + " " + blockNumber +" "+  trialNumberInFile+ " "  + time);
 		return v;
 	}
 	
@@ -90,16 +100,33 @@ public class PVT_session {
 		Values RTblock = getRTblock(blockNumber);
 		int l = 0;
 		for (int i = 0; i < RTblock.size(); i++) 
-			if (RTblock.get(i) >= 500)
+			if (RTblock.get(i) >= 500 && RT.get(i) < 30000)
 				l++;
 		return l;
 	}
-	
+
+	/**
+	 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
+	 */
+	public double getBlockLSNRapx(int blockNumber){
+		Values RTblock = getRTblock(blockNumber);
+		// LSNR_apx = B ((1/N) sum_1^N (1 / RT_i))    B = 3855ms
+		int N = 0;
+		int B = 3855;
+		double sum = 0;
+		for (int i = 0; i < RTblock.size(); i++) 
+			if ( RTblock.get(i) >= 150 && RT.get(i) < 30000){
+				sum = sum + 1.0 / RTblock.get(i);
+				N++;
+			}
+		return B * ((1.0/N) * sum);
+	}
+
 	public double getBlockAveAlertResponses(int blockNumber){
 		Values RTblock = getRTblock(blockNumber);
 		return RTblock.averageInRange(150, 500);
 	}
-	
+
 	
 	// 5-min blocks
 	public class Block {
@@ -129,6 +156,22 @@ public class PVT_session {
 				if (RT.get(i) >= 500)
 					l++;
 			return l;
+		}
+		
+		/**
+		 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
+		 */
+		public double getLSNRapx(){
+			// LSNR_apx = B ((1/N) sum_1^N (1 / RT_i))    B = 3855ms
+			int N = 0;
+			int B = 3855;
+			double sum = 0;
+			for (int i = 0; i < RT.size(); i++) 
+				if ( RT.get(i) >= 150){
+					sum = sum + 1.0 / RT.get(i);
+					N++;
+				}
+			return B * ((1.0/N) * sum);
 		}
 		
 		public double getFalseAlertProportion() {

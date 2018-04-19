@@ -113,6 +113,15 @@ public class PVT_sessions {
 		return null;	
 	}
 	
+	Object getSessionsBlockLSNRapx(int sNumber, int blockNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getBlockLSNRapx(blockNumber);
+		}
+		return null;	
+	}
+
 	Object getSessionsBlockProportionOfLapses(int sNumber, int blockNumber, pre_post p) {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
@@ -121,7 +130,7 @@ public class PVT_sessions {
 		}
 		return null;	
 	}
-	
+
 	public double getNumberOfLapses_AveOnTimePoints(int tp,  pre_post p) {
 		Values lapses = new Values();
 		for (int i = 0; i < sessions.size(); i++) 
@@ -145,6 +154,15 @@ public class PVT_sessions {
 			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0)
 				lapses.add(sessions.get(i).getBlockLapses(blockNumber));
 		return lapses.average();
+	}
+	
+	public double getLSNRapxAtEachBlock_AveOnTimePoints(int tp,int blockNumber,  pre_post p) {
+		Values LSNRapx = new Values();
+		// skipping the first response time ??
+		for (int i = 0; i < sessions.size(); i++) 
+			if (sessions.get(i).timePoint == tp && sessions.get(i).pre_post == p && sessions.get(i).RT.size() > 0)
+				LSNRapx.add(sessions.get(i).getBlockLSNRapx(blockNumber));
+		return LSNRapx.average();
 	}
 	
 	public double getProportionOfLapses_AveOnTimePoints(int tp,  pre_post p) {
@@ -205,7 +223,7 @@ public class PVT_sessions {
 				timeFromStart = timeFromStart.replaceAll("\\s+", "");
 				while (true){ // dropping the first RT!!!
 					line = t.readNextLine();
-					rt = line.substring(1,5);
+					rt = line.substring(0,5);
 					rt = rt.replaceAll("\\s+", "");
 					if (rt.equals("0"))
 						break;
@@ -222,7 +240,8 @@ public class PVT_sessions {
 				if (ID.equals("3207")){
 					sn = new int [][] 
 						   {{10,11},{12,13},{14,15},{16,17},
-							{18,19},{20,21},{22,23},{24,25}, 
+							//{18,19},{20,21},{22,23},{24,25},
+							{18,19},{20,21},{     },{24,25},
 							{27,28},{29,30},{31,32},{33,34}, 
 							{35,36},{37,38},{39,40},{41,42}, 
 							{44,45},{46,47},{48,49},{50,51}, 
@@ -235,14 +254,15 @@ public class PVT_sessions {
 				else if (ID.equals("3232")){
 					sn = new int [][] 
 						   {{10,11},{12,13},{14,15},{16,17},
-							{18,19},{20,21},{22,23},{24,25}, 
+							{18,19},{20,21},{22,23},{24,25},
 							{26,27},{28,29},{30,31},{32,33}, 
 							{34,35},{	  },{37,38},{39,40}, 
 							{42,43},{44,45},{46,47},{48,49}, 
 							{54,55},{56,57},{58,59},{60,61},
 							{62,63},{64,65},{66,67},{68,69},
 							{70,71},{72,73},{74,75},{76,77},
-							{78,79},{80,81},{82,  },{83,84},
+							//{78,79},{80,81},{82,  },{83,84},
+							{78,79},{80,81},{     },{83,84},
 							{86,87},{88,89},{90,91},{92,93}};
 				}
 				else{
@@ -281,8 +301,10 @@ public class PVT_sessions {
 					tp1_post= new int[]	{11,19,28,36,45};
 					tp2_pre=  new int[]	{12,20,29,37,46};
 					tp2_post= new int[]	{13,21,30,38,47};
-					tp3_pre=  new int[]	{14,22,31,39,48};
-					tp3_post= new int[]	{15,23,32,40,49};
+					//tp3_pre=  new int[]	{14,22,31,39,48};
+					tp3_pre=  new int[]	{14   ,31,39,48};
+					//tp3_post= new int[]	{15,23,32,40,49};
+					tp3_post= new int[]	{15   ,32,40,49};
 					tp4_pre=  new int[]	{16,24,33,41,50};
 					tp4_post= new int[]	{17,25,34,42,51};
 					
@@ -309,7 +331,8 @@ public class PVT_sessions {
 					tp6_post= new int[]	{55,63,71,79,87};
 					tp7_pre=  new int[]	{56,64,72,80,88};
 					tp7_post= new int[]	{57,65,73,81,89};
-					tp8_pre=  new int[]	{58,66,74,82,90};
+					//tp8_pre=  new int[]	{58,66,74,82,90};
+					tp8_pre=  new int[]	{58,66,74   ,90};
 					tp8_post= new int[]	{59,67,75   ,91};
 					tp9_pre=  new int[]	{60,68,76,83,92};
 					tp9_post= new int[]	{61,69,77,84,93};

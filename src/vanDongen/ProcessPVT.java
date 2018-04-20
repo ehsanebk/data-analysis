@@ -337,11 +337,11 @@ public class ProcessPVT {
 
 		// Number of Lapses
 		outputCSV.println("PRE LAPSES BLOCK DATA");
-		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,,5,,,6,,,7,,,8,,");
 		outputCSV.print("Best_Lapses_BlockAVE_PRE,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_Lapses_AVE_BestCaseTimePoints_PRE[i][j].size() > 0){
@@ -356,7 +356,7 @@ public class ProcessPVT {
 		outputCSV.print("Worst_PVT_BlockAVE_PRE,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_Lapses_AVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
@@ -370,11 +370,11 @@ public class ProcessPVT {
 		outputCSV.flush();
 		
 		outputCSV.println("POST BLOCK DATA");
-		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,,5,,,6,,,7,,,8,,");
 		outputCSV.print("Best_PVT_BlockAVE_POST,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_Lapses_AVE_BestCaseTimePoints_POST[i][j].size() > 0){
@@ -389,7 +389,7 @@ public class ProcessPVT {
 		outputCSV.print("Worst_PVT_BlockAVE_POST,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_Lapses_AVE_WorstCaseTimePoints_POST[i][j].size() > 0){
@@ -404,11 +404,11 @@ public class ProcessPVT {
 		
 		// LSNR apx
 		outputCSV.println("PRE LSNR_apx BLOCK DATA");
-		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,,5,,,6,,,7,,,8,,");
 		outputCSV.print("Best_LSNRapx_BlockAVE_PRE,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_LSNRapx_AVE_BestCaseTimePoints_PRE[i][j].size() > 0){
@@ -423,7 +423,7 @@ public class ProcessPVT {
 		outputCSV.print("Worst_LSNRapx_BlockAVE_PRE,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_LSNRapx_AVE_WorstCaseTimePoints_PRE[i][j].size() > 0){
@@ -437,12 +437,12 @@ public class ProcessPVT {
 		outputCSV.flush();
 		
 		outputCSV.println("POST LSNRapx BLOCK DATA");
-		outputCSV.println(",,,1,,,2,,,3,,,4,,,,5,,,6,,,7,,,8,,");
+		outputCSV.println(",,,1,,,2,,,3,,,4,,,,,5,,,6,,,7,,,8,,");
 		// PVT AVE
 		outputCSV.print("Best_LSNRapx_BlockAVE_POST,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_LSNRapx_AVE_BestCaseTimePoints_POST[i][j].size() > 0){
@@ -457,7 +457,7 @@ public class ProcessPVT {
 		outputCSV.print("Worst_LSNRapx_BlockAVE_POST,");
 		for (int i = 1; i < 10; i++) {
 			if (i==5)
-				outputCSV.print(",");
+				outputCSV.print(",,");
 			outputCSV.print(",");
 			for (int j = 0; j < 2; j++) {
 				if ( Block_LSNRapx_AVE_WorstCaseTimePoints_POST[i][j].size() > 0){

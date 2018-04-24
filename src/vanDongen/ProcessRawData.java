@@ -9,7 +9,7 @@ import analysis.Values;
 
 public class ProcessRawData {
 
-	private static Vector<Data> participantsData;
+	private static Vector<SubjectData> participantsData;
 	
 	private static String[] bestCasesNum = {"3001","3025","3040","3086",
 			"3206","3232","3256","3275","3386","3408",
@@ -20,7 +20,7 @@ public class ProcessRawData {
 
 	public static void main(String[] args) {
 				
-		participantsData = new Vector<Data>();
+		participantsData = new Vector<SubjectData>();
 		//File directory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 		File directory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Data(report)");
 
@@ -31,24 +31,24 @@ public class ProcessRawData {
 				boolean newData = true;
 				
 				// trying to find whether the ID is new
-				Data data=  new Data();	
+				SubjectData subjectData=  new SubjectData();	
 				for (int i = 0; i < participantsData.size(); i++) {
 					if (participantsData.get(i).ID.equals(ID)){
-						data = participantsData.get(i);
+						subjectData = participantsData.get(i);
 						newData= false;
 						break;
 					}
 				}
 				
-				data.sessions.add(new Session(file));
+				subjectData.sessions.add(new Session(file));
 				
 				if (newData){
 					if (Utilities.arrayContains(worstCasesNum, ID))
-						data.condition = Conditions.WorstCase;
+						subjectData.condition = Conditions.WorstCase;
 					else
-						data.condition = Conditions.BestCase;
-					data.ID = ID;
-					participantsData.add(data);
+						subjectData.condition = Conditions.BestCase;
+					subjectData.ID = ID;
+					participantsData.add(subjectData);
 				}
 			}
 		}
@@ -56,11 +56,11 @@ public class ProcessRawData {
 		//File rawDataDirectory = new File("/Users/ehsanebk/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
 		File rawDataDirectory = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Raw Data flat");
 		for (int i = 0; i < participantsData.size(); i++){
-			Data data = participantsData.get(i);
-			String id = data.ID;
-			System.out.println(data.ID);
-			for (int j = 0; j < data.sessions.size(); j++) {
-				Session s  = data.sessions.get(j);
+			SubjectData subjectData = participantsData.get(i);
+			String id = subjectData.ID;
+			System.out.println(subjectData.ID);
+			for (int j = 0; j < subjectData.sessions.size(); j++) {
+				Session s  = subjectData.sessions.get(j);
 				String s_number = s.sessionNumber;
 				System.out.println(s_number);
 				for (File file : rawDataDirectory.listFiles()) {
@@ -102,18 +102,18 @@ public class ProcessRawData {
 		
 		
 		for (int i = 0; i < participantsData.size(); i++) {
-			Data data = participantsData.get(i);
-			System.out.println(data.ID);
+			SubjectData subjectData = participantsData.get(i);
+			System.out.println(subjectData.ID);
 
-			for (int j = 0; j < data.sessions.size(); j++) {
-				switch (data.condition){
+			for (int j = 0; j < subjectData.sessions.size(); j++) {
+				switch (subjectData.condition){
 				case BestCase:
-					MPH_STD_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionMPH_STD_RawData());
-					MPH_Ave_BestCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionMPH_Ave_RawData());
+					MPH_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_STD_RawData());
+					MPH_Ave_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_Ave_RawData());
 					break;
 				case WorstCase:
-					MPH_STD_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionMPH_STD_RawData());
-					MPH_Ave_WorstCaseTimePoints[data.sessions.get(j).timePoint].add(data.sessions.get(j).getSessionMPH_Ave_RawData());
+					MPH_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_STD_RawData());
+					MPH_Ave_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_Ave_RawData());
 				}
 			}
 		}

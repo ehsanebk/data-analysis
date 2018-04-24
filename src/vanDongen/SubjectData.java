@@ -5,14 +5,14 @@ import analysis.Values;
 
 enum Conditions {BestCase, WorstCase};
 
-public class Data {
+public class SubjectData {
 
 	String ID;
 	Conditions condition;
 
 	Vector<Session> sessions;
 
-	Data() {
+	SubjectData() {
 
 		sessions = new Vector<Session>();
 	}

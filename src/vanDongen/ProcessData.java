@@ -79,9 +79,9 @@ public class ProcessData {
 		}
 		
 		try {		
-			File output = 
-					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_TimePoints_Extracted.csv");
-			WriteToFileTimePoints(output);
+//			File output = 
+//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_TimePoints_Extracted.csv");
+//			WriteToFileTimePoints(output);
 
 			File outputIndividualTimePoints = 
 					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_TimePoints_Extracted_Individual.csv");
@@ -133,315 +133,6 @@ public class ProcessData {
 	}
 
 
-	static void WriteToFileTimePoints(File output) {
-		PrintWriter outputCSV = null;
-		try {
-			outputCSV = new PrintWriter(output);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Values [] steer_STD_BestCaseTimePoints =  new Values[10];
-		Values [] steer_STD_WorstCaseTimePoints =  new Values[10];
-		
-
-		Values [] lanePos_STD_BestCaseTimePoints =  new Values[10];
-		Values [] lanePos_STD_WorstCaseTimePoints =  new Values[10];
-		
-		Values [] zeroSteer_Percentage_BestCaseTimePoints =  new Values[10];
-		Values [] zeroSteer_Percentage_WorstCaseTimePoints =  new Values[10];
-
-		Values [] steer2D_Percentage_BestCaseTimePoints =  new Values[10];
-		Values [] steer2D_Percentage_WorstCaseTimePoints =  new Values[10];
-
-		Values [] steer3D_Percentage_BestCaseTimePoints =  new Values[10];
-		Values [] steer3D_Percentage_WorstCaseTimePoints =  new Values[10];
-
-		// Fast Corrective Counter Steering
-		Values [] FCCS_BestCaseTimePoints =  new Values[10];
-		Values [] FCCS_WorstCaseTimePoints =  new Values[10];
-
-
-		Values [] predicitonError_STD_BestCaseTimePoints =  new Values[10];
-		Values [] predicitonError_STD_WorstCaseTimePoints =  new Values[10];
-
-		Values [] steeringEntropy_BestCaseTimePoints =  new Values[10];
-		Values [] steeringEntropy_WorstCaseTimePoints =  new Values[10];
-
-		Values [] MPH_STD_BestCaseTimePoints =  new Values[10];
-		Values [] MPH_STD_WorstCaseTimePoints =  new Values[10];
-		
-		for (int i = 0; i < 10; i++) {
-			
-			steer_STD_BestCaseTimePoints[i] = new Values();
-			steer_STD_WorstCaseTimePoints[i] = new Values();
-			
-			lanePos_STD_BestCaseTimePoints[i] = new Values();
-			lanePos_STD_WorstCaseTimePoints[i] = new Values();
-			
-			zeroSteer_Percentage_BestCaseTimePoints[i] =  new Values();
-			zeroSteer_Percentage_WorstCaseTimePoints[i] =  new Values();
-			steer2D_Percentage_BestCaseTimePoints[i] = new Values();
-			steer2D_Percentage_WorstCaseTimePoints[i] = new Values();
-			steer3D_Percentage_BestCaseTimePoints[i] = new Values();
-			steer3D_Percentage_WorstCaseTimePoints[i] = new Values();
-
-			FCCS_BestCaseTimePoints[i] = new Values();
-			FCCS_WorstCaseTimePoints[i] = new Values();
-
-			predicitonError_STD_BestCaseTimePoints[i] = new Values();
-			predicitonError_STD_WorstCaseTimePoints[i] = new Values();
-			steeringEntropy_BestCaseTimePoints[i] = new Values();
-			steeringEntropy_WorstCaseTimePoints[i] = new Values();
-			
-			MPH_STD_BestCaseTimePoints[i] = new Values();
-			MPH_STD_WorstCaseTimePoints[i] = new Values();
-		}
-
-
-		for (int i = 0; i < participantsData.size(); i++) {
-			SubjectData subjectData = participantsData.get(i);
-			System.out.println("Writing to file (Time Points): " + subjectData.ID);
-
-			for (int j = 0; j < subjectData.sessions.size(); j++) {
-				switch (subjectData.condition){
-				case BestCase:
-					steer_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteering_STD_Extracted());
-					lanePos_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionLanePos_STD_Extracted());
-					
-					zeroSteer_Percentage_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionZeroSteer_Extracted());
-					steer2D_Percentage_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession2DSteer_Extracted());
-					steer3D_Percentage_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession3DSteer_Extracted());
-					FCCS_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionFastCorrectiveCounterSteering_Extracted());
-
-					predicitonError_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionPredicitonError_STD_Extracted());
-					steeringEntropy_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteeringEntorpy_Extracted());
-					if (subjectData.sessions.get(j).getSessionMPH_STD_RawData()!=0)
-						MPH_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_STD_RawData());
-					break;
-				case WorstCase:
-					steer_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteering_STD_Extracted());
-					lanePos_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionLanePos_STD_Extracted());
-					
-					zeroSteer_Percentage_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionZeroSteer_Extracted());
-					steer2D_Percentage_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession2DSteer_Extracted());
-					steer3D_Percentage_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession3DSteer_Extracted());
-					FCCS_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionFastCorrectiveCounterSteering_Extracted());
-
-					predicitonError_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionPredicitonError_STD_Extracted());
-					steeringEntropy_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteeringEntorpy_Extracted());
-					if (subjectData.sessions.get(j).getSessionMPH_STD_RawData()!=0)
-						MPH_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_STD_RawData());
-					break;
-				}
-			}
-		}
-
-		////////////////        writing to file       ////////////////////////
-		outputCSV.println(",,1,2,3,4,,5,6,7,8");
-
-		// steer STD
-		outputCSV.print("Best_steer_STD");
-		for (int i = 0; i < steer_STD_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=steer_STD_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_steer_STD");
-		for (int i = 0; i < steer_STD_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=steer_STD_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();		
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// MPH STD
-		outputCSV.print("Best_MPH_STD");
-		for (int i = 0; i < MPH_STD_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=MPH_STD_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_MPH_STD");
-		for (int i = 0; i < MPH_STD_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=MPH_STD_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// lanePos STD
-		outputCSV.print("Best_lanePos_STD");
-		for (int i = 0; i < lanePos_STD_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=lanePos_STD_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_lanePos_STD");
-		for (int i = 0; i < lanePos_STD_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=lanePos_STD_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// Zero Steer Ave : Percentage of Frames
-		outputCSV.print("Best_ZeroSteer_Percentage");
-		for (int i = 0; i < zeroSteer_Percentage_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s= zeroSteer_Percentage_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_ZeroSteer_Percentage");
-		for (int i = 0; i < zeroSteer_Percentage_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s= zeroSteer_Percentage_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// more than 0.2 degree Steer Ave : Percentage of Frames
-		outputCSV.print("Best_Steer2D_Percentage");
-		for (int i = 0; i < steer2D_Percentage_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s= steer2D_Percentage_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_Steer2D_Percentage");
-		for (int i = 0; i < steer2D_Percentage_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s= steer2D_Percentage_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// more than 0.3 degree Steer Ave : Percentage of Frames
-		outputCSV.print("Best_Steer3D_Percentage");
-		for (int i = 0; i < steer3D_Percentage_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s= steer3D_Percentage_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_Steer3D_Percentage");
-		for (int i = 0; i < steer3D_Percentage_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s= steer3D_Percentage_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// number of Fast Corrective Counter Steering : FCCS
-		outputCSV.print("Best_FCCS");
-		for (int i = 0; i < FCCS_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=FCCS_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_FCCS");
-		for (int i = 0; i < FCCS_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=FCCS_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// predicitonError STD
-		outputCSV.print("Best_predictionError_STD");
-		for (int i = 0; i < predicitonError_STD_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=predicitonError_STD_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_predicitonError_STD");
-		for (int i = 0; i < predicitonError_STD_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=predicitonError_STD_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-
-		// Steering Entropy Average
-		outputCSV.print("Best_steeringEntropy");
-		for (int i = 0; i < steeringEntropy_BestCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=steeringEntropy_BestCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("Worst_steeringEntropy");
-		for (int i = 0; i < steeringEntropy_WorstCaseTimePoints.length; i++) {
-			if (i==5)
-				outputCSV.print(",");
-			double s=steeringEntropy_WorstCaseTimePoints[i].average(); 
-			outputCSV.print(","+s);
-
-		}
-		outputCSV.print("\n");
-		outputCSV.flush();
-		outputCSV.print("\n\n\n");
-		outputCSV.flush();
-		
-		outputCSV.close();
-	}
 
 	/**
 	 * @param outputIndividualTimePointsCSV
@@ -850,5 +541,316 @@ public class ProcessData {
 				}		
 			}
 		}
+
+	static void WriteToFileTimePoints(File output) {
+		PrintWriter outputCSV = null;
+		try {
+			outputCSV = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Values [] steer_STD_BestCaseTimePoints =  new Values[10];
+		Values [] steer_STD_WorstCaseTimePoints =  new Values[10];
+		
+
+		Values [] lanePos_STD_BestCaseTimePoints =  new Values[10];
+		Values [] lanePos_STD_WorstCaseTimePoints =  new Values[10];
+		
+		Values [] zeroSteer_Percentage_BestCaseTimePoints =  new Values[10];
+		Values [] zeroSteer_Percentage_WorstCaseTimePoints =  new Values[10];
+
+		Values [] steer2D_Percentage_BestCaseTimePoints =  new Values[10];
+		Values [] steer2D_Percentage_WorstCaseTimePoints =  new Values[10];
+
+		Values [] steer3D_Percentage_BestCaseTimePoints =  new Values[10];
+		Values [] steer3D_Percentage_WorstCaseTimePoints =  new Values[10];
+
+		// Fast Corrective Counter Steering
+		Values [] FCCS_BestCaseTimePoints =  new Values[10];
+		Values [] FCCS_WorstCaseTimePoints =  new Values[10];
+
+
+		Values [] predicitonError_STD_BestCaseTimePoints =  new Values[10];
+		Values [] predicitonError_STD_WorstCaseTimePoints =  new Values[10];
+
+		Values [] steeringEntropy_BestCaseTimePoints =  new Values[10];
+		Values [] steeringEntropy_WorstCaseTimePoints =  new Values[10];
+
+		Values [] MPH_STD_BestCaseTimePoints =  new Values[10];
+		Values [] MPH_STD_WorstCaseTimePoints =  new Values[10];
+		
+		for (int i = 0; i < 10; i++) {
+			
+			steer_STD_BestCaseTimePoints[i] = new Values();
+			steer_STD_WorstCaseTimePoints[i] = new Values();
+			
+			lanePos_STD_BestCaseTimePoints[i] = new Values();
+			lanePos_STD_WorstCaseTimePoints[i] = new Values();
+			
+			zeroSteer_Percentage_BestCaseTimePoints[i] =  new Values();
+			zeroSteer_Percentage_WorstCaseTimePoints[i] =  new Values();
+			steer2D_Percentage_BestCaseTimePoints[i] = new Values();
+			steer2D_Percentage_WorstCaseTimePoints[i] = new Values();
+			steer3D_Percentage_BestCaseTimePoints[i] = new Values();
+			steer3D_Percentage_WorstCaseTimePoints[i] = new Values();
+
+			FCCS_BestCaseTimePoints[i] = new Values();
+			FCCS_WorstCaseTimePoints[i] = new Values();
+
+			predicitonError_STD_BestCaseTimePoints[i] = new Values();
+			predicitonError_STD_WorstCaseTimePoints[i] = new Values();
+			steeringEntropy_BestCaseTimePoints[i] = new Values();
+			steeringEntropy_WorstCaseTimePoints[i] = new Values();
+			
+			MPH_STD_BestCaseTimePoints[i] = new Values();
+			MPH_STD_WorstCaseTimePoints[i] = new Values();
+		}
+
+
+		for (int i = 0; i < participantsData.size(); i++) {
+			SubjectData subjectData = participantsData.get(i);
+			System.out.println("Writing to file (Time Points): " + subjectData.ID);
+
+			for (int j = 0; j < subjectData.sessions.size(); j++) {
+				switch (subjectData.condition){
+				case BestCase:
+					steer_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteering_STD_Extracted());
+					lanePos_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionLanePos_STD_Extracted());
+					
+					zeroSteer_Percentage_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionZeroSteer_Extracted());
+					steer2D_Percentage_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession2DSteer_Extracted());
+					steer3D_Percentage_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession3DSteer_Extracted());
+					FCCS_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionFastCorrectiveCounterSteering_Extracted());
+
+					predicitonError_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionPredicitonError_STD_Extracted());
+					steeringEntropy_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteeringEntorpy_Extracted());
+					if (subjectData.sessions.get(j).getSessionMPH_STD_RawData()!=0)
+						MPH_STD_BestCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_STD_RawData());
+					break;
+				case WorstCase:
+					steer_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteering_STD_Extracted());
+					lanePos_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionLanePos_STD_Extracted());
+					
+					zeroSteer_Percentage_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionZeroSteer_Extracted());
+					steer2D_Percentage_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession2DSteer_Extracted());
+					steer3D_Percentage_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSession3DSteer_Extracted());
+					FCCS_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionFastCorrectiveCounterSteering_Extracted());
+
+					predicitonError_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionPredicitonError_STD_Extracted());
+					steeringEntropy_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionSteeringEntorpy_Extracted());
+					if (subjectData.sessions.get(j).getSessionMPH_STD_RawData()!=0)
+						MPH_STD_WorstCaseTimePoints[subjectData.sessions.get(j).timePoint].add(subjectData.sessions.get(j).getSessionMPH_STD_RawData());
+					break;
+				}
+			}
+		}
+
+		////////////////        writing to file       ////////////////////////
+		outputCSV.println(",,1,2,3,4,,5,6,7,8");
+
+		// steer STD
+		outputCSV.print("Best_steer_STD");
+		for (int i = 0; i < steer_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=steer_STD_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_steer_STD");
+		for (int i = 0; i < steer_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=steer_STD_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();		
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// MPH STD
+		outputCSV.print("Best_MPH_STD");
+		for (int i = 0; i < MPH_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=MPH_STD_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_MPH_STD");
+		for (int i = 0; i < MPH_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=MPH_STD_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// lanePos STD
+		outputCSV.print("Best_lanePos_STD");
+		for (int i = 0; i < lanePos_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=lanePos_STD_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_lanePos_STD");
+		for (int i = 0; i < lanePos_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=lanePos_STD_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// Zero Steer Ave : Percentage of Frames
+		outputCSV.print("Best_ZeroSteer_Percentage");
+		for (int i = 0; i < zeroSteer_Percentage_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s= zeroSteer_Percentage_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_ZeroSteer_Percentage");
+		for (int i = 0; i < zeroSteer_Percentage_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s= zeroSteer_Percentage_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// more than 0.2 degree Steer Ave : Percentage of Frames
+		outputCSV.print("Best_Steer2D_Percentage");
+		for (int i = 0; i < steer2D_Percentage_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s= steer2D_Percentage_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_Steer2D_Percentage");
+		for (int i = 0; i < steer2D_Percentage_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s= steer2D_Percentage_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// more than 0.3 degree Steer Ave : Percentage of Frames
+		outputCSV.print("Best_Steer3D_Percentage");
+		for (int i = 0; i < steer3D_Percentage_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s= steer3D_Percentage_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_Steer3D_Percentage");
+		for (int i = 0; i < steer3D_Percentage_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s= steer3D_Percentage_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// number of Fast Corrective Counter Steering : FCCS
+		outputCSV.print("Best_FCCS");
+		for (int i = 0; i < FCCS_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=FCCS_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_FCCS");
+		for (int i = 0; i < FCCS_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=FCCS_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// predicitonError STD
+		outputCSV.print("Best_predictionError_STD");
+		for (int i = 0; i < predicitonError_STD_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=predicitonError_STD_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_predicitonError_STD");
+		for (int i = 0; i < predicitonError_STD_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=predicitonError_STD_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+
+		// Steering Entropy Average
+		outputCSV.print("Best_steeringEntropy");
+		for (int i = 0; i < steeringEntropy_BestCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=steeringEntropy_BestCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("Worst_steeringEntropy");
+		for (int i = 0; i < steeringEntropy_WorstCaseTimePoints.length; i++) {
+			if (i==5)
+				outputCSV.print(",");
+			double s=steeringEntropy_WorstCaseTimePoints[i].average(); 
+			outputCSV.print(","+s);
+
+		}
+		outputCSV.print("\n");
+		outputCSV.flush();
+		outputCSV.print("\n\n\n");
+		outputCSV.flush();
+		
+		outputCSV.close();
+	}
+
 }
 

@@ -97,7 +97,7 @@ public class ProcessData {
 			
 			File outputInividualPVT_Blocks = 
 					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
-			WriteToFileInividual(outputInividualPVT_Blocks);
+			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -96,6 +96,11 @@ public class PVT_session {
 		return v;
 	}
 	
+	/**
+	 * @param blockNumber
+	 * starts from 0
+	 * @return
+	 */
 	public int getBlockLapses(int blockNumber){
 		Values RTblock = getRTblock(blockNumber);
 		int l = 0;
@@ -106,6 +111,7 @@ public class PVT_session {
 	}
 
 	/**
+	 * starts from 0
 	 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
 	 */
 	public double getBlockLSNRapx(int blockNumber){

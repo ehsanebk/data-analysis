@@ -573,56 +573,56 @@ public class ProcessData {
 
 				outputCSV.print("Pre Lapses B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Pre Lapses B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 2, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
 				outputCSV.print("Post Lapses B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Post Lapses B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 2, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
 				outputCSV.print("Pre LSNR_apx B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 0, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Pre LSNR_apx B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 2, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
 				outputCSV.print("post LSNR_apx B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 0, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("post LSNR_apx B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 2, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -653,56 +653,56 @@ public class ProcessData {
 
 				outputCSV.print("Pre Lapses B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Pre Lapses B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 2, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
 				outputCSV.print("Post Lapses B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Post Lapses B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 2, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
 				outputCSV.print("Pre LSNR_apx B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 0, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Pre LSNR_apx B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 2, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
 				outputCSV.print("post LSNR_apx B1");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 0, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("post LSNR_apx B2");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 2, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 1, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");

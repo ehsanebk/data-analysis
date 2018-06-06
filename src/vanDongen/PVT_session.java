@@ -37,7 +37,6 @@ public class PVT_session {
 	String hand;
 	Values RT;
 	Values timeOfReactionsFromStart;
-	//Vector<Block> blocks;
 	
 	public PVT_session() {
 		RT = new Values();
@@ -132,70 +131,5 @@ public class PVT_session {
 		Values RTblock = getRTblock(blockNumber);
 		return RTblock.averageInRange(150, 500);
 	}
-
-	
-	// 5-min blocks
-	public class Block {
-		Values RT = new Values();
-		double startTime;
-		double totalBlockTime;
-		int alertResponse[] = new int[35]; // Alert responses (150-500ms, 10ms
-		// intervals )
-		
-		int numberOfResponses = 0;
-		int sleepAttacks = 0;
-		
-		
-		public int getNumberOfFalseAlerts(){
-			int c = 0;
-			for (int i = 0; i < RT.size(); i++) {
-				double r = RT.get(i);
-				if (r < .150)
-					c++;
-			}
-			return c;
-		}
-
-		public int getNumberOfLapses(){
-			int l = 0;
-			for (int i = 0; i < RT.size(); i++) 
-				if (RT.get(i) >= 500)
-					l++;
-			return l;
-		}
-		
-		/**
-		 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
-		 */
-		public double getLSNRapx(){
-			// LSNR_apx = B ((1/N) sum_1^N (1 / RT_i))    B = 3855ms
-			int N = 0;
-			int B = 3855;
-			double sum = 0;
-			for (int i = 0; i < RT.size(); i++) 
-				if ( RT.get(i) >= 150){
-					sum = sum + 1.0 / RT.get(i);
-					N++;
-				}
-			return B * ((1.0/N) * sum);
-		}
-		
-		public double getFalseAlertProportion() {
-			return (double)getNumberOfFalseAlerts()/ RT.size();
-		}
-		public double getLapsesProportion() {
-			return (double)getNumberOfLapses() / RT.size();
-		}
-		public double getMeanAlertReactionTimes() {
-			Values Alert = new Values();
-			for (int i = 0; i < RT.size(); i++) {
-				double r = RT.get(i);
-				if (r <= .500 && r >= .150)
-					Alert.add(r);
-			}
-			return Alert.average();
-		}
-	}
-
 	
 }

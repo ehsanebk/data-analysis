@@ -42,7 +42,7 @@ public class ProcessPVT {
 		File directory = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/PVT Raw data");
 		data.process(directory.toPath());
 
-		File output = new File("./Result(VanDongen)/Results_TimePoints_PVT.csv");
+		File output = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT.csv");
 		//File outputProportion = new File("./Result(VanDongen)/Results_TimePoints_PVT_L_Proportion.csv");
 		//File output = new File("/Users/Ehsan/OneDrive - drexel.edu/Driving Data(Van Dongen)/Results_TimePoints_PVT.csv");
 		WriteToFileNumberOfLapses(output);

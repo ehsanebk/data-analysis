@@ -93,7 +93,7 @@ public class ProcessData {
 
 			File outputInividualExtracted = 
 					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
-			WriteToFileInividual(outputInividualExtracted);
+			WriteToFileIndividual(outputInividualExtracted);
 			
 			File outputInividualPVT_Blocks = 
 					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
@@ -142,7 +142,7 @@ public class ProcessData {
 	 * For now, this function just writes the individual values 
 	 * @throws Exception 
 	 */
-	private static void WriteToFileIndividual(File outputIndividualTimePoints) throws Exception {
+	private static void WriteToFileIndividualWithTime(File outputIndividualTimePoints) throws Exception {
 
 		PrintWriter output = null;
 		try {
@@ -365,7 +365,7 @@ public class ProcessData {
 	 * and second based on the straight segments in time points 
 	 * @throws Exception
 	 */
-	private static void WriteToFileInividual(File output) throws Exception {
+	private static void WriteToFileIndividual(File output) throws Exception {
 
 		PrintWriter outputCSV = null;
 		try {
@@ -407,14 +407,14 @@ public class ProcessData {
 				
 				outputCSV.print("Pre Ave RT");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveAlertResponses(j,pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Post Ave RT");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveAlertResponses(j,pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -491,14 +491,14 @@ public class ProcessData {
 				
 				outputCSV.print("Pre Ave RT");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveAlertResponses(j,pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
 				outputCSV.print("Post Ave RT");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveAlertResponses(j,pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");

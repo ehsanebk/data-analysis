@@ -59,6 +59,10 @@ public class PVT_session {
 		return RT.averageInRange(150, 500);
 	}
 	
+	public double getSessionAveResponses(){
+		return RT.average();
+	}
+	
 	public int getSessionNumberOfLapses(){
 		int l = 0;
 		for (int i = 0; i < RT.size(); i++) 

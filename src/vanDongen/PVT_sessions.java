@@ -95,6 +95,15 @@ public class PVT_sessions {
 		return null;	
 	}
 	
+	Object getSessionsAveResponses(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getSessionAveResponses();
+		}
+		return null;	
+	}
+	
 	Object getSessionsLSNRapx(int sNumber, pre_post p) {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();

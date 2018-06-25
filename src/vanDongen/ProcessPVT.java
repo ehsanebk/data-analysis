@@ -295,8 +295,8 @@ public class ProcessPVT {
 
 					outputCSV.print("Post " +PVTdata.getSessionsNumber(j,pre_post.Post));
 					outputCSV.flush();
-					if (PVTdata.getSessionByNumber(j,pre_post.Pre)!= null)
-						RT = PVTdata.getSessionByNumber(j,pre_post.Pre).RT;
+					if (PVTdata.getSessionByNumber(j,pre_post.Post)!= null)
+						RT = PVTdata.getSessionByNumber(j,pre_post.Post).RT;
 					else
 						RT = new Values();
 					
@@ -339,8 +339,8 @@ public class ProcessPVT {
 
 					outputCSV.print("Post " +PVTdata.getSessionsNumber(j,pre_post.Post));
 					outputCSV.flush();
-					if (PVTdata.getSessionByNumber(j,pre_post.Pre)!=null)
-						RT = PVTdata.getSessionByNumber(j,pre_post.Pre).RT;
+					if (PVTdata.getSessionByNumber(j,pre_post.Post)!=null)
+						RT = PVTdata.getSessionByNumber(j,pre_post.Post).RT;
 					else
 						RT = new Values();
 					

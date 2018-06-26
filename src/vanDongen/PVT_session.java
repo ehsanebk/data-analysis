@@ -131,6 +131,11 @@ public class PVT_session {
 		return B * ((1.0/N) * sum);
 	}
 
+	public double getBlockAveResponses(int blockNumber){
+		Values RTblock = getRTblock(blockNumber);
+		return RTblock.averageInRange(150, 29999);
+	}
+	
 	public double getBlockAveAlertResponses(int blockNumber){
 		Values RTblock = getRTblock(blockNumber);
 		return RTblock.averageInRange(150, 500);

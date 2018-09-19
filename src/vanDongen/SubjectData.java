@@ -147,6 +147,14 @@ public class SubjectData {
 		}
 		return null;
 	}
+	Object getSessionLanePosAtEachHalf_STD_Extracted (int sNumber, int half){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionLanePosAtEachHalf_STD_Extracted(half);
+		}
+		return null;
+	}
 	// Steering
 	Object getSessionSteering_Ave_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
@@ -172,6 +180,16 @@ public class SubjectData {
 		}
 		return null;
 	}
+	Object getSessionSteeringAtEachHalf_STD_Extracted (int sNumber, int half){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionSteeringAtEachHalf_STD_Extracted(half);
+		}
+		return null;
+	}
+	
+	
 	Object getSessionZeroSteer_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();

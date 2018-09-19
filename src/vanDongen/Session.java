@@ -576,6 +576,16 @@ public class Session {
 		return values.average();
 	}
 	
+	//Returning the lane position in the first half (0) and second half (1)
+	// The first two segments are dropped for data clarity...
+	// The fist half is segment 2 to 6 and second is 6 to 10 (10 segments in total)
+	double getSessionLanePosAtEachHalf_STD_Extracted (int half){
+		Values values = new Values();
+		for (int i = 2+ half*4; i < (2 + half*4) + 4; i++)
+			values.add(straightSegments.get(i).lanePos_STD);
+		return values.average();
+	}
+	
 	// Steering
 	double getSessionSteering_Ave_Extracted (){
 		Values values = new Values();
@@ -595,6 +605,18 @@ public class Session {
 			values.add(straightSegments.get(i).steering_STD);
 		return values.average();
 	}
+	//Returning the Steering Angle STD in the first half (0) and second half (1)
+	// The first two segments are dropped for data clarity...
+	// The fist half is segment 2 to 6 and second is 6 to 10 (10 segments in total)
+	double getSessionSteeringAtEachHalf_STD_Extracted (int half){
+		Values values = new Values();
+		for (int i = 2+ half*4; i < (2 + half*4) + 4; i++)
+			values.add(straightSegments.get(i).steering_STD);
+		return values.average();
+	}
+
+	
+	
 	double getSessionZeroSteer_Extracted (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)

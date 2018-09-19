@@ -91,13 +91,20 @@ public class ProcessData {
 //					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_TimePoints_Extracted_Cumulative.csv");
 //			WriteToFileCumulativeAffect(outputCumulativeTimePoints);
 
-			File outputInividualExtracted = 
-					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
-			WriteToFileIndividual(outputInividualExtracted);
+//			File outputInividualExtracted = 
+//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
+//			WriteToFileIndividual(outputInividualExtracted);
+//			
+//			File outputInividualPVT_Blocks = 
+//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
+//			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
 			
-			File outputInividualPVT_Blocks = 
-					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
-			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
+			File outputSPSS_LatDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_LatDev_SPSS.csv");
+			WriteToFileSPSS_LatDevSTD(outputSPSS_LatDev);
+
+			File outputSPSS_SteeringDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_SteeringDev_SPSS.csv");
+			WriteToFileSPSS_SteeringDevSTD(outputSPSS_SteeringDev);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,6 +144,163 @@ public class ProcessData {
 
 
 
+	static void WriteToFileSPSS_LatDevSTD(File output) throws Exception {
+		PrintWriter outputSPSS = null;
+		try {
+			outputSPSS = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		outputSPSS.println("Subj. #,Cond."
+				+ ",early_d1_t1_b1,early_d1_t1_b2"
+				+ ",early_d1_t2_b1,early_d1_t2_b2"
+				+ ",early_d1_t3_b1,early_d1_t3_b2"
+				+ ",early_d1_t4_b1,early_d1_t4_b2"
+				
+				+ ",early_d2_t1_b1,early_d2_t1_b2"
+				+ ",early_d2_t2_b1,early_d2_t2_b2"
+				+ ",early_d2_t3_b1,early_d2_t3_b2"
+				+ ",early_d2_t4_b1,early_d2_t4_b2"
+				
+				+ ",early_d3_t1_b1,early_d3_t1_b2"
+				+ ",early_d3_t2_b1,early_d3_t2_b2"
+				+ ",early_d3_t3_b1,early_d3_t3_b2"
+				+ ",early_d3_t4_b1,early_d3_t4_b2"
+				
+				+ ",early_d4_t1_b1,early_d4_t1_b2"
+				+ ",early_d4_t2_b1,early_d4_t2_b2"
+				+ ",early_d4_t3_b1,early_d4_t3_b2"
+				+ ",early_d4_t4_b1,early_d4_t4_b2"
+				
+				+ ",early_d5_t1_b1,early_d5_t1_b2"
+				+ ",early_d5_t2_b1,early_d5_t2_b2"
+				+ ",early_d5_t3_b1,early_d5_t3_b2"
+				+ ",early_d5_t4_b1,early_d5_t4_b2"
+				
+				+ ",late_d1_t1_b1,late_d1_t1_b2"
+				+ ",late_d1_t2_b1,late_d1_t2_b2"
+				+ ",late_d1_t3_b1,late_d1_t3_b2"
+				+ ",late_d1_t4_b1,late_d1_t4_b2"
+				
+				+ ",late_d2_t1_b1,late_d2_t1_b2"
+				+ ",late_d2_t2_b1,late_d2_t2_b2"
+				+ ",late_d2_t3_b1,late_d2_t3_b2"
+				+ ",late_d2_t4_b1,late_d2_t4_b2"
+				                                                   
+				+ ",late_d3_t1_b1,late_d3_t1_b2"
+				+ ",late_d3_t2_b1,late_d3_t2_b2"
+				+ ",late_d3_t3_b1,late_d3_t3_b2"
+				+ ",late_d3_t4_b1,late_d3_t4_b2"
+				                                                
+				+ ",late_d4_t1_b1,late_d4_t1_b2"
+				+ ",late_d4_t2_b1,late_d4_t2_b2"
+				+ ",late_d4_t3_b1,late_d4_t3_b2"
+				+ ",late_d4_t4_b1,late_d4_t4_b2"
+				                                                   
+				+ ",late_d5_t1_b1,late_d5_t1_b2"
+				+ ",late_d5_t2_b1,late_d5_t2_b2"
+				+ ",late_d5_t3_b1,late_d5_t3_b2"
+				+ ",late_d5_t4_b1,late_d5_t4_b2"
+				
+				+ "\n"
+				);
+		for (int i = 0; i < participantsData.size(); i++) {
+
+			SubjectData subjectData = participantsData.get(i);
+			outputSPSS.print(subjectData.ID+","+subjectData.condition);
+			for (int j = 4; j < 44; j++) {
+				outputSPSS.print(
+						"," + subjectData.getSessionLanePosAtEachHalf_STD_Extracted(j, 0)+ 
+						"," + subjectData.getSessionLanePosAtEachHalf_STD_Extracted(j, 1));
+				outputSPSS.flush();
+			}
+			outputSPSS.print("\n");
+		}
+		outputSPSS.close();
+	}
+	
+	static void WriteToFileSPSS_SteeringDevSTD(File output) throws Exception {
+		PrintWriter outputSPSS = null;
+		try {
+			outputSPSS = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		outputSPSS.println("Subj. #,Cond."
+				+ ",early_d1_t1_b1,early_d1_t1_b2"
+				+ ",early_d1_t2_b1,early_d1_t2_b2"
+				+ ",early_d1_t3_b1,early_d1_t3_b2"
+				+ ",early_d1_t4_b1,early_d1_t4_b2"
+				
+				+ ",early_d2_t1_b1,early_d2_t1_b2"
+				+ ",early_d2_t2_b1,early_d2_t2_b2"
+				+ ",early_d2_t3_b1,early_d2_t3_b2"
+				+ ",early_d2_t4_b1,early_d2_t4_b2"
+				
+				+ ",early_d3_t1_b1,early_d3_t1_b2"
+				+ ",early_d3_t2_b1,early_d3_t2_b2"
+				+ ",early_d3_t3_b1,early_d3_t3_b2"
+				+ ",early_d3_t4_b1,early_d3_t4_b2"
+				
+				+ ",early_d4_t1_b1,early_d4_t1_b2"
+				+ ",early_d4_t2_b1,early_d4_t2_b2"
+				+ ",early_d4_t3_b1,early_d4_t3_b2"
+				+ ",early_d4_t4_b1,early_d4_t4_b2"
+				
+				+ ",early_d5_t1_b1,early_d5_t1_b2"
+				+ ",early_d5_t2_b1,early_d5_t2_b2"
+				+ ",early_d5_t3_b1,early_d5_t3_b2"
+				+ ",early_d5_t4_b1,early_d5_t4_b2"
+				
+				+ ",late_d1_t1_b1,late_d1_t1_b2"
+				+ ",late_d1_t2_b1,late_d1_t2_b2"
+				+ ",late_d1_t3_b1,late_d1_t3_b2"
+				+ ",late_d1_t4_b1,late_d1_t4_b2"
+				
+				+ ",late_d2_t1_b1,late_d2_t1_b2"
+				+ ",late_d2_t2_b1,late_d2_t2_b2"
+				+ ",late_d2_t3_b1,late_d2_t3_b2"
+				+ ",late_d2_t4_b1,late_d2_t4_b2"
+				                                                   
+				+ ",late_d3_t1_b1,late_d3_t1_b2"
+				+ ",late_d3_t2_b1,late_d3_t2_b2"
+				+ ",late_d3_t3_b1,late_d3_t3_b2"
+				+ ",late_d3_t4_b1,late_d3_t4_b2"
+				                                                
+				+ ",late_d4_t1_b1,late_d4_t1_b2"
+				+ ",late_d4_t2_b1,late_d4_t2_b2"
+				+ ",late_d4_t3_b1,late_d4_t3_b2"
+				+ ",late_d4_t4_b1,late_d4_t4_b2"
+				                                                   
+				+ ",late_d5_t1_b1,late_d5_t1_b2"
+				+ ",late_d5_t2_b1,late_d5_t2_b2"
+				+ ",late_d5_t3_b1,late_d5_t3_b2"
+				+ ",late_d5_t4_b1,late_d5_t4_b2"
+				
+				+ "\n"
+				);
+		for (int i = 0; i < participantsData.size(); i++) {
+
+			SubjectData subjectData = participantsData.get(i);
+			outputSPSS.print(subjectData.ID+","+subjectData.condition);
+			for (int j = 4; j < 44; j++) {
+				outputSPSS.print(
+						"," + subjectData.getSessionSteeringAtEachHalf_STD_Extracted(j, 0)+ 
+						"," + subjectData.getSessionSteeringAtEachHalf_STD_Extracted(j, 1));
+				outputSPSS.flush();
+			}
+			outputSPSS.print("\n");
+		}
+		outputSPSS.close();
+	}
+	
+	
 	/**
 	 * @param outputIndividualTimePointsCSV
 	 * For now, this function just writes the individual values 
@@ -546,7 +710,6 @@ public class ProcessData {
 	}
 
 	private static void WriteToFileInividualPVTBlocks(File output) throws Exception {
-
 		PrintWriter outputCSV = null;
 		try {
 			outputCSV = new PrintWriter(output);

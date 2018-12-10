@@ -77,11 +77,29 @@ public class PVT_sessions {
 		return null;	
 	}
 	
-	Object getSessionsProportionOfLapses(int sNumber, pre_post p) {
+	Object getSessionsFalseStarts(int sNumber, pre_post p) {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
-				return session.getSessionNumberOfLapses()/session.RT.size();
+				return session.getSessionNumberOfFalseStarts();
+		}
+		return null;	
+	}
+	
+	Object getSessionsPercentOfLapses(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return (session.getSessionNumberOfLapses()/(double)session.RT.size()) * 100;
+		}
+		return null;	
+	}
+	
+	Object getSessionsPercentOfFalseStarts(int sNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return (session.getSessionNumberOfFalseStarts()/(double)session.RT.size()) * 100;
 		}
 		return null;	
 	}
@@ -135,7 +153,7 @@ public class PVT_sessions {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
-				return session.getBlockLapses(blockNumber)/session.getRTblock(blockNumber).size();
+				return session.getBlockLapses(blockNumber)/(double)session.getRTblock(blockNumber).size();
 		}
 		return null;	
 	}

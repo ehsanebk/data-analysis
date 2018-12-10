@@ -71,6 +71,14 @@ public class PVT_session {
 		return l;
 	}
 	
+	public int getSessionNumberOfFalseStarts(){
+		int l = 0;
+		for (int i = 0; i < RT.size(); i++) 
+			if ( RT.get(i) < 150)
+				l++;
+		return l;
+	}
+	
 	/**
 	 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
 	 */

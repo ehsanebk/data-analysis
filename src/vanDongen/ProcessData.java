@@ -569,6 +569,20 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
+				outputCSV.print("Pre Median Alert RT");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsMedianAlertResponses(j,pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre LSNR_apx");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsLSNRapx(j,pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("Post Lapses(P)");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsPercentOfLapses(j,pre_post.Post));
@@ -583,28 +597,14 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre Ave RT");
+				outputCSV.print("Post Median Alert RT");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsMedianAlertResponses(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Post Ave RT");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Post));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
-				outputCSV.print("Pre LSNR_apx");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsLSNRapx(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
-				outputCSV.print("post LSNR_apx");
+				outputCSV.print("Post LSNR_apx");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsLSNRapx(j,pre_post.Post));
 					outputCSV.flush();
@@ -667,6 +667,20 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
+				outputCSV.print("Pre Median Alert RT");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre LSNR_apx");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsLSNRapx(j,pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("Post Lapses(P)");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsPercentOfLapses(j,pre_post.Post));
@@ -681,28 +695,14 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre Ave RT");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
-				outputCSV.print("Post Ave RT");
+				outputCSV.print("Post Median Alert RT");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsAveResponses(j,pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre LSNR_apx");
-				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsLSNRapx(j,pre_post.Pre));
-					outputCSV.flush();
-				}
-				outputCSV.print("\n");
-				
-				outputCSV.print("post LSNR_apx");
+				outputCSV.print("Post LSNR_apx");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsLSNRapx(j,pre_post.Post));
 					outputCSV.flush();

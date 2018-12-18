@@ -86,6 +86,38 @@ public class Values {
 		return meanInRange(min, max);
 	}
 
+	public double median() {
+		if (v.size() == 0)
+			return 0;
+		Vector<Double> vSorted = v;
+		Collections.sort(vSorted);
+		
+		int middle = vSorted.size()/2;
+		if (vSorted.size()%2 == 1) {
+			return vSorted.get(middle);
+		} else {
+			return (vSorted.get(middle-1) + vSorted.get(middle)) / 2.0;
+		}
+	}
+	
+	public double medianInRange(double min, double max) {
+		if (v.size() == 0)
+			return 0;
+		Vector<Double> vSortedAlert = new Vector<Double>();
+		for (int i = 0; i < v.size(); i++)
+			if (inRange(v.elementAt(i), min, max)){
+				vSortedAlert.add(v.elementAt(i));
+			}
+		Collections.sort(vSortedAlert);
+		int middle = vSortedAlert.size()/2;
+		if (vSortedAlert.size()%2 == 1) {
+			return vSortedAlert.get(middle);
+		} else {
+			return (vSortedAlert.get(middle-1) + vSortedAlert.get(middle)) / 2.0;
+		}
+		
+	}
+	
 	public double stddev() {
 		if (v.size() < 2)
 			return 0;

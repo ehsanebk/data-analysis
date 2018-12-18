@@ -59,8 +59,16 @@ public class PVT_session {
 		return RT.averageInRange(150, 500);
 	}
 	
+	public double getSessionMedianAlertResponses(){
+		return RT.medianInRange(150, 500);
+	}
+	
 	public double getSessionAveResponses(){
 		return RT.average();
+	}
+	
+	public double getSessionMeidanResponses(){
+		return RT.median();
 	}
 	
 	public int getSessionNumberOfLapses(){

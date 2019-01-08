@@ -50,29 +50,29 @@ public class ProcessPVT {
 //			e.printStackTrace();
 //		}
 //		
-//		File outputRawRT = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT_RawRT.csv");
+		File outputRawLapses = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT_RawLapses.csv");
+		try {
+			WriteToFileRawLapses(outputRawLapses);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		File outputSPSS_Lapses = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT_SPSS_Lapses.csv");
 //		try {
-//			WriteToFileRawRT(outputRawRT);
+//			WriteToFileSPSS_Lapses(outputSPSS_Lapses);
 //		} catch (Exception e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		
-		File outputSPSS_Lapses = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT_SPSS_Lapses.csv");
-		try {
-			WriteToFileSPSS_Lapses(outputSPSS_Lapses);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		File outputSPSS_LSNR_apx = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT_SPSS_LSNR_apx.csv");
-		try {
-			WriteToFileSPSS_LSNR_apx(outputSPSS_LSNR_apx);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		
+//		File outputSPSS_LSNR_apx = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_PVT/Human_PVT_SPSS_LSNR_apx.csv");
+//		try {
+//			WriteToFileSPSS_LSNR_apx(outputSPSS_LSNR_apx);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 	}
 
@@ -434,7 +434,9 @@ public class ProcessPVT {
 			}		
 		}
 	}
-	static void WriteToFileRawRT(File output) throws Exception {
+	
+	
+	static void WriteToFileRawLapses(File output) throws Exception {
 		PrintWriter outputCSV = null;
 		try {
 			outputCSV = new PrintWriter(output);
@@ -442,92 +444,105 @@ public class ProcessPVT {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-		outputCSV.println("Best Case");
+		
+		outputCSV.println("Condition,ID,session #,TimeInSession,RT");
+		
+		// Best case
 		for (int i = 0; i < participantsDataPVT.size(); i++) {
 			PVT_sessions PVTdata = participantsDataPVT.get(i);
 			if (PVTdata.condition.equals(Conditions.BestCase)){
-				System.out.println("Writing to file (PVT data): " + PVTdata.ID);
-				outputCSV.println(PVTdata.ID+":"+PVTdata.condition );
-				outputCSV.flush();
+				System.out.println("Writing to file (PVT data): " + PVTdata.ID + " " + PVTdata.condition);
+				
 				Values RT;
+				Values timeOfReactionsFromStart;
 
 				for (int j = 4; j < 44; j++) {					
-					outputCSV.print("PRE " +PVTdata.getSessionsNumber(j,pre_post.Pre));
-					outputCSV.flush();
-					if (PVTdata.getSessionByNumber(j,pre_post.Pre)!= null)
+					if (PVTdata.getSessionByNumber(j,pre_post.Pre)!= null){
 						RT = PVTdata.getSessionByNumber(j,pre_post.Pre).RT;
-					else
+						timeOfReactionsFromStart = PVTdata.getSessionByNumber(j,pre_post.Pre).timeOfReactionsFromStart; 
+					}
+					else{
 						RT = new Values();
+						timeOfReactionsFromStart = new Values(); 
+					}
 					
 					for (int r = 0; r < RT.size(); r++) {
-						outputCSV.print("," + RT.get(r));
+						if (RT.get(r) > 500 && RT.get(r) < 30000)   // checking if the RT is a lapse
+							outputCSV.println("Day,"+ PVTdata.ID
+									+ ", PRE " +PVTdata.getSessionsNumber(j,pre_post.Pre)
+									+ "," + timeOfReactionsFromStart.get(r) + "," + RT.get(r));
 					}
-					outputCSV.print("\n");
 					outputCSV.flush();
 
-					outputCSV.print("Post " +PVTdata.getSessionsNumber(j,pre_post.Post));
-					outputCSV.flush();
-					if (PVTdata.getSessionByNumber(j,pre_post.Post)!= null)
+					if (PVTdata.getSessionByNumber(j,pre_post.Post)!= null){
 						RT = PVTdata.getSessionByNumber(j,pre_post.Post).RT;
-					else
+						timeOfReactionsFromStart = PVTdata.getSessionByNumber(j,pre_post.Post).timeOfReactionsFromStart;
+					}
+					else{
 						RT = new Values();
+						timeOfReactionsFromStart = new Values(); 
+					}
 					
 					for (int r = 0; r < RT.size(); r++) {
-						outputCSV.print("," + RT.get(r));
+						if (RT.get(r) > 500 && RT.get(r) < 30000)   // checking if the RT is a lapse
+							outputCSV.println("Day,"+ PVTdata.ID
+									+ ", POST " +PVTdata.getSessionsNumber(j,pre_post.Pre)
+									+ "," + timeOfReactionsFromStart.get(r) + "," + RT.get(r));
 					}
-					outputCSV.print("\n");
 					outputCSV.flush();
+					
 				}
-
-
-				outputCSV.print("\n");
-				outputCSV.flush();
 			}	
 		}
 
-		outputCSV.println("Worst Case");
+		outputCSV.println(",");
+		
+		outputCSV.println("Condition,ID,session #,TimeInSession,RT");
+		//Worst Case
 		for (int i = 0; i < participantsDataPVT.size(); i++) {
 			PVT_sessions PVTdata = participantsDataPVT.get(i);
 			if (PVTdata.condition.equals(Conditions.WorstCase)){
-				System.out.println("Writing to file (PVT data): " + PVTdata.ID);
-				outputCSV.println(PVTdata.ID+":"+PVTdata.condition );
-				outputCSV.flush();
+				System.out.println("Writing to file (PVT data): " + PVTdata.ID + " "  + PVTdata.condition);
+				
 				Values RT;
-
+				Values timeOfReactionsFromStart;
 
 				for (int j = 4; j < 44; j++) {					
-					outputCSV.print("PRE " +PVTdata.getSessionsNumber(j,pre_post.Pre));
-					outputCSV.flush();
-					if (PVTdata.getSessionByNumber(j,pre_post.Pre)!=null)
+					if (PVTdata.getSessionByNumber(j,pre_post.Pre)!= null){
 						RT = PVTdata.getSessionByNumber(j,pre_post.Pre).RT;
-					else
+						timeOfReactionsFromStart = PVTdata.getSessionByNumber(j,pre_post.Pre).timeOfReactionsFromStart; 
+					}
+					else{
 						RT = new Values();
+						timeOfReactionsFromStart = new Values(); 
+					}
 					
 					for (int r = 0; r < RT.size(); r++) {
-						outputCSV.print("," + RT.get(r));
+						if (RT.get(r) > 500 && RT.get(r) < 30000)   // checking if the RT is a lapse
+							outputCSV.println("Night,"+ PVTdata.ID
+									+ ", PRE " +PVTdata.getSessionsNumber(j,pre_post.Pre)
+									+ "," + timeOfReactionsFromStart.get(r) + "," + RT.get(r));
 					}
-					outputCSV.print("\n");
 					outputCSV.flush();
 
-					outputCSV.print("Post " +PVTdata.getSessionsNumber(j,pre_post.Post));
-					outputCSV.flush();
-					if (PVTdata.getSessionByNumber(j,pre_post.Post)!=null)
+					if (PVTdata.getSessionByNumber(j,pre_post.Post)!= null){
 						RT = PVTdata.getSessionByNumber(j,pre_post.Post).RT;
-					else
+						timeOfReactionsFromStart = PVTdata.getSessionByNumber(j,pre_post.Post).timeOfReactionsFromStart;
+					}
+					else{
 						RT = new Values();
+						timeOfReactionsFromStart = new Values(); 
+					}
 					
 					for (int r = 0; r < RT.size(); r++) {
-						outputCSV.print("," + RT.get(r));
+						if (RT.get(r) > 500 && RT.get(r) < 30000)   // checking if the RT is a lapse
+							outputCSV.println("Night,"+ PVTdata.ID
+									+ ", POST " +PVTdata.getSessionsNumber(j,pre_post.Pre)
+									+ "," + timeOfReactionsFromStart.get(r) + "," + RT.get(r));
 					}
-					outputCSV.print("\n");
 					outputCSV.flush();
-				}
-
-
-				outputCSV.print("\n");
-				outputCSV.flush();			
+					
+				}	
 			}		
 		}
 	}

@@ -87,6 +87,18 @@ public class PVT_session {
 		return l;
 	}
 	
+	public int[] getAlertResponseDistribution () {
+		int alertResponse[] = new int[35]; // Alert responses (150-500 ms,10 ms intervals )
+		for (int i = 0; i < RT.size(); i++) {
+			double responseTime = RT.get(i);
+			if (responseTime > 150 && responseTime <= 500){
+				// making the array for alert reaction times
+				alertResponse[(int) ((responseTime - 150) / 10)]++;
+			}
+		}
+		return alertResponse;
+	}
+	
 	/**
 	 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
 	 */

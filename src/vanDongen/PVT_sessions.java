@@ -59,6 +59,7 @@ public class PVT_sessions {
 		}
 		return null;	
 	}
+	
 	String getSessionsTime(int sNumber, pre_post p) {
 		SimpleDateFormat timeFormat = new SimpleDateFormat ("MM/dd/yy HH:mm"); // for parsing date formats
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
@@ -68,6 +69,7 @@ public class PVT_sessions {
 		}
 		return null;	
 	}
+
 	Object getSessionsLapses(int sNumber, pre_post p) {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
@@ -167,11 +169,29 @@ public class PVT_sessions {
 		return null;	
 	}
 
-	Object getSessionsBlockProportionOfLapses(int sNumber, int blockNumber, pre_post p) {
+	Object getSessionsBlockPercentOfLapses(int sNumber, int blockNumber, pre_post p) {
 		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
 			PVT_session session = (PVT_session) iterator.next();
 			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
-				return session.getBlockLapses(blockNumber)/(double)session.getRTblock(blockNumber).size();
+				return session.getBlockLapses(blockNumber)/(double)session.getRTblock(blockNumber).size() * 100;
+		}
+		return null;	
+	}
+	
+	Object getSessionsBlockPercentOfFalseStarts(int sNumber, int blockNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getBlockFalseStarts(blockNumber)/(double)session.getRTblock(blockNumber).size() * 100;
+		}
+		return null;	
+	}
+	
+	Object getSessionsBlockMedianAlertResponses(int sNumber, int blockNumber, pre_post p) {
+		for (Iterator<PVT_session> iterator = sessions.iterator(); iterator.hasNext();) {
+			PVT_session session = (PVT_session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber && session.pre_post.equals(p))
+				return session.getBlockMedianAlertResponses(blockNumber);
 		}
 		return null;	
 	}

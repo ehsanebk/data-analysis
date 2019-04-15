@@ -142,6 +142,20 @@ public class PVT_session {
 	}
 
 	/**
+	 * @param blockNumber
+	 * starts from 0
+	 * @return
+	 */
+	public int getBlockFalseStarts(int blockNumber){
+		Values RTblock = getRTblock(blockNumber);
+		int l = 0;
+		for (int i = 0; i < RTblock.size(); i++) 
+			if (RTblock.get(i) < 150 )
+				l++;
+		return l;
+	}
+	
+	/**
 	 * starts from 0
 	 * @return Log-transformed Signal-to-Noise Ratio (LSNR) approximation
 	 */
@@ -169,4 +183,8 @@ public class PVT_session {
 		return RTblock.averageInRange(150, 500);
 	}
 	
+	public double getBlockMedianAlertResponses(int blockNumber){
+		Values RTblock = getRTblock(blockNumber);
+		return RTblock.medianInRange(150, 500);
+	}
 }

@@ -358,8 +358,6 @@ public class ProcessPVT {
 		outputSPSS.close();
 	}
 
-	
-	
 	static void WriteToFileSPSS_LSNR_apx(File output) throws Exception {
 		PrintWriter outputSPSS = null;
 		try {
@@ -437,8 +435,6 @@ public class ProcessPVT {
 		}
 		outputSPSS.close();
 	}
-	
-	
 	
 	static void WriteToFile(File output) throws Exception {
 		PrintWriter outputCSV = null;
@@ -608,7 +604,6 @@ public class ProcessPVT {
 			}		
 		}
 	}
-	
 	
 	static void WriteToFileRawLapses(File output) throws Exception {
 		PrintWriter outputCSV = null;

@@ -91,13 +91,13 @@ public class ProcessData {
 //					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_TimePoints_Extracted_Cumulative.csv");
 //			WriteToFileCumulativeAffect(outputCumulativeTimePoints);
 
-			File outputInividualExtracted = 
-					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
-			WriteToFileIndividual(outputInividualExtracted);
+//			File outputInividualExtracted = 
+//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
+//			WriteToFileIndividual(outputInividualExtracted);
 //			
-//			File outputInividualPVT_Blocks = 
-//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
-//			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
+			File outputInividualPVT_Blocks = 
+					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
+			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
 			
 //			File outputSPSS_LatDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_LatDev_SPSS.csv");
 //			WriteToFileSPSS_LatDevSTD(outputSPSS_LatDev);
@@ -762,30 +762,30 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 
-				outputCSV.print("Pre Lapses B1");
+				outputCSV.print("Pre Lapses B1(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 0, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre Lapses B2");
+				outputCSV.print("Pre Lapses B2(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 1, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
-				outputCSV.print("Post Lapses B1");
+				outputCSV.print("Post Lapses B1(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 0, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Post Lapses B2");
+				outputCSV.print("Post Lapses B2(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 1, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
@@ -842,30 +842,30 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 
-				outputCSV.print("Pre Lapses B1");
+				outputCSV.print("Pre Lapses B1(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 0, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Pre Lapses B2");
+				outputCSV.print("Pre Lapses B2(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Pre));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 1, pre_post.Pre));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 
-				outputCSV.print("Post Lapses B1");
+				outputCSV.print("Post Lapses B1(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 0, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 0, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
 				
-				outputCSV.print("Post Lapses B2");
+				outputCSV.print("Post Lapses B2(P)");
 				for (int j = 4; j < 44; j++) {
-					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLapses(j, 1, pre_post.Post));
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfLapses(j, 1, pre_post.Post));
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");

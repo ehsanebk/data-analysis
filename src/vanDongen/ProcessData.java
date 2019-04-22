@@ -790,6 +790,63 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 
+				outputCSV.print("Pre FalseStarts B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 0, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre FalseStarts B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 1, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				outputCSV.print("Post FalseStarts B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 0, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Post FalseStarts B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 1, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				outputCSV.print("Pre Median B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 0, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre Median B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 1, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				outputCSV.print("Post Median B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 0, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Post Medain B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 1, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				
 				outputCSV.print("Pre LSNR_apx B1");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 0, pre_post.Pre));
@@ -870,6 +927,62 @@ public class ProcessData {
 				}
 				outputCSV.print("\n");
 
+				outputCSV.print("Pre FalseStarts B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 0, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre FalseStarts B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 1, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				outputCSV.print("Post FalseStarts B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 0, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Post FalseStarts B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockPercentOfFalseStarts(j, 1, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				outputCSV.print("Pre Median B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 0, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Pre Median B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 1, pre_post.Pre));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				outputCSV.print("Post Median B1(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 0, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
+				outputCSV.print("Post Medain B2(P)");
+				for (int j = 4; j < 44; j++) {
+					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockMedianAlertResponses(j, 1, pre_post.Post));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+				
 				outputCSV.print("Pre LSNR_apx B1");
 				for (int j = 4; j < 44; j++) {
 					outputCSV.print("," + PVTdata.getByID(subjectData.ID).getSessionsBlockLSNRapx(j, 0, pre_post.Pre));

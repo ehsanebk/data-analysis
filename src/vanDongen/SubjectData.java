@@ -51,7 +51,7 @@ public class SubjectData {
 	}
 
 
-	///// new values Raw Data
+	///// new values Raw Data (MPH)
 	Object getSessionMPH_STD_RawData (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
 			Session session = (Session) iterator.next();
@@ -60,6 +60,25 @@ public class SubjectData {
 		}
 		return null;
 	}
+	
+	Object getSessionMPHAtEachHalf_STD_RawData (int sNumber, int half){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionMPHAtEachHalf_STD_RawData(half);
+		}
+		return null;
+	}
+	
+	Object getSessionMPHAtSegment_STD_RawData (int sNumber, int seg){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionMPHAtSegment_STD_RawData(seg);
+		}
+		return null;
+	}
+	
 	
 	Object getSessionMPH_Ave_RawData (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
@@ -155,6 +174,14 @@ public class SubjectData {
 		}
 		return null;
 	}
+	Object getSessionLanePosAtSegment_STD_Extracted (int sNumber, int seg){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionLanePosAtSegment_STD_Extracted(seg);
+		}
+		return null;
+	}
 	// Steering
 	Object getSessionSteering_Ave_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
@@ -188,7 +215,14 @@ public class SubjectData {
 		}
 		return null;
 	}
-	
+	Object getSessionSteeringAtSegment_STD_Extracted (int sNumber, int seg){
+		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {
+			Session session = (Session) iterator.next();
+			if (Integer.valueOf(session.sessionNumber).intValue() == sNumber)
+				return session.getSessionSteeringAtSegment_STD_Extracted(seg);
+		}
+		return null;
+	}
 	
 	Object getSessionZeroSteer_Extracted (int sNumber){
 		for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext();) {

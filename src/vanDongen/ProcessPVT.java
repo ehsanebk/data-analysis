@@ -123,6 +123,85 @@ public class ProcessPVT {
 		}
 		throw new Exception("PVT for ID " + ID + " Not found in the data!");
 	}
+	
+	static void WriteToFileSPSS_PercentOfLapses_NoBlock(File output) throws Exception {
+		PrintWriter outputSPSS = null;
+		try {
+			outputSPSS = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		outputSPSS.println("Subj. #,Cond."
+				+ ",early_d1_t1_pre,early_d1_t1_post"
+				+ ",early_d1_t2_pre,early_d1_t2_post"
+				+ ",early_d1_t3_pre,early_d1_t3_post"
+				+ ",early_d1_t4_pre,early_d1_t4_post"
+				
+				+ ",early_d2_t1_pre,early_d2_t1_post"
+				+ ",early_d2_t2_pre,early_d2_t2_post"
+				+ ",early_d2_t3_pre,early_d2_t3_post"
+				+ ",early_d2_t4_pre,early_d2_t4_post"
+				
+				+ ",early_d3_t1_pre,early_d3_t1_post"
+				+ ",early_d3_t2_pre,early_d3_t2_post"
+				+ ",early_d3_t3_pre,early_d3_t3_post"
+				+ ",early_d3_t4_pre,early_d3_t4_post"
+				
+				+ ",early_d4_t1_pre,early_d4_t1_post"
+				+ ",early_d4_t2_pre,early_d4_t2_post"
+				+ ",early_d4_t3_pre,early_d4_t3_post"
+				+ ",early_d4_t4_pre,early_d4_t4_post"
+				
+				+ ",early_d5_t1_pre,early_d5_t1_post"
+				+ ",early_d5_t2_pre,early_d5_t2_post"
+				+ ",early_d5_t3_pre,early_d5_t3_post"
+				+ ",early_d5_t4_pre,early_d5_t4_post"
+				
+				+ ",late_d1_t1_pre,late_d1_t1_post"
+				+ ",late_d1_t2_pre,late_d1_t2_post"
+				+ ",late_d1_t3_pre,late_d1_t3_post"
+				+ ",late_d1_t4_pre,late_d1_t4_post"
+				
+				+ ",late_d2_t1_pre,late_d2_t1_post"
+				+ ",late_d2_t2_pre,late_d2_t2_post"
+				+ ",late_d2_t3_pre,late_d2_t3_post"
+				+ ",late_d2_t4_pre,late_d2_t4_post"
+				                              
+				+ ",late_d3_t1_pre,late_d3_t1_post"
+				+ ",late_d3_t2_pre,late_d3_t2_post"
+				+ ",late_d3_t3_pre,late_d3_t3_post"
+				+ ",late_d3_t4_pre,late_d3_t4_post"
+				                           
+				+ ",late_d4_t1_pre,late_d4_t1_post"
+				+ ",late_d4_t2_pre,late_d4_t2_post"
+				+ ",late_d4_t3_pre,late_d4_t3_post"
+				+ ",late_d4_t4_pre,late_d4_t4_post"
+				                              
+				+ ",late_d5_t1_pre,late_d5_t1_post"
+				+ ",late_d5_t2_pre,late_d5_t2_post"
+				+ ",late_d5_t3_pre,late_d5_t3_post"
+				+ ",late_d5_t4_pre,late_d5_t4_post"
+				
+				+ "\n"
+				);
+		for (int i = 0; i < participantsDataPVT.size(); i++) {
+
+			PVT_sessions PVTdata = participantsDataPVT.get(i);
+			outputSPSS.print(PVTdata.ID+","+PVTdata.condition);
+			for (int j = 4; j < 44; j++) {
+				outputSPSS.print(
+						"," + PVTdata.getSessionsPercentOfLapses(j, pre_post.Pre) + 
+						"," + PVTdata.getSessionsPercentOfLapses(j, pre_post.Post) );
+				outputSPSS.flush();
+			}
+			outputSPSS.print("\n");
+		}
+		outputSPSS.close();
+	}
+	
 
 	static void WriteToFileSPSS_PercentOfLapses(File output) throws Exception {
 		PrintWriter outputSPSS = null;
@@ -155,10 +234,10 @@ public class ProcessPVT {
 				+ ",early_d4_t3_pre_b1,early_d4_t3_pre_b2,early_d4_t3_post_b1,early_d4_t3_post_b2"
 				+ ",early_d4_t4_pre_b1,early_d4_t4_pre_b2,early_d4_t4_post_b1,early_d4_t4_post_b2"
 				
-				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_pre_b1,early_d5_t1_pre_b2"
-				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_pre_b1,early_d5_t2_pre_b2"
-				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_pre_b1,early_d5_t3_pre_b2"
-				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_pre_b1,early_d5_t4_pre_b2"
+				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_post_b1,early_d5_t1_post_b2"
+				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_post_b1,early_d5_t2_post_b2"
+				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_post_b1,early_d5_t3_post_b2"
+				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_post_b1,early_d5_t4_post_b2"
 				
 				+ ",late_d1_t1_pre_b1,late_d1_t1_pre_b2,late_d1_t1_post_b1,late_d1_t1_post_b2"
 				+ ",late_d1_t2_pre_b1,late_d1_t2_pre_b2,late_d1_t2_post_b1,late_d1_t2_post_b2"
@@ -233,10 +312,10 @@ public class ProcessPVT {
 				+ ",early_d4_t3_pre_b1,early_d4_t3_pre_b2,early_d4_t3_post_b1,early_d4_t3_post_b2"
 				+ ",early_d4_t4_pre_b1,early_d4_t4_pre_b2,early_d4_t4_post_b1,early_d4_t4_post_b2"
 				
-				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_pre_b1,early_d5_t1_pre_b2"
-				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_pre_b1,early_d5_t2_pre_b2"
-				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_pre_b1,early_d5_t3_pre_b2"
-				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_pre_b1,early_d5_t4_pre_b2"
+				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_post_b1,early_d5_t1_post_b2"
+				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_post_b1,early_d5_t2_post_b2"
+				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_post_b1,early_d5_t3_post_b2"
+				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_post_b1,early_d5_t4_post_b2"
 				
 				+ ",late_d1_t1_pre_b1,late_d1_t1_pre_b2,late_d1_t1_post_b1,late_d1_t1_post_b2"
 				+ ",late_d1_t2_pre_b1,late_d1_t2_pre_b2,late_d1_t2_post_b1,late_d1_t2_post_b2"
@@ -311,10 +390,10 @@ public class ProcessPVT {
 				+ ",early_d4_t3_pre_b1,early_d4_t3_pre_b2,early_d4_t3_post_b1,early_d4_t3_post_b2"
 				+ ",early_d4_t4_pre_b1,early_d4_t4_pre_b2,early_d4_t4_post_b1,early_d4_t4_post_b2"
 				
-				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_pre_b1,early_d5_t1_pre_b2"
-				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_pre_b1,early_d5_t2_pre_b2"
-				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_pre_b1,early_d5_t3_pre_b2"
-				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_pre_b1,early_d5_t4_pre_b2"
+				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_post_b1,early_d5_t1_post_b2"
+				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_post_b1,early_d5_t2_post_b2"
+				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_post_b1,early_d5_t3_post_b2"
+				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_post_b1,early_d5_t4_post_b2"
 				
 				+ ",late_d1_t1_pre_b1,late_d1_t1_pre_b2,late_d1_t1_post_b1,late_d1_t1_post_b2"
 				+ ",late_d1_t2_pre_b1,late_d1_t2_pre_b2,late_d1_t2_post_b1,late_d1_t2_post_b2"
@@ -389,10 +468,10 @@ public class ProcessPVT {
 				+ ",early_d4_t3_pre_b1,early_d4_t3_pre_b2,early_d4_t3_post_b1,early_d4_t3_post_b2"
 				+ ",early_d4_t4_pre_b1,early_d4_t4_pre_b2,early_d4_t4_post_b1,early_d4_t4_post_b2"
 				
-				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_pre_b1,early_d5_t1_pre_b2"
-				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_pre_b1,early_d5_t2_pre_b2"
-				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_pre_b1,early_d5_t3_pre_b2"
-				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_pre_b1,early_d5_t4_pre_b2"
+				+ ",early_d5_t1_pre_b1,early_d5_t1_pre_b2,early_d5_t1_post_b1,early_d5_t1_post_b2"
+				+ ",early_d5_t2_pre_b1,early_d5_t2_pre_b2,early_d5_t2_post_b1,early_d5_t2_post_b2"
+				+ ",early_d5_t3_pre_b1,early_d5_t3_pre_b2,early_d5_t3_post_b1,early_d5_t3_post_b2"
+				+ ",early_d5_t4_pre_b1,early_d5_t4_pre_b2,early_d5_t4_post_b1,early_d5_t4_post_b2"
 				
 				+ ",late_d1_t1_pre_b1,late_d1_t1_pre_b2,late_d1_t1_post_b1,late_d1_t1_post_b2"
 				+ ",late_d1_t2_pre_b1,late_d1_t2_pre_b2,late_d1_t2_post_b1,late_d1_t2_post_b2"

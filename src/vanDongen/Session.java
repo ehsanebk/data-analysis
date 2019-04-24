@@ -27,7 +27,7 @@ public class Session {
 	String sessionNumber;
 	int timePoint=0;   // the time points are in the format of 
 					// 1 2 3 4 break 5 6 7 8
-	Vector<StraightSegment> straightSegments;
+	Vector<StraightSegment> straightSegments; // Straight segments starts form 0 to 9 (10 in total)
 	
 	
 	Session(File reportedFile){
@@ -498,6 +498,22 @@ public class Session {
 			values.add(straightSegments.get(i).MPH_STD_RawData);
 		return values.average();
 	}
+	
+	//Returning the MPH_STD in the first half (0) and second half (1)
+	// The first two segments are dropped for data clarity...
+	// The fist half is segment 2 to 6 and second is 6 to 10 (10 segments in total)
+	double getSessionMPHAtEachHalf_STD_RawData (int half){
+		Values values = new Values();
+		for (int i = 2+ half*4; i < (2 + half*4) + 4; i++)
+			values.add(straightSegments.get(i).MPH_STD_RawData);
+		return values.average();
+	}
+
+	//Returning the MPH_STD in the straight segment number seg out of 10
+	double getSessionMPHAtSegment_STD_RawData (int seg){
+		return straightSegments.get(seg).MPH_STD_RawData;
+	}
+
 	double getSessionMPH_Ave_RawData(){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)
@@ -585,6 +601,12 @@ public class Session {
 			values.add(straightSegments.get(i).lanePos_STD);
 		return values.average();
 	}
+
+	//Returning the lane position in the straight segment number seg out of 10
+	double getSessionLanePosAtSegment_STD_Extracted (int seg){
+		return straightSegments.get(seg).lanePos_STD;
+	}
+
 	
 	// Steering
 	double getSessionSteering_Ave_Extracted (){
@@ -605,6 +627,7 @@ public class Session {
 			values.add(straightSegments.get(i).steering_STD);
 		return values.average();
 	}
+	
 	//Returning the Steering Angle STD in the first half (0) and second half (1)
 	// The first two segments are dropped for data clarity...
 	// The fist half is segment 2 to 6 and second is 6 to 10 (10 segments in total)
@@ -615,8 +638,11 @@ public class Session {
 		return values.average();
 	}
 
-	
-	
+	//Returning the Steering Angle STD in the Segment seg
+	double getSessionSteeringAtSegment_STD_Extracted (int seg){
+		return straightSegments.get(seg).steering_STD;
+	}
+
 	double getSessionZeroSteer_Extracted (){
 		Values values = new Values();
 		for (int i = 0; i < straightSegments.size(); i++)

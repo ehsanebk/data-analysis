@@ -95,15 +95,18 @@ public class ProcessData {
 //					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_Extracted.csv");
 //			WriteToFileIndividual(outputInividualExtracted);
 //			
-			File outputInividualPVT_Blocks = 
-					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
-			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
+//			File outputInividualPVT_Blocks = 
+//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
+//			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
 			
-//			File outputSPSS_LatDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_LatDev_SPSS.csv");
-//			WriteToFileSPSS_LatDevSTD(outputSPSS_LatDev);
-//
-//			File outputSPSS_SteeringDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_SteeringDev_SPSS.csv");
-//			WriteToFileSPSS_SteeringDevSTD(outputSPSS_SteeringDev);
+			File outputSPSS_LatDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_LatDev_SPSS.csv");
+			WriteToFileSPSS_LatDevSTD(outputSPSS_LatDev);
+
+			File outputSPSS_SteeringDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_SteeringDev_SPSS.csv");
+			WriteToFileSPSS_SteeringDevSTD(outputSPSS_SteeringDev);
+			
+			File outputSPSS_MPH_Dev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_MPH_Dev_SPSS.csv");
+			WriteToFileSPSS_MPH_STD(outputSPSS_MPH_Dev);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -143,7 +146,59 @@ public class ProcessData {
 	}
 
 
-
+	static String titlesForSPSSfile = "Subj. #,Cond."
+			+ ",early_d1_t1_b1,early_d1_t1_b2,early_d1_t1_b3,early_d1_t1_b4,early_d1_t1_b5,early_d1_t1_b6,early_d1_t1_b7,early_d1_t1_b8"
+			+ ",early_d1_t2_b1,early_d1_t2_b2,early_d1_t2_b3,early_d1_t2_b4,early_d1_t2_b5,early_d1_t2_b6,early_d1_t2_b7,early_d1_t2_b8"
+			+ ",early_d1_t3_b1,early_d1_t3_b2,early_d1_t3_b3,early_d1_t3_b4,early_d1_t3_b5,early_d1_t3_b6,early_d1_t3_b7,early_d1_t3_b8"
+			+ ",early_d1_t4_b1,early_d1_t4_b2,early_d1_t4_b3,early_d1_t4_b4,early_d1_t4_b5,early_d1_t4_b6,early_d1_t4_b7,early_d1_t4_b8"
+			                                              
+			+ ",early_d2_t1_b1,early_d2_t1_b2,early_d2_t1_b3,early_d2_t1_b4,early_d2_t1_b5,early_d2_t1_b6,early_d2_t1_b7,early_d2_t1_b8"
+			+ ",early_d2_t2_b1,early_d2_t2_b2,early_d2_t2_b3,early_d2_t2_b4,early_d2_t2_b5,early_d2_t2_b6,early_d2_t2_b7,early_d2_t2_b8"
+			+ ",early_d2_t3_b1,early_d2_t3_b2,early_d2_t3_b3,early_d2_t3_b4,early_d2_t3_b5,early_d2_t3_b6,early_d2_t3_b7,early_d2_t3_b8"
+			+ ",early_d2_t4_b1,early_d2_t4_b2,early_d2_t4_b3,early_d2_t4_b4,early_d2_t4_b5,early_d2_t4_b6,early_d2_t4_b7,early_d2_t4_b8"
+			                                               
+			+ ",early_d3_t1_b1,early_d3_t1_b2,early_d3_t1_b3,early_d3_t1_b4,early_d3_t1_b5,early_d3_t1_b6,early_d3_t1_b7,early_d3_t1_b8"
+			+ ",early_d3_t2_b1,early_d3_t2_b2,early_d3_t2_b3,early_d3_t2_b4,early_d3_t2_b5,early_d3_t2_b6,early_d3_t2_b7,early_d3_t2_b8"
+			+ ",early_d3_t3_b1,early_d3_t3_b2,early_d3_t3_b3,early_d3_t3_b4,early_d3_t3_b5,early_d3_t3_b6,early_d3_t3_b7,early_d3_t3_b8"
+			+ ",early_d3_t4_b1,early_d3_t4_b2,early_d3_t4_b3,early_d3_t4_b4,early_d3_t4_b5,early_d3_t4_b6,early_d3_t4_b7,early_d3_t4_b8"
+			                                              
+			+ ",early_d4_t1_b1,early_d4_t1_b2,early_d4_t1_b3,early_d4_t1_b4,early_d4_t1_b5,early_d4_t1_b6,early_d4_t1_b7,early_d4_t1_b8"
+			+ ",early_d4_t2_b1,early_d4_t2_b2,early_d4_t2_b3,early_d4_t2_b4,early_d4_t2_b5,early_d4_t2_b6,early_d4_t2_b7,early_d4_t2_b8"
+			+ ",early_d4_t3_b1,early_d4_t3_b2,early_d4_t3_b3,early_d4_t3_b4,early_d4_t3_b5,early_d4_t3_b6,early_d4_t3_b7,early_d4_t3_b8"
+			+ ",early_d4_t4_b1,early_d4_t4_b2,early_d4_t4_b3,early_d4_t4_b4,early_d4_t4_b5,early_d4_t4_b6,early_d4_t4_b7,early_d4_t4_b8"
+			                                              
+			+ ",early_d5_t1_b1,early_d5_t1_b2,early_d5_t1_b3,early_d5_t1_b4,early_d5_t1_b5,early_d5_t1_b6,early_d5_t1_b7,early_d5_t1_b8"
+			+ ",early_d5_t2_b1,early_d5_t2_b2,early_d5_t2_b3,early_d5_t2_b4,early_d5_t2_b5,early_d5_t2_b6,early_d5_t2_b7,early_d5_t2_b8"
+			+ ",early_d5_t3_b1,early_d5_t3_b2,early_d5_t3_b3,early_d5_t3_b4,early_d5_t3_b5,early_d5_t3_b6,early_d5_t3_b7,early_d5_t3_b8"
+			+ ",early_d5_t4_b1,early_d5_t4_b2,early_d5_t4_b3,early_d5_t4_b4,early_d5_t4_b5,early_d5_t4_b6,early_d5_t4_b7,early_d5_t4_b8"
+			
+			+ ",late_d1_t1_b1,late_d1_t1_b2,late_d1_t1_b3,late_d1_t1_b4,late_d1_t1_b5,late_d1_t1_b6,late_d1_t1_b7,late_d1_t1_b8"
+			+ ",late_d1_t2_b1,late_d1_t2_b2,late_d1_t2_b3,late_d1_t2_b4,late_d1_t2_b5,late_d1_t2_b6,late_d1_t2_b7,late_d1_t2_b8"
+			+ ",late_d1_t3_b1,late_d1_t3_b2,late_d1_t3_b3,late_d1_t3_b4,late_d1_t3_b5,late_d1_t3_b6,late_d1_t3_b7,late_d1_t3_b8"
+			+ ",late_d1_t4_b1,late_d1_t4_b2,late_d1_t4_b3,late_d1_t4_b4,late_d1_t4_b5,late_d1_t4_b6,late_d1_t4_b7,late_d1_t4_b8"
+			                                           
+			+ ",late_d2_t1_b1,late_d2_t1_b2,late_d2_t1_b3,late_d2_t1_b4,late_d2_t1_b5,late_d2_t1_b6,late_d2_t1_b7,late_d2_t1_b8"
+			+ ",late_d2_t2_b1,late_d2_t2_b2,late_d2_t2_b3,late_d2_t2_b4,late_d2_t2_b5,late_d2_t2_b6,late_d2_t2_b7,late_d2_t2_b8"
+			+ ",late_d2_t3_b1,late_d2_t3_b2,late_d2_t3_b3,late_d2_t3_b4,late_d2_t3_b5,late_d2_t3_b6,late_d2_t3_b7,late_d2_t3_b8"
+			+ ",late_d2_t4_b1,late_d2_t4_b2,late_d2_t4_b3,late_d2_t4_b4,late_d2_t4_b5,late_d2_t4_b6,late_d2_t4_b7,late_d2_t4_b8"
+			                                                             
+			+ ",late_d3_t1_b1,late_d3_t1_b2,late_d3_t1_b3,late_d3_t1_b4,late_d3_t1_b5,late_d3_t1_b6,late_d3_t1_b7,late_d3_t1_b8"
+			+ ",late_d3_t2_b1,late_d3_t2_b2,late_d3_t2_b3,late_d3_t2_b4,late_d3_t2_b5,late_d3_t2_b6,late_d3_t2_b7,late_d3_t2_b8"
+			+ ",late_d3_t3_b1,late_d3_t3_b2,late_d3_t3_b3,late_d3_t3_b4,late_d3_t3_b5,late_d3_t3_b6,late_d3_t3_b7,late_d3_t3_b8"
+			+ ",late_d3_t4_b1,late_d3_t4_b2,late_d3_t4_b3,late_d3_t4_b4,late_d3_t4_b5,late_d3_t4_b6,late_d3_t4_b7,late_d3_t4_b8"
+			                                                 
+			+ ",late_d4_t1_b1,late_d4_t1_b2,late_d4_t1_b3,late_d4_t1_b4,late_d4_t1_b5,late_d4_t1_b6,late_d4_t1_b7,late_d4_t1_b8"
+			+ ",late_d4_t2_b1,late_d4_t2_b2,late_d4_t2_b3,late_d4_t2_b4,late_d4_t2_b5,late_d4_t2_b6,late_d4_t2_b7,late_d4_t2_b8"
+			+ ",late_d4_t3_b1,late_d4_t3_b2,late_d4_t3_b3,late_d4_t3_b4,late_d4_t3_b5,late_d4_t3_b6,late_d4_t3_b7,late_d4_t3_b8"
+			+ ",late_d4_t4_b1,late_d4_t4_b2,late_d4_t4_b3,late_d4_t4_b4,late_d4_t4_b5,late_d4_t4_b6,late_d4_t4_b7,late_d4_t4_b8"
+			                                                             
+			+ ",late_d5_t1_b1,late_d5_t1_b2,late_d5_t1_b3,late_d5_t1_b4,late_d5_t1_b5,late_d5_t1_b6,late_d5_t1_b7,late_d5_t1_b8"
+			+ ",late_d5_t2_b1,late_d5_t2_b2,late_d5_t2_b3,late_d5_t2_b4,late_d5_t2_b5,late_d5_t2_b6,late_d5_t2_b7,late_d5_t2_b8"
+			+ ",late_d5_t3_b1,late_d5_t3_b2,late_d5_t3_b3,late_d5_t3_b4,late_d5_t3_b5,late_d5_t3_b6,late_d5_t3_b7,late_d5_t3_b8"
+			+ ",late_d5_t4_b1,late_d5_t4_b2,late_d5_t4_b3,late_d5_t4_b4,late_d5_t4_b5,late_d5_t4_b6,late_d5_t4_b7,late_d5_t4_b8"
+			
+			+ "\n";
+			
 	static void WriteToFileSPSS_LatDevSTD(File output) throws Exception {
 		PrintWriter outputSPSS = null;
 		try {
@@ -154,68 +209,17 @@ public class ProcessData {
 		}
 
 
-		outputSPSS.println("Subj. #,Cond."
-				+ ",early_d1_t1_b1,early_d1_t1_b2"
-				+ ",early_d1_t2_b1,early_d1_t2_b2"
-				+ ",early_d1_t3_b1,early_d1_t3_b2"
-				+ ",early_d1_t4_b1,early_d1_t4_b2"
-				
-				+ ",early_d2_t1_b1,early_d2_t1_b2"
-				+ ",early_d2_t2_b1,early_d2_t2_b2"
-				+ ",early_d2_t3_b1,early_d2_t3_b2"
-				+ ",early_d2_t4_b1,early_d2_t4_b2"
-				
-				+ ",early_d3_t1_b1,early_d3_t1_b2"
-				+ ",early_d3_t2_b1,early_d3_t2_b2"
-				+ ",early_d3_t3_b1,early_d3_t3_b2"
-				+ ",early_d3_t4_b1,early_d3_t4_b2"
-				
-				+ ",early_d4_t1_b1,early_d4_t1_b2"
-				+ ",early_d4_t2_b1,early_d4_t2_b2"
-				+ ",early_d4_t3_b1,early_d4_t3_b2"
-				+ ",early_d4_t4_b1,early_d4_t4_b2"
-				
-				+ ",early_d5_t1_b1,early_d5_t1_b2"
-				+ ",early_d5_t2_b1,early_d5_t2_b2"
-				+ ",early_d5_t3_b1,early_d5_t3_b2"
-				+ ",early_d5_t4_b1,early_d5_t4_b2"
-				
-				+ ",late_d1_t1_b1,late_d1_t1_b2"
-				+ ",late_d1_t2_b1,late_d1_t2_b2"
-				+ ",late_d1_t3_b1,late_d1_t3_b2"
-				+ ",late_d1_t4_b1,late_d1_t4_b2"
-				
-				+ ",late_d2_t1_b1,late_d2_t1_b2"
-				+ ",late_d2_t2_b1,late_d2_t2_b2"
-				+ ",late_d2_t3_b1,late_d2_t3_b2"
-				+ ",late_d2_t4_b1,late_d2_t4_b2"
-				                                                   
-				+ ",late_d3_t1_b1,late_d3_t1_b2"
-				+ ",late_d3_t2_b1,late_d3_t2_b2"
-				+ ",late_d3_t3_b1,late_d3_t3_b2"
-				+ ",late_d3_t4_b1,late_d3_t4_b2"
-				                                                
-				+ ",late_d4_t1_b1,late_d4_t1_b2"
-				+ ",late_d4_t2_b1,late_d4_t2_b2"
-				+ ",late_d4_t3_b1,late_d4_t3_b2"
-				+ ",late_d4_t4_b1,late_d4_t4_b2"
-				                                                   
-				+ ",late_d5_t1_b1,late_d5_t1_b2"
-				+ ",late_d5_t2_b1,late_d5_t2_b2"
-				+ ",late_d5_t3_b1,late_d5_t3_b2"
-				+ ",late_d5_t4_b1,late_d5_t4_b2"
-				
-				+ "\n"
-				);
+		outputSPSS.println(titlesForSPSSfile);
+		
 		for (int i = 0; i < participantsData.size(); i++) {
 
 			SubjectData subjectData = participantsData.get(i);
 			outputSPSS.print(subjectData.ID+","+subjectData.condition);
 			for (int j = 4; j < 44; j++) {
-				outputSPSS.print(
-						"," + subjectData.getSessionLanePosAtEachHalf_STD_Extracted(j, 0)+ 
-						"," + subjectData.getSessionLanePosAtEachHalf_STD_Extracted(j, 1));
-				outputSPSS.flush();
+				for (int seg = 2; seg < 10; seg++) {   // dropping the first 2 segment
+					outputSPSS.print("," + subjectData.getSessionLanePosAtSegment_STD_Extracted(j, seg));
+					outputSPSS.flush();
+				}
 			}
 			outputSPSS.print("\n");
 		}
@@ -232,74 +236,50 @@ public class ProcessData {
 		}
 
 
-		outputSPSS.println("Subj. #,Cond."
-				+ ",early_d1_t1_b1,early_d1_t1_b2"
-				+ ",early_d1_t2_b1,early_d1_t2_b2"
-				+ ",early_d1_t3_b1,early_d1_t3_b2"
-				+ ",early_d1_t4_b1,early_d1_t4_b2"
-				
-				+ ",early_d2_t1_b1,early_d2_t1_b2"
-				+ ",early_d2_t2_b1,early_d2_t2_b2"
-				+ ",early_d2_t3_b1,early_d2_t3_b2"
-				+ ",early_d2_t4_b1,early_d2_t4_b2"
-				
-				+ ",early_d3_t1_b1,early_d3_t1_b2"
-				+ ",early_d3_t2_b1,early_d3_t2_b2"
-				+ ",early_d3_t3_b1,early_d3_t3_b2"
-				+ ",early_d3_t4_b1,early_d3_t4_b2"
-				
-				+ ",early_d4_t1_b1,early_d4_t1_b2"
-				+ ",early_d4_t2_b1,early_d4_t2_b2"
-				+ ",early_d4_t3_b1,early_d4_t3_b2"
-				+ ",early_d4_t4_b1,early_d4_t4_b2"
-				
-				+ ",early_d5_t1_b1,early_d5_t1_b2"
-				+ ",early_d5_t2_b1,early_d5_t2_b2"
-				+ ",early_d5_t3_b1,early_d5_t3_b2"
-				+ ",early_d5_t4_b1,early_d5_t4_b2"
-				
-				+ ",late_d1_t1_b1,late_d1_t1_b2"
-				+ ",late_d1_t2_b1,late_d1_t2_b2"
-				+ ",late_d1_t3_b1,late_d1_t3_b2"
-				+ ",late_d1_t4_b1,late_d1_t4_b2"
-				
-				+ ",late_d2_t1_b1,late_d2_t1_b2"
-				+ ",late_d2_t2_b1,late_d2_t2_b2"
-				+ ",late_d2_t3_b1,late_d2_t3_b2"
-				+ ",late_d2_t4_b1,late_d2_t4_b2"
-				                                                   
-				+ ",late_d3_t1_b1,late_d3_t1_b2"
-				+ ",late_d3_t2_b1,late_d3_t2_b2"
-				+ ",late_d3_t3_b1,late_d3_t3_b2"
-				+ ",late_d3_t4_b1,late_d3_t4_b2"
-				                                                
-				+ ",late_d4_t1_b1,late_d4_t1_b2"
-				+ ",late_d4_t2_b1,late_d4_t2_b2"
-				+ ",late_d4_t3_b1,late_d4_t3_b2"
-				+ ",late_d4_t4_b1,late_d4_t4_b2"
-				                                                   
-				+ ",late_d5_t1_b1,late_d5_t1_b2"
-				+ ",late_d5_t2_b1,late_d5_t2_b2"
-				+ ",late_d5_t3_b1,late_d5_t3_b2"
-				+ ",late_d5_t4_b1,late_d5_t4_b2"
-				
-				+ "\n"
-				);
+		outputSPSS.println(titlesForSPSSfile);
+		
 		for (int i = 0; i < participantsData.size(); i++) {
 
 			SubjectData subjectData = participantsData.get(i);
 			outputSPSS.print(subjectData.ID+","+subjectData.condition);
 			for (int j = 4; j < 44; j++) {
-				outputSPSS.print(
-						"," + subjectData.getSessionSteeringAtEachHalf_STD_Extracted(j, 0)+ 
-						"," + subjectData.getSessionSteeringAtEachHalf_STD_Extracted(j, 1));
-				outputSPSS.flush();
+				for (int seg = 2; seg < 10; seg++) {   // dropping the first 2 segment
+					outputSPSS.print("," + subjectData.getSessionSteeringAtSegment_STD_Extracted(j, seg) );
+					outputSPSS.flush();
+				}
 			}
 			outputSPSS.print("\n");
 		}
 		outputSPSS.close();
 	}
 	
+	
+	static void WriteToFileSPSS_MPH_STD(File output) throws Exception {
+		PrintWriter outputSPSS = null;
+		try {
+			outputSPSS = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		outputSPSS.println(titlesForSPSSfile);
+		
+		for (int i = 0; i < participantsData.size(); i++) {
+
+			SubjectData subjectData = participantsData.get(i);
+			outputSPSS.print(subjectData.ID+","+subjectData.condition);
+			for (int j = 4; j < 44; j++) {
+				for (int seg = 2; seg < 10; seg++) {   // dropping the first 2 segment
+					outputSPSS.print("," + subjectData.getSessionMPHAtSegment_STD_RawData(j, seg) );
+					outputSPSS.flush();
+				}
+			}
+			outputSPSS.print("\n");
+		}
+		outputSPSS.close();
+	}
 	
 	/**
 	 * @param outputIndividualTimePointsCSV

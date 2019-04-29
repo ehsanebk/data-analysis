@@ -99,14 +99,18 @@ public class ProcessData {
 //					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_PVT_Blocks.csv");
 //			WriteToFileInividualPVTBlocks(outputInividualPVT_Blocks);
 			
-			File outputSPSS_LatDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_LatDev_SPSS.csv");
-			WriteToFileSPSS_LatDevSTD(outputSPSS_LatDev);
-
-			File outputSPSS_SteeringDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_SteeringDev_SPSS.csv");
-			WriteToFileSPSS_SteeringDevSTD(outputSPSS_SteeringDev);
-			
-			File outputSPSS_MPH_Dev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_MPH_Dev_SPSS.csv");
-			WriteToFileSPSS_MPH_STD(outputSPSS_MPH_Dev);
+//			File outputSPSS_LatDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_LatDev_SPSS.csv");
+//			WriteToFileSPSS_LatDevSTD(outputSPSS_LatDev);
+//
+//			File outputSPSS_SteeringDev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_SteeringDev_SPSS.csv");
+//			WriteToFileSPSS_SteeringDevSTD(outputSPSS_SteeringDev);
+//			
+//			File outputSPSS_MPH_Dev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_MPH_Dev_SPSS.csv");
+//			WriteToFileSPSS_MPH_STD(outputSPSS_MPH_Dev);
+		
+			File outputInividualDrivingSegments = 
+					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_DrivingSegments.csv");
+			WriteToFileInividualDrivingSegments(outputInividualDrivingSegments);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -990,6 +994,126 @@ public class ProcessData {
 					outputCSV.flush();
 				}
 				outputCSV.print("\n");
+
+
+				outputCSV.print(",");
+				outputCSV.print("\n");
+
+				outputCSV.print("\n");
+				outputCSV.flush();
+			}		
+		}
+	}
+
+	private static void WriteToFileInividualDrivingSegments(File output) throws Exception {
+		PrintWriter outputCSV = null;
+		try {
+			outputCSV = new PrintWriter(output);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		outputCSV.println("Best Case");
+		for (int i = 0; i < participantsData.size(); i++) {
+			SubjectData subjectData = participantsData.get(i);
+			if (subjectData.condition.equals(Conditions.BestCase)){
+				System.out.println("Writing to file (Individual Corrolation): " + subjectData.ID);
+				outputCSV.println(subjectData.ID+":"+subjectData.condition );
+				outputCSV.flush();
+
+				outputCSV.print("Session #");
+				for (int j = 4; j < 44; j++) {					
+					outputCSV.print("," + subjectData.getSessionNumber(j));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				
+				for (int S = 2; S < 10 ; S++) {
+					outputCSV.print("LatDev Seg " + S);
+					for (int j = 4; j < 44; j++) {
+						outputCSV.print("," + subjectData.getSessionLanePosAtSegment_STD_Extracted(j, S));
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					
+				}
+				
+				for (int S = 2; S < 10 ; S++) {
+					outputCSV.print("SteeringSTD Seg " + S);
+					for (int j = 4; j < 44; j++) {
+						outputCSV.print("," + subjectData.getSessionSteeringAtSegment_STD_Extracted(j, S));
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					
+				}
+				
+				for (int S = 2; S < 10 ; S++) {
+					outputCSV.print("MPH_STD Seg " + S);
+					for (int j = 4; j < 44; j++) {
+						outputCSV.print("," + subjectData.getSessionMPHAtSegment_STD_RawData(j, S));
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					
+				}
+				
+
+				outputCSV.print(",");
+				outputCSV.print("\n");
+
+				outputCSV.print("\n");
+				outputCSV.flush();
+			}	
+		}
+
+		outputCSV.println("Worst Case");
+		for (int i = 0; i < participantsData.size(); i++) {
+			SubjectData subjectData = participantsData.get(i);
+			if (subjectData.condition.equals(Conditions.WorstCase)){
+				System.out.println("Writing to file (Individual Corrolation): " + subjectData.ID);
+				outputCSV.println(subjectData.ID+":"+subjectData.condition );
+				outputCSV.flush();
+
+				outputCSV.print("Session #");
+				for (int j = 4; j < 44; j++) {					
+					outputCSV.print("," + subjectData.getSessionNumber(j));
+					outputCSV.flush();
+				}
+				outputCSV.print("\n");
+
+				for (int S = 2; S < 10 ; S++) {
+					outputCSV.print("LatDev Seg " + S);
+					for (int j = 4; j < 44; j++) {
+						outputCSV.print("," + subjectData.getSessionLanePosAtSegment_STD_Extracted(j, S));
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					
+				}
+				
+				for (int S = 2; S < 10 ; S++) {
+					outputCSV.print("SteeringSTD Seg " + S);
+					for (int j = 4; j < 44; j++) {
+						outputCSV.print("," + subjectData.getSessionSteeringAtSegment_STD_Extracted(j, S));
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					
+				}
+				
+				for (int S = 2; S < 10 ; S++) {
+					outputCSV.print("MPH_STD Seg " + S);
+					for (int j = 4; j < 44; j++) {
+						outputCSV.print("," + subjectData.getSessionMPHAtSegment_STD_RawData(j, S));
+						outputCSV.flush();
+					}
+					outputCSV.print("\n");
+					
+				}
 
 
 				outputCSV.print(",");

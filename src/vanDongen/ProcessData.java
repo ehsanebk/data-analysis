@@ -108,9 +108,9 @@ public class ProcessData {
 //			File outputSPSS_MPH_Dev = new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Analysis/Human_MPH_Dev_SPSS.csv");
 //			WriteToFileSPSS_MPH_STD(outputSPSS_MPH_Dev);
 		
-			File outputInividualDrivingSegments = 
-					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_DrivingSegments.csv");
-			WriteToFileInividualDrivingSegments(outputInividualDrivingSegments);
+//			File outputInividualDrivingSegments = 
+//					new File("/Users/Ehsan/OneDrive - Drexel University/Driving Data(Van Dongen)/Result_Human_Driving/Results_Human_Individual_DrivingSegments.csv");
+//			WriteToFileInividualDrivingSegments(outputInividualDrivingSegments);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

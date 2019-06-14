@@ -59,16 +59,20 @@ public class PVT_sessions {
 		// for the function below the counter starts from 1 because 
 		// the first reaction time is not being considered in the calculations
 
-		public int getLapses() {
+		public int getNumberOfLapses() {
 			int counter = 0;
 			for (int i = 1; i < RT.size(); i++) {
-				if (RT.get(i) > 500 )
+				if (RT.get(i) > 500 && RT.get(i) < 29999)
 					counter++;
 			}
 			return counter;
 		}
-
-		public int getFalseAlerts(){
+		
+		public int getProportionOfLapses() {
+			return getNumberOfLapses()/(RT.size()-1);
+		}
+		
+		public int getNumberOfFalseAlerts(){
 			int counter = 0;
 			for (int i = 1; i < RT.size(); i++) {
 				if (RT.get(i) < 150 )
@@ -77,6 +81,10 @@ public class PVT_sessions {
 			return counter;
 		}
 
+		public int getProportionOfFalseAlerts(){
+			return getNumberOfFalseAlerts()/(RT.size()-1);
+		}
+		
 		public double mean_AlertResponses(){
 			Values r = new Values();
 			for (int i = 1; i < RT.size(); i++) {
@@ -85,6 +93,12 @@ public class PVT_sessions {
 			}
 			return r.mean();
 		}
+		
+		public double getSessionMedianAlertResponses(){
+			return RT.medianInRange(150, 500);
+		}
+		
+		
 		public double slowest_AlertResponses(){
 			Values r = new Values();
 			for (int i = 1; i < RT.size(); i++) {

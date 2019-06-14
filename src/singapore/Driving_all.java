@@ -33,7 +33,7 @@ public class Driving_all {
 		//			System.out.println("--------------------------------------------------");
 		//		}
 
-		File file = new File("/Users/Ehsan/OneDrive - drexel.edu/"
+		File file = new File("/Users/Ehsan/OneDrive - Drexel University/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "/Result/LP_PVT_all.csv");
 		try {
@@ -54,7 +54,7 @@ public class Driving_all {
 
 		for (String protocol : protocols){
 
-			File timing = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
+			File timing = new File ("/Users/Ehsan/OneDrive - Drexel University/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
 					+ "Protocol " + protocol + " session timings.csv");
 
@@ -113,7 +113,7 @@ public class Driving_all {
 //			}
 			System.out.println("Processing Driving for Subject : " + subject.id);
 			// Directories were the filtered ( valid part of the driving data) is kept 
-			File directory = new File ("/Users/Ehsan/OneDrive - drexel.edu/"
+			File directory = new File ("/Users/Ehsan/OneDrive - Drexel University/"
 					+ "Driving data - standard deviation lateral position (Singapore)/"
 					+ "Driving Data Raw/Protocol "+ subject.protocol+" filtered");
 
@@ -208,7 +208,7 @@ public class Driving_all {
 		foutPVT.flush();
 
 		// Getting the PVT data ready
-		File PVTfile = new File("/Users/Ehsan/OneDrive - drexel.edu/"
+		File PVTfile = new File("/Users/Ehsan/OneDrive - Drexel University/"
 				+ "Driving data - standard deviation lateral position (Singapore)/"
 				+ "PVT Raw Data/MFPD_PVT_all.txt");
 		Process_PVT singaporePVT = new Process_PVT(PVTfile);
@@ -222,7 +222,7 @@ public class Driving_all {
 			for (int j = 1; j <= 7  ; j++) {
 				if (pvt.getTrail(j) != null)
 					foutPVT.print(pvt.getTrail(j).getTrialtime() +","
-							+pvt.getTrail(j).getLapses() + ",") ;
+							+ pvt.getTrail(j).getProportionOfLapses()*100 + ",") ; // percentage of lapses
 				else
 					foutPVT.print(","+ ",") ;
 			}

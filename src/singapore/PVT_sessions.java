@@ -68,8 +68,8 @@ public class PVT_sessions {
 			return counter;
 		}
 		
-		public int getProportionOfLapses() {
-			return getNumberOfLapses()/(RT.size()-1);
+		public double getProportionOfLapses() {
+			return getNumberOfLapses()/(double)(RT.size()-1);
 		}
 		
 		public int getNumberOfFalseAlerts(){
@@ -81,8 +81,8 @@ public class PVT_sessions {
 			return counter;
 		}
 
-		public int getProportionOfFalseAlerts(){
-			return getNumberOfFalseAlerts()/(RT.size()-1);
+		public double getProportionOfFalseStarts(){
+			return getNumberOfFalseAlerts()/(double)(RT.size()-1);
 		}
 		
 		public double mean_AlertResponses(){

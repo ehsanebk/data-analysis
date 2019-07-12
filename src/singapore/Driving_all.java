@@ -192,16 +192,16 @@ public class Driving_all {
 			e1.printStackTrace();
 		}
 		foutPVT.println("protocol,id,"
-				+ ",PVT 1,,PVT 2,,PVT 3,,PVT 4,,PVT 5,,PVT 6,,PVT 7,,"
-				//+ ",,alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
+				+ ",PVT 1,,,,PVT 2,,,,PVT 3,,,,PVT 4,,,,PVT 5,,,,PVT 6,,,,PVT 7,,,,"
 				+ ",Driving 1,,,Driving 2,,,Driving 3,,,Driving 4,,,"
 				);
 		foutPVT.flush();
 
 		foutPVT.println(",,"
-				+ ",Time,Lapse #,Time,Lapse #,Time,Lapse #,Time,Lapse #,"
-				+ "Time,Lapse #,Time,Lapse #,Time,Lapse #,"
-				//+ ",,alert ave 0,alert ave 1,alert ave 2,alert ave 3,alert ave 4,alert ave 5,alert ave 6,alert ave 7,"
+				+ ",Time,% Lapse,% FalseStarts, Median Alert RT,Time,% Lapse,% FalseStarts, Median Alert RT"
+				+ ",Time,% Lapse,% FalseStarts, Median Alert RT,Time,% Lapse,% FalseStarts, Median Alert RT"
+				+ ",Time,% Lapse,% FalseStarts, Median Alert RT,Time,% Lapse,% FalseStarts, Median Alert RT"
+				+ ",Time,% Lapse,% FalseStarts, Median Alert RT,"
 				+ ",Start-Stop,LPSD,Frame Count,Start-Stop,LPSD,Frame Count,"
 				+ "Start-Stop,LPSD,Frame Count,Start-Stop,LPSD,Frame Count"
 				);
@@ -222,9 +222,11 @@ public class Driving_all {
 			for (int j = 1; j <= 7  ; j++) {
 				if (pvt.getTrail(j) != null)
 					foutPVT.print(pvt.getTrail(j).getTrialtime() +","
-							+ pvt.getTrail(j).getProportionOfLapses()*100 + ",") ; // percentage of lapses
+							+ pvt.getTrail(j).getProportionOfLapses()*100 + ","
+							+ pvt.getTrail(j).getProportionOfFalseStarts()*100 + ","
+							+ pvt.getTrail(j).getSessionMedianAlertResponses() + ",") ; // percentage of lapses
 				else
-					foutPVT.print(","+ ",") ;
+					foutPVT.print(","+ ",,,") ;
 			}
 			foutPVT.flush();
 			for (int j = 1; j < driving.trials.length; j++) {
